@@ -170,12 +170,7 @@ public:
         mView->sort(parentItemId, [this](const int i1, const int i2) {
             return this->compare(i1, i2);
         });
-
-        /*
-
-        */
     }
-
 
     bool itemIsPopulated(const int itemId) const {
         const auto it = mPopulatedItems.find(itemId); 
@@ -183,7 +178,7 @@ public:
         return it != mPopulatedItems.end();
     }
 
-    bool compare(const int itemId1, const int itemId2) const {
+    int compare(const int itemId1, const int itemId2) const {
         const auto path1 = mPathItemsCache.left.find(itemId1)->second;
         const auto path2 = mPathItemsCache.left.find(itemId2)->second;
 
@@ -194,7 +189,7 @@ public:
         if (!boost::filesystem::is_directory(path1) && boost::filesystem::is_directory(path2)) {
             return 1;
         }
-
+        
         return path1.filename().string().compare(path2.filename().string());
     }
 
