@@ -8,12 +8,11 @@
 #include <QMdiSubWindow>
 #include <QTextEdit>
 
-#include <Xenoide/Gui/DocumentPresenter.hpp>
-#include <Xenoide/Gui/DocumentManagerPresenter.hpp>
+#include <Xenoide/Gui/Document.hpp>
 #include <Xenoide/Gui/Qt5/DocumentMdiSubWindowQt.hpp>
 
 namespace Xenoide {
-    DocumentManagerMdiQt::DocumentManagerMdiQt(QWidget *parent, DocumentManagerPresenter *presenter) : QWidget(parent), DocumentManager(presenter), mDialogManager(this) {
+    DocumentManagerMdiQt::DocumentManagerMdiQt(QWidget *parent, DocumentManager::Presenter *presenter) : QWidget(parent), DocumentManager(presenter), mDialogManager(this) {
         mMdiArea = new QMdiArea(this);
         mMdiArea->setViewMode(QMdiArea::TabbedView);
         mMdiArea->setTabsClosable(true);
@@ -36,10 +35,8 @@ namespace Xenoide {
                     break;
                 }
             }
-            
-            
 
-            // TODO: Generate menu Dnamically
+            // TODO: Generate menu Dynamically
             // trigger context menu on that tab
             if (Document *editor = this->getDocument(index); found && editor) {
                 QMenu contextMenu("Context Menu", this);
@@ -109,7 +106,7 @@ namespace Xenoide {
 }
 
 namespace Xenoide {
-    Document* DocumentManagerMdiQt::appendDocument(DocumentPresenter *documentPresenter) {
+    Document* DocumentManagerMdiQt::appendDocument(Document::Presenter *documentPresenter) {
         assert(mMdiArea);
         assert(documentPresenter);
 
@@ -122,7 +119,7 @@ namespace Xenoide {
         this->connect(documentSubWindowQt, &DocumentMdiSubWindowQt::closeRequested, [=](DocumentMdiSubWindowQt *subWindow, QCloseEvent *evt) {
             std::cout << "triggered DocumentMdiSubWindowQt::closeRequested" << std::endl;
 
-            if (documentPresenter->onCloseRequested() == DocumentPresenter::UserResponse::Accept) {
+            if (documentPresenter->onCloseRequested() == Document::Presenter::UserResponse::Accept) {
                 presenter->onCloseDocument(subWindow);
 
                 evt->accept();

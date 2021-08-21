@@ -2,8 +2,6 @@
 #include <QApplication>
 
 #include <Xenoide/Gui/Qt5/IDEFrameQt.hpp>
-#include <Xenoide/Gui/IDEFrameModel.hpp>
-#include <Xenoide/Gui/IDEFramePresenter.hpp>
 #include <boost/filesystem.hpp>
 
 int felide_main_qt5(int argc, char **argv) {
@@ -11,8 +9,8 @@ int felide_main_qt5(int argc, char **argv) {
 
     QApplication app(argc, argv);
 
-    auto model = IDEFrameModel::create();
-    auto presenter = IDEFramePresenter{model.get()};
+    auto model = IDEFrame::Model::create();
+    auto presenter = IDEFrame::Presenter{model.get()};
     auto view = IDEFrameQt{&presenter};
 
     view.show();

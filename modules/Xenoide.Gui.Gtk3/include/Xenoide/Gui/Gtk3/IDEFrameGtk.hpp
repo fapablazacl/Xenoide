@@ -14,7 +14,7 @@
 namespace Xenoide {
     class IDEFrameGtk : public Gtk::ApplicationWindow, public IDEFrame {
     public:
-        IDEFrameGtk(IDEFramePresenter *presenter);
+        IDEFrameGtk(IDEFrame::Presenter *presenter);
 
         virtual ~IDEFrameGtk();
 

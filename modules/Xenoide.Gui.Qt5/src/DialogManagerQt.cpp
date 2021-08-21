@@ -8,8 +8,7 @@
 
 #include <Xenoide/Gui/Qt5/FileSearchDialogQt.hpp>
 
-#include <Xenoide/Gui/FileSearchDialogPresenter.hpp>
-#include <Xenoide/Gui/FileSearchDialogModel.hpp>
+#include <Xenoide/Gui/FileSearchDialog.hpp>
 
 namespace Xenoide {
     DialogManagerQt::DialogManagerQt(QWidget *parent) {
@@ -170,8 +169,8 @@ namespace Xenoide {
     }
 
     boost::optional<boost::filesystem::path> DialogManagerQt::showFileSearchDialog(const FileSearchDialogData &data) const {
-        auto fileSearchDialogModel = FileSearchDialogModel::create(data.defaultPath);
-        auto fileSearchDialogPresenter = FileSearchDialogPresenter{fileSearchDialogModel.get()};
+        auto fileSearchDialogModel = FileSearchDialog::Model::create(data.defaultPath);
+        auto fileSearchDialogPresenter = FileSearchDialog::Presenter{fileSearchDialogModel.get()};
         auto fileSearchDialog = FileSearchDialogQt{m_parent, &fileSearchDialogPresenter};
 
         fileSearchDialog.setWindowTitle(data.title.c_str());

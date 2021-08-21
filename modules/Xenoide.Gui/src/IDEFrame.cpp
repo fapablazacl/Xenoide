@@ -78,7 +78,7 @@ namespace Xenoide {
             }),
         })};
 
-        this->menuView->setupMenuBar(menu);
+        // this->menuView->setupMenuBar(menu);
     }
 
     void IDEFrame::Presenter::onFileNew() {

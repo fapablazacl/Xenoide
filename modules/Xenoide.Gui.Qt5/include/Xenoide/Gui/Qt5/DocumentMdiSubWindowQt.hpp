@@ -9,8 +9,6 @@
 #include <Qsci/qscilexercpp.h>
 
 #include <Xenoide/Gui/Document.hpp>
-#include <Xenoide/Gui/DocumentPresenter.hpp>
-
 #include <Xenoide/Gui/Qt5/DialogManagerQt.hpp>
 
 
@@ -20,7 +18,7 @@ namespace Xenoide {
         Q_OBJECT
 
     public:
-        explicit DocumentMdiSubWindowQt(DocumentPresenter *presenter);
+        explicit DocumentMdiSubWindowQt(Document::Presenter *presenter);
 
         virtual ~DocumentMdiSubWindowQt();
 
@@ -68,7 +66,7 @@ namespace Xenoide {
 
     private:
         DialogManagerQt mDialogManager;
-        DocumentPresenter *mPresenter = nullptr;
+        Document::Presenter *mPresenter = nullptr;
         QsciScintilla *mScintilla = nullptr;
         DocumentConfig mConfig;
     };

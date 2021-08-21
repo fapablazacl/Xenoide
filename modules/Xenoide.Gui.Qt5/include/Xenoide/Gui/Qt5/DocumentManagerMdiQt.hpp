@@ -19,7 +19,7 @@ namespace Xenoide {
         Q_OBJECT
 
     public:
-        explicit DocumentManagerMdiQt(QWidget *parent, DocumentManagerPresenter *presenter);
+        explicit DocumentManagerMdiQt(QWidget *parent, DocumentManager::Presenter *presenter);
 
         virtual ~DocumentManagerMdiQt();
         
@@ -29,7 +29,7 @@ namespace Xenoide {
         void changeDocumentTitle(DocumentMdiSubWindowQt *documentQt, const std::string &title);
         
     public:
-        Document* appendDocument(DocumentPresenter *documentPresenter) override;
+        Document* appendDocument(Document::Presenter *documentPresenter) override;
 
         void setCurrentDocument(Document *document) override;
 

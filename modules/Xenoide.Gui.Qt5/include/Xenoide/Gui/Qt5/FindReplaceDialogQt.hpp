@@ -13,13 +13,11 @@
 #include <Xenoide/Gui/Qt5/DocumentMdiSubWindowQt.hpp>
 
 namespace Xenoide {
-    class FindReplaceDialogPresenter;
-
     class FindReplaceDialogQt : public QWidget, public FindReplaceDialog {
         Q_OBJECT
 
     public:
-        explicit FindReplaceDialogQt(QWidget *parent, FindReplaceDialogPresenter *presenter, DocumentMdiSubWindowQt *document);
+        explicit FindReplaceDialogQt(QWidget *parent, FindReplaceDialog::Presenter *presenter, DocumentMdiSubWindowQt *document);
 
         virtual ~FindReplaceDialogQt();
 
@@ -29,7 +27,7 @@ namespace Xenoide {
         void setupLayout();
 
     public:
-        void attachPresenter(FindReplaceDialogPresenter *presenter) override;
+        void attachPresenter(FindReplaceDialog::Presenter *presenter) override;
 
         void show(const ViewData &viewData) override;
 

@@ -9,13 +9,13 @@
 #include <QCloseEvent>
 #include <QMdiArea>
 #include <QMdiSubWindow>
-#include <Xenoide/Gui/IDEFramePresenter.hpp>
+#include <Xenoide/Gui/IDEFrame.hpp>
 #include <Xenoide/Gui/Qt5/DialogManagerQt.hpp>
 #include <Xenoide/Gui/Qt5/FolderBrowserQt.hpp>
 #include <Xenoide/Gui/Qt5/UtilitiesQt.hpp>
 
 namespace Xenoide {
-    IDEFrameQt::IDEFrameQt(IDEFramePresenter *presenter) : IDEFrame(presenter) {
+    IDEFrameQt::IDEFrameQt(IDEFrame::Presenter *presenter) : IDEFrame(presenter) {
         mDialogManager = std::make_unique<DialogManagerQt>(this);
 
         this->setupDocumentManager();

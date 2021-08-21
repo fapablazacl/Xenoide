@@ -1,12 +1,17 @@
 
-set (target "felide.sandbox")
+set (target "Xenoide.Sandbox")
 
 set (sources 
     "sandbox.cpp"
+	"stdafx.cpp"
+	"stdafx.h"
+	"Resource.rc"
+	"resource.h"
 )
 
-add_executable (${target} ${sources})
+add_executable (${target} WIN32 ${sources})
 
-# target_link_libraries (${target} stdc++fs)
+target_include_directories (${target} PUBLIC ${XENOIDE_WTL_INCLUDE_DIR})
+target_include_directories (${target} PUBLIC "res")
 
 install(TARGETS ${target} DESTINATION "bin")

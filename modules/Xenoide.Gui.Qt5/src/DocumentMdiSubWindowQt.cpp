@@ -11,7 +11,7 @@
 
 
 namespace Xenoide {
-    DocumentMdiSubWindowQt::DocumentMdiSubWindowQt(DocumentPresenter *presenter) : mDialogManager(this) {
+    DocumentMdiSubWindowQt::DocumentMdiSubWindowQt(Document::Presenter *presenter) : mDialogManager(this) {
         mPresenter = presenter;
 
         mScintilla = new QsciScintilla(this);

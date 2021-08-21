@@ -5,13 +5,13 @@
 #include <iostream>
 #include <boost/filesystem.hpp>
 #include <Xenoide/Core/FileService.hpp>
-#include <Xenoide/Gui/IDEFramePresenter.hpp>
+#include <Xenoide/Gui/IDEFrame.hpp>
 #include <Xenoide/Gui/Gtk3/DocumentGtk.hpp>
 
 namespace fs = boost::filesystem;
 
 namespace Xenoide {
-    IDEFrameGtk::IDEFrameGtk(IDEFramePresenter *presenter) : IDEFrame(presenter), dialogManager(*this), folderBrowser(presenter->getFolderBrowserPresenter()) {
+    IDEFrameGtk::IDEFrameGtk(IDEFrame::Presenter *presenter) : IDEFrame(presenter), dialogManager(*this), folderBrowser(presenter->getFolderBrowserPresenter()) {
         // setup supported actions
         add_action("file_new", sigc::mem_fun(*this, &IDEFrameGtk::on_action_file_new));
         add_action("file_open", sigc::mem_fun(*this, &IDEFrameGtk::on_action_file_open));
@@ -169,7 +169,7 @@ namespace Xenoide {
         }
 
         const std::string name = fs::path(path).filename().string();
-        const std::string content = "" /*Xenoide::FileUtil::load(path)*/;
+        const std::string content = "" /*TODO: Implement Xenoide::FileUtil::load(path)*/;
 
         documentManager.open_editor(path, name, content);
     }

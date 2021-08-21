@@ -21,6 +21,8 @@ namespace Xenoide {
         BEGIN_MSG_MAP(CDocument)
             MSG_WM_CREATE(OnCreate)
             MSG_WM_SIZE(OnSize)
+
+            REFLECT_NOTIFICATIONS()
         END_MSG_MAP()
 
         CDocumentManager(DocumentManager::Presenter *presenter);

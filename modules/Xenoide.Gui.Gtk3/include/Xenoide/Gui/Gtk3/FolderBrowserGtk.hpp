@@ -31,7 +31,7 @@ namespace Xenoide {
 
     class FolderBrowserGtk : public Gtk::Bin, public FolderBrowser {
     public:
-        FolderBrowserGtk(FolderBrowserPresenter *presenter);
+        FolderBrowserGtk(FolderBrowser::Presenter *presenter);
 
         virtual ~FolderBrowserGtk();
 

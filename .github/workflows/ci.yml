@@ -1,0 +1,21 @@
+name: Continous Integration Jobs
+on: [push]
+jobs:
+  Ubuntu-CI:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+
+      - name: Check out repository code
+        uses: actions/checkout@v2
+
+      - name: Install Development dependencies
+        run: sudo apt-get install libboost-all-dev libgtkmm-3.0-dev libgtksourceviewmm-3.0-dev
+
+      - name: Configuring a debug build, using the GTK3 Frontend
+        run: mkdir -p .cmake/ && cd .cmake/ && cmake ../ -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug -DXENOIDE_GUI_GTK3=ON
+
+      - name: Performing a Debug build
+        run: cd .cmake/ && make 

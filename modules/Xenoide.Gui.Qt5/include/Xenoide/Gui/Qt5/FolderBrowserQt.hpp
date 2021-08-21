@@ -10,7 +10,6 @@
 
 namespace Xenoide {
     class DialogManagerQt;
-    class FolderBrowserPresenter;
     class DialogManager;
 
     class FolderBrowserQt : public QWidget, public FolderBrowser {
@@ -24,7 +23,7 @@ namespace Xenoide {
         virtual void displayContextualMenu(const Point &point, const Menu &menu) override;
 
     public:
-        FolderBrowserQt(QWidget *parent, FolderBrowserPresenter *presenter, DialogManagerQt *dialogManager);
+        FolderBrowserQt(QWidget *parent, FolderBrowser::Presenter *presenter, DialogManagerQt *dialogManager);
 
         ~FolderBrowserQt();
 

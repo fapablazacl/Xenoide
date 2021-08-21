@@ -10,10 +10,9 @@
 #include <QMenu>
 #include <QAction>
 
-#include <Xenoide/Gui/IDEFramePresenter.hpp>
 #include <Xenoide/Gui/IDEFrame.hpp>
-#include <Xenoide/Gui/FolderBrowserPresenter.hpp>
-#include <Xenoide/Gui/DocumentManagerPresenter.hpp>
+#include <Xenoide/Gui/FolderBrowser.hpp>
+#include <Xenoide/Gui/DocumentManager.hpp>
 #include <Xenoide/Gui/Menu.hpp>
 #include <Xenoide/Gui/MenuPanel.hpp>
 
@@ -26,7 +25,7 @@ namespace Xenoide {
         Q_OBJECT;
 
     public:
-        explicit IDEFrameQt(IDEFramePresenter *controller);
+        explicit IDEFrameQt(IDEFrame::Presenter *controller);
 
     public:
         virtual DocumentManager* getDocumentManager() override;

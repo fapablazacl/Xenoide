@@ -8,7 +8,7 @@
 #include <QMessageBox>
 #include <QMimeData>
 #include <iostream>
-#include <Xenoide/Gui/FolderBrowserPresenter.hpp>
+#include <Xenoide/Gui/FolderBrowser.hpp>
 
 #include <Xenoide/Gui/Qt5/DialogManagerQt.hpp>
 #include <Xenoide/Gui/Qt5/UtilitiesQt.hpp>
@@ -21,7 +21,7 @@ namespace Xenoide {
     // TODO: Refactor file handling logic into another layer
     class FolderBrowserQtTreeModel : public QFileSystemModel {
     public:
-        FolderBrowserQtTreeModel(QWidget *parent, FolderBrowserPresenter *presenter) : QFileSystemModel(parent) {
+        FolderBrowserQtTreeModel(QWidget *parent, FolderBrowser::Presenter *presenter) : QFileSystemModel(parent) {
             this->presenter = presenter;
         }
 
@@ -56,7 +56,7 @@ namespace Xenoide {
         }
 
     private:
-        FolderBrowserPresenter *presenter = nullptr;
+        FolderBrowser::Presenter *presenter = nullptr;
     };
 }
 
@@ -74,7 +74,7 @@ namespace Xenoide {
 }
 
 namespace Xenoide {
-    FolderBrowserQt::FolderBrowserQt(QWidget *parent, FolderBrowserPresenter *presenter, DialogManagerQt *dialogManager) : QWidget(parent), FolderBrowser(presenter) {
+    FolderBrowserQt::FolderBrowserQt(QWidget *parent, FolderBrowser::Presenter *presenter, DialogManagerQt *dialogManager) : QWidget(parent), FolderBrowser(presenter) {
         mTreeView = new QTreeView(this);
 
         this->setLayout(new QVBoxLayout(this));

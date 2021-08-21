@@ -14,7 +14,7 @@ namespace Xenoide {
         Q_OBJECT
 
     public:
-        explicit FileSearchDialogQt(QWidget *parent, FileSearchDialogPresenter *presenter);
+        explicit FileSearchDialogQt(QWidget *parent, FileSearchDialog::Presenter *presenter);
 
         virtual ~FileSearchDialogQt();
 
