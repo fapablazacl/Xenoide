@@ -577,11 +577,10 @@ public:
         mWndScintilla.SendMessage(SCI_SETUSETABS, 0);
         mWndScintilla.SendMessage(SCI_SETTABWIDTH, 4);
         
+        mWndScintilla.SendMessage(SCI_SETMOUSEDWELLTIME, 2000);
+
         // configure for generic text
         SetStyleAttribs(STYLE_DEFAULT, {black, white, defaultFontSize, defaultFontName});
-
-        // configure keywords, colors and fonts for GLSL
-        // SetLanguage(lexerC, languageConfigGLSL);
 
         SetMsgHandled(true);
 
@@ -589,9 +588,39 @@ public:
     }
 
     LRESULT OnNotify(int idCtrl, LPNMHDR pnmh) {
+        if (pnmh->code == SCN_DWELLSTART) {
+            auto notification = reinterpret_cast<SCNotification*>(pnmh);
+
+            mWndScintilla.SendMessage(SCI_CALLTIPSHOW, notification->position, reinterpret_cast<LPARAM>("void glBegin(GLenum mode)"));
+        }
+
+        if (pnmh->code == SCN_CHARADDED) {
+            auto notification = reinterpret_cast<SCNotification*>(pnmh);
+
+            if (notification->ch == '(') {
+                const auto pos = mWndScintilla.SendMessage(SCI_GETCURRENTPOS);
+                mWndScintilla.SendMessage(SCI_CALLTIPSHOW, pos, reinterpret_cast<LPARAM>("The glBegin and glend functions delimit the vertices of a primitive or a group of like primitives.\nmode: The primitive or primitives that will be created from vertices presented between glBegin and the subsequent glEnd."));
+                mWndScintilla.SendMessage(SCI_CALLTIPSETHLT, 99, 103);
+                
+            } else if (notification->ch == ' ') {
+                identifier = "";
+            } else if (std::isalpha(notification->ch)) {
+                identifier += static_cast<char>(notification->ch);
+                
+                if (identifier.size() >= 3) {
+                    mWndScintilla.SendMessage(SCI_AUTOCSHOW, identifier.size(), reinterpret_cast<LPARAM>("void int float pointer test"));
+                    identifier = "";
+                }
+            } else {
+                identifier = "";
+            }
+        }
+
         SetMsgHandled(false);
+        
         return 0;
     }
+
 
     void OnDestroy() {
         mWndScintilla.DestroyWindow();
@@ -663,6 +692,7 @@ public:
     }
 
 private:
+    std::string identifier;
     mutable CWindow mWndScintilla;
 };
 
