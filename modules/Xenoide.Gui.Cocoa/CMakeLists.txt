@@ -6,6 +6,7 @@ set (target Xenoide.Gui.Cocoa)
 
 set (sources 
     AppDelegate.swift
+    Window.swift
 )
 
 set (xibs
