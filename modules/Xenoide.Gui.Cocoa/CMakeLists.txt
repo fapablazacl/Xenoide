@@ -5,16 +5,12 @@ set (PRINCIPAL_CLASS "NSApplication")
 set (target Xenoide.Gui.Cocoa)
 
 set (sources 
-    main.m
-    AppDelegate.h
-    AppDelegate.m
-    MainWindowController.h
-    MainWindowController.m
+    AppDelegate.swift
+    Window.swift
 )
 
 set (xibs
-    MainMenu
-    MainWindowController
+    "Base.lproj/MainMenu"
 )
 
 set (resources)
@@ -27,6 +23,13 @@ endforeach()
 # message("CMAKE_CURRENT_BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR}")
 
 add_executable(${target} MACOSX_BUNDLE ${sources} ${resources})
+
+target_sources(${target} PRIVATE Assets.xcassets)
+
+set_source_files_properties(Assets.xcassets PROPERTIES
+    MACOSX_PACKAGE_LOCATION Resources
+)
+
 set_target_properties(${target} PROPERTIES
     MACOSX_BUNDLE_INFO_PLIST                "${CMAKE_SOURCE_DIR}/modules/${target}/Info.plist.in"
     XCODE_ATTRIBUTE_INFOPLIST_PREPROCESS    YES

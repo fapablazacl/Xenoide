@@ -1,7 +1,7 @@
 
 cmake_minimum_required (VERSION 3.5)
 
-project (Xenoide)
+project (Xenoide LANGUAGES Swift C CXX)
 
 option (XENOIDE_GUI_COCOA "Builds the Cocoa based UI Frontend" OFF)
 option (XENOIDE_GUI_GTK3 "Builds the Gtk3 based UI Frontend" OFF)
@@ -31,9 +31,9 @@ endif ()
 # Specify the use of the C++17 standard
 set (CMAKE_CXX_STANDARD 17)
 
-if (UNIX)
-    add_definitions ("-fPIC")
-endif ()
+# if (UNIX)
+#     add_definitions ("-fPIC")
+# endif ()
 
 # IDE Core
 add_subdirectory ("modules/Xenoide.Core")
