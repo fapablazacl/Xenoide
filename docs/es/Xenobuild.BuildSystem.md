@@ -183,5 +183,5 @@ Regla de mapeo que indica cómo se transforman Files correspondiente a un cierto
 - Output: Determina el tipo de archivo de destino que se genera cuando el Pipe es ejecutado, junto con la cardinalidad.
 ### Pipeline
 Conjunto de Pipes que, en cooperación complementaria entre ellos, permiten construir conjuntos de componentes de software.
-Especificación de la Solución Técnica.
+# Especificación de la Solución Técnica.
 Si bien BORC está siendo pensado para casos de uso de aplicaciones C++ y pipelines de assets para videojuegos, para cumplir con el requisito de la “flexibilidad”, se requiere de un modelo de dominio genérico para sistemas de construcción, o, en otras palabras, se requiere modelar un “build engine”. El build engine proveerá el Core necesario para soportar las operaciones de construcción de una solución de software.
