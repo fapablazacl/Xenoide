@@ -2,7 +2,7 @@
 #include <Xenoide/Gui/Document.h>
 
 #include <Xenoide/Core/OS.h>
-#include <Xenoide/Core/FileServiceImpl.h>
+#include <Xenoide/Core/FileService.h>
 #include <Xenoide/Gui/DialogManager.h>
 
 #include <boost/filesystem/path.hpp>
@@ -129,7 +129,7 @@ namespace Xenoide {
         this->dialogView = dialogView;
 
         if (model->hasFilePath()) {
-            auto fileService = FileServiceImpl();
+            auto fileService = FileService();
             auto content = fileService.load(model->getFilePath());
 
             model->setContent(content);
@@ -169,7 +169,7 @@ namespace Xenoide {
             }
         }
 
-        auto fileService = FileServiceImpl();
+        auto fileService = FileService();
 
         model->setContent(view->getContent());
 

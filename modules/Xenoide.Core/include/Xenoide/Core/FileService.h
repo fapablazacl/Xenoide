@@ -11,11 +11,11 @@ namespace Xenoide {
     public:
         virtual ~FileService() {}
 
-        virtual std::string load(const boost::filesystem::path &filePath) = 0;
+        virtual std::string load(const boost::filesystem::path &filePath);
 
-        virtual void save(const boost::filesystem::path &filePath, const std::string &content) = 0;
+        virtual void save(const boost::filesystem::path &filePath, const std::string &content);
 
-        virtual void touch(const boost::filesystem::path &filePath) = 0;
+        virtual void touch(const boost::filesystem::path &filePath);
     };
 }
 

@@ -4,7 +4,7 @@
 #include <iostream>
 #include <cassert>
 #include <boost/filesystem.hpp>
-#include <Xenoide/Core/FolderServiceImpl.h>
+#include <Xenoide/Core/FolderService.h>
 #include <Xenoide/Gui/Menu.h>
 #include <Xenoide/Gui/MenuPanel.h>
 #include <Xenoide/Gui/FolderBrowser.h>
@@ -201,7 +201,7 @@ namespace Xenoide {
     class IDEFrameModelImpl : public IDEFrame::Model {
     public:
         IDEFrameModelImpl() {
-            this->folderService = std::make_unique<FolderServiceImpl>();
+            this->folderService = std::make_unique<FolderService>();
 
             this->documentManagerModel = DocumentManager::Model::create();
             this->folderBrowserModel = FolderBrowser::Model::create(this->folderService.get());

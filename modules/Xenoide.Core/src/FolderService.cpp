@@ -1,11 +1,11 @@
 
-#include <Xenoide/Core/FolderServiceImpl.h>
+#include <Xenoide/Core/FolderService.h>
 
 #include <boost/filesystem.hpp>
 
 
 namespace Xenoide {
-    std::vector<boost::filesystem::path> FolderServiceImpl::listChildFolders(const boost::filesystem::path &folderPath) const {
+    std::vector<boost::filesystem::path> FolderService::listChildFolders(const boost::filesystem::path &folderPath) const {
         auto childPathVector = std::vector<boost::filesystem::path>{};
 
         auto subPathIterator = boost::filesystem::directory_iterator{folderPath};

@@ -11,7 +11,7 @@ namespace Xenoide {
     public:
         virtual ~FolderService() {}
 
-        virtual std::vector<boost::filesystem::path> listChildFolders(const boost::filesystem::path &folderPath) const = 0;
+        virtual std::vector<boost::filesystem::path> listChildFolders(const boost::filesystem::path &folderPath) const;
     };
 }
 

@@ -1,11 +1,11 @@
 
-#include <Xenoide/Core/FileServiceImpl.h>
+#include <Xenoide/Core/FileService.h>
 
 #include <fstream>
 
 
 namespace Xenoide {
-    std::string FileServiceImpl::load(const boost::filesystem::path &filePath) {
+    std::string FileService::load(const boost::filesystem::path &filePath) {
         typedef std::istreambuf_iterator<char> fstream_iterator;
 
         std::fstream fs;
@@ -24,7 +24,7 @@ namespace Xenoide {
     }
 
 
-    void FileServiceImpl::save(const boost::filesystem::path &filePath, const std::string &content) {
+    void FileService::save(const boost::filesystem::path &filePath, const std::string &content) {
         std::fstream fs;
 
         fs.open(filePath.string().c_str(), std::ios_base::out);
@@ -40,7 +40,7 @@ namespace Xenoide {
     }
 
 
-    void FileServiceImpl::touch(const boost::filesystem::path &filePath) {
+    void FileService::touch(const boost::filesystem::path &filePath) {
         std::ofstream os;
         os.open(filePath.string().c_str(), std::ios_base::out);
         os.close();
