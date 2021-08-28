@@ -8,12 +8,13 @@ set (sources
     "include/Xenoide/Core/FileServiceImpl.h"
     "include/Xenoide/Core/FolderService.h"
     "include/Xenoide/Core/FolderServiceImpl.h"
+    "include/Xenoide/Core/WorkspaceService.h"
     "include/Xenoide/Core/OS.h"
 
     "src/OS.cpp"
     "src/Version.cpp"
     "src/FileServiceImpl.cpp"
-    "src/FolderServiceImpl.cpp"
+    "src/WorkspaceService.cpp"
 ) 
 
 if (XENOIDE_DYNAMIC_LINK)
