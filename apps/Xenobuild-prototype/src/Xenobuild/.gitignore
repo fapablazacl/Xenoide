@@ -1,4 +1,0 @@
-*.obj
-test
-.cmake/*
-.build/*
