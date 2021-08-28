@@ -1,10 +1,10 @@
 
-#include <Xenoide/Gui/DocumentManager.hpp>
+#include <Xenoide/Gui/DocumentManager.h>
 
 #include <list>
 #include <algorithm>
 #include <iostream>
-#include <Xenoide/Gui/DialogManager.hpp>
+#include <Xenoide/Gui/DialogManager.h>
 
 
 namespace Xenoide {

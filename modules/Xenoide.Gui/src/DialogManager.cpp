@@ -1,5 +1,5 @@
 
-#include <Xenoide/Gui/DialogManager.hpp>
+#include <Xenoide/Gui/DialogManager.h>
 
 namespace Xenoide {
     DialogManager::~DialogManager() {}

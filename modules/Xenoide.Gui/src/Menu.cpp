@@ -1,5 +1,5 @@
 
-#include <Xenoide/Gui/Menu.hpp>
+#include <Xenoide/Gui/Menu.h>
 
 namespace Xenoide {
     Menu Menu::menuBar(const std::vector<Menu> &childs) {

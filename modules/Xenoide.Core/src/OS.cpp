@@ -1,5 +1,5 @@
 
-#include <Xenoide/Core/OS.hpp>
+#include <Xenoide/Core/OS.h>
 
 namespace Xenoide {
     OS getCurrentOS() {

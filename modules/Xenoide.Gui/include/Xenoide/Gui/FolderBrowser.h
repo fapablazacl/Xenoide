@@ -3,14 +3,10 @@
 #define __XENOIDE_UI_FOLDEREXPLORERVIEW_HPP_
 
 #include <string>
-#include <Xenoide/Core/Predef.hpp>
-#include <Xenoide/Gui/Menu.hpp>
 #include <boost/optional/optional.hpp>
-#include <string>
-#include <Xenoide/Core/Predef.hpp>
 #include <boost/filesystem/path.hpp>
-#include <boost/optional/optional_fwd.hpp>
-
+#include <Xenoide/Core/Predef.h>
+#include <Xenoide/Gui/Menu.h>
 
 namespace Xenoide {
     class FolderBrowser;

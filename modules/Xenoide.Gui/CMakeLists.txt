@@ -2,17 +2,17 @@
 set (target Xenoide.Gui)
 
 set (sources
-    "include/Xenoide/Gui/WindowsUtils.hpp"
-    "include/Xenoide/Gui/FindReplaceDialog.hpp"
-    "include/Xenoide/Gui/Document.hpp"
-    "include/Xenoide/Gui/DocumentManager.hpp"
-    "include/Xenoide/Gui/FolderBrowser.hpp"
-    "include/Xenoide/Gui/IDEFrame.hpp"
-    "include/Xenoide/Gui/FileSearchDialog.hpp"
-    "include/Xenoide/Gui/DialogManager.hpp"
-    "include/Xenoide/Gui/Menu.hpp"
-    "include/Xenoide/Gui/MenuPanel.hpp"
-    "include/Xenoide/Gui/FileFilter.hpp"
+    "include/Xenoide/Gui/WindowsUtils.h"
+    "include/Xenoide/Gui/FindReplaceDialog.h"
+    "include/Xenoide/Gui/Document.h"
+    "include/Xenoide/Gui/DocumentManager.h"
+    "include/Xenoide/Gui/FolderBrowser.h"
+    "include/Xenoide/Gui/IDEFrame.h"
+    "include/Xenoide/Gui/FileSearchDialog.h"
+    "include/Xenoide/Gui/DialogManager.h"
+    "include/Xenoide/Gui/Menu.h"
+    "include/Xenoide/Gui/MenuPanel.h"
+    "include/Xenoide/Gui/FileFilter.h"
 
     "src/WindowsUtils.cpp"
     "src/FindReplaceDialog.cpp"

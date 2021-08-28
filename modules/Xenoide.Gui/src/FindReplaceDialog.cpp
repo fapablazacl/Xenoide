@@ -1,7 +1,7 @@
 
-#include <Xenoide/Gui/FindReplaceDialog.hpp>
-#include <Xenoide/Gui/WindowsUtils.hpp>
-#include <Xenoide/Gui/Document.hpp>
+#include <Xenoide/Gui/FindReplaceDialog.h>
+#include <Xenoide/Gui/WindowsUtils.h>
+#include <Xenoide/Gui/Document.h>
 
 #include <iostream>
 

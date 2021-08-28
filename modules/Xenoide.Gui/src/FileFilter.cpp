@@ -1,5 +1,5 @@
 
-#include <Xenoide/Gui/FileFilter.hpp>
+#include <Xenoide/Gui/FileFilter.h>
 
 namespace Xenoide {
     FileFilter::~FileFilter() {}

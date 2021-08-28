@@ -1,16 +1,15 @@
 
-#include <Xenoide/Gui/Document.hpp>
+#include <Xenoide/Gui/Document.h>
 
-#include <Xenoide/Core/OS.hpp>
-#include <Xenoide/Core/FileService.hpp>
-#include <Xenoide/Gui/DialogManager.hpp>
+#include <Xenoide/Core/OS.h>
+#include <Xenoide/Core/FileServiceImpl.h>
+#include <Xenoide/Gui/DialogManager.h>
 
 #include <boost/filesystem/path.hpp>
 
 
 namespace Xenoide {
     DocumentConfig DocumentConfig::Default() {
-        // TODO: Parametrize this parameters into an external file
         switch (getCurrentOS()) {
             case OS::Linux: return {"Monospace", 10, 4, true, true};
             case OS::Windows: return {"Consolas", 10, 4, true, true};
@@ -130,8 +129,8 @@ namespace Xenoide {
         this->dialogView = dialogView;
 
         if (model->hasFilePath()) {
-            auto fileService = FileService::create();
-            auto content = fileService->load(model->getFilePath());
+            auto fileService = FileServiceImpl();
+            auto content = fileService.load(model->getFilePath());
 
             model->setContent(content);
         }
@@ -170,14 +169,14 @@ namespace Xenoide {
             }
         }
 
-        auto fileService = FileService::create();
+        auto fileService = FileServiceImpl();
 
         model->setContent(view->getContent());
 
         const std::string fileName = model->getFilePath();
         const std::string content = model->getContent();
         
-        fileService->save(fileName, content);
+        fileService.save(fileName, content);
 
         model->setFilePath(fileName);
         model->setModifiedFlag(false);

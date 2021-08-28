@@ -1,15 +1,15 @@
 
-#include <Xenoide/Gui/FolderBrowser.hpp>
+#include <Xenoide/Gui/FolderBrowser.h>
 
 
 #include <iostream>
 #include <fstream>
 #include <boost/filesystem.hpp>
 
-#include <Xenoide/Core/FolderService.hpp>
-#include <Xenoide/Gui/DialogManager.hpp>
-#include <Xenoide/Gui/Menu.hpp>
-#include <Xenoide/Gui/IDEFrame.hpp>
+#include <Xenoide/Core/FolderService.h>
+#include <Xenoide/Gui/DialogManager.h>
+#include <Xenoide/Gui/Menu.h>
+#include <Xenoide/Gui/IDEFrame.h>
 
 
 namespace Xenoide {

@@ -9,12 +9,9 @@
 namespace Xenoide {
     class FolderService {
     public:
-        virtual ~FolderService();
+        virtual ~FolderService() {}
 
         virtual std::vector<boost::filesystem::path> listChildFolders(const boost::filesystem::path &folderPath) const = 0;
-
-    public:
-        static std::unique_ptr<FolderService> create();
     };
 }
 

@@ -1,5 +1,5 @@
 
-#include <Xenoide/Gui/MenuPanel.hpp>
+#include <Xenoide/Gui/MenuPanel.h>
 
 namespace Xenoide {
     MenuPanel::~MenuPanel() {}

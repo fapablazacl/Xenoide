@@ -7,7 +7,7 @@
 #include <map>
 #include <tuple>
 #include <list>
-#include <Xenoide/Gui/Document.hpp>
+#include <Xenoide/Gui/Document.h>
 
 namespace Xenoide {
     class DocumentManager {

@@ -2,12 +2,12 @@
 #ifndef __XENOIDE_UI_MAINWINDOWVIEW_HPP__
 #define __XENOIDE_UI_MAINWINDOWVIEW_HPP__
 
-#include <Xenoide/Core/Predef.hpp>
-#include <Xenoide/Gui/FileFilter.hpp>
-#include <Xenoide/Gui/DialogManager.hpp>
-#include <Xenoide/Gui/Document.hpp>
-#include <Xenoide/Gui/DocumentManager.hpp>
-#include <Xenoide/Gui/FolderBrowser.hpp>
+#include <Xenoide/Core/Predef.h>
+#include <Xenoide/Gui/FileFilter.h>
+#include <Xenoide/Gui/DialogManager.h>
+#include <Xenoide/Gui/Document.h>
+#include <Xenoide/Gui/DocumentManager.h>
+#include <Xenoide/Gui/FolderBrowser.h>
 #include <boost/optional/optional.hpp>
 #include <boost/filesystem/path.hpp>
 

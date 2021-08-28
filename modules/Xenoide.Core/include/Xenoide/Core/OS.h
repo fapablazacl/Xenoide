@@ -2,7 +2,7 @@
 #ifndef __XENOIDE_UTIL_OS_HPP__
 #define __XENOIDE_UTIL_OS_HPP__
 
-#include <Xenoide/Core/Predef.hpp>
+#include <Xenoide/Core/Predef.h>
 
 namespace Xenoide {
     enum OS {

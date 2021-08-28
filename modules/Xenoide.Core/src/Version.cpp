@@ -1,5 +1,5 @@
 
-#include <Xenoide/Core/Version.hpp>
+#include <Xenoide/Core/Version.h>
 
 #include <cassert>
 #include <stdexcept>

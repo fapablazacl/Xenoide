@@ -1,5 +1,5 @@
 
-#include <Xenoide/Gui/WindowsUtils.hpp>
+#include <Xenoide/Gui/WindowsUtils.h>
 
 #include <locale>
 #include <codecvt>

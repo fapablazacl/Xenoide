@@ -1,5 +1,5 @@
 
-#include <Xenoide/Gui/FileSearchDialog.hpp>
+#include <Xenoide/Gui/FileSearchDialog.h>
 
 #include <iostream>
 #include <cassert>

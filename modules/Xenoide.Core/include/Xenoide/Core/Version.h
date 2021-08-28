@@ -3,7 +3,7 @@
 #define __XENOIDE_VERSION_HPP__
 
 #include <string>
-#include <Xenoide/Core/Predef.hpp>
+#include <Xenoide/Core/Predef.h>
 
 namespace Xenoide {
     enum class VersionComparisonResult {
