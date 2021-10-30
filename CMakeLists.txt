@@ -1,5 +1,5 @@
 
-cmake_minimum_required (VERSION 3.5)
+cmake_minimum_required (VERSION 3.10)
 
 project (Xenoide LANGUAGES C CXX)
 
@@ -31,10 +31,10 @@ set (CMAKE_CXX_STANDARD 17)
 #     add_definitions ("-fPIC")
 # endif ()
 
-# IDE Core
-add_subdirectory ("modules/Xenoide.Core")
-add_subdirectory ("modules/Xenoide.Gui")
+add_subdirectory("dep")
+add_subdirectory("src")
 
+# IDE Core
 if (XENOIDE_TESTS)
     add_subdirectory ("tests/gui-mvp")
     add_subdirectory ("tests/qt5-scintilla-poc")

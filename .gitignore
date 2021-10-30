@@ -11,3 +11,4 @@ build-clang/*
 .cmake*
 .idea/*
 cmake-*
+project/*
