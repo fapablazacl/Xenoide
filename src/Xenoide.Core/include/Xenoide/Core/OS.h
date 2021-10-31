@@ -5,7 +5,7 @@
 #include <Xenoide/Core/Predef.h>
 
 namespace Xenoide {
-    enum OS {
+    enum class OS {
         Unknown,
         Windows,
         Mac,
