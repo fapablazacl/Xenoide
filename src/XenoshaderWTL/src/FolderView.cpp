@@ -58,10 +58,10 @@ void FolderView::sort(const int itemId, std::function<int (int, int)> cmp) {
 LRESULT FolderView::OnCreate(LPCREATESTRUCT cs) {
     SetMsgHandled(true);
 
-    const DWORD dwStyle = TVS_HASLINES | TVS_HASBUTTONS | TVS_LINESATROOT | WS_VISIBLE | WS_CHILD;
-    const DWORD dwExStyle = TVS_EX_DOUBLEBUFFER;
-
-    mTreeView.Create(m_hWnd, rcDefault, "", dwStyle, dwExStyle, ID_FOLDERVIEW_TREEVIEW);
+    const DWORD dwStyle = TVS_FULLROWSELECT | TVS_SHOWSELALWAYS | TVS_HASBUTTONS | TVS_LINESATROOT | WS_VISIBLE | WS_CHILD;
+    
+    mTreeView.Create(m_hWnd, rcDefault, "", dwStyle, 0L, ID_FOLDERVIEW_TREEVIEW);
+    mTreeView.SetExtendedStyle(TVS_EX_DOUBLEBUFFER, TVS_EX_DOUBLEBUFFER);
 
     mPresenter.attachView(this);
 
