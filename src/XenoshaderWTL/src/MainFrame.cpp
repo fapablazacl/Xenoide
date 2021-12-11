@@ -4,7 +4,8 @@
 
 #include <Xenoide/Core/FileService.h>
 
-MainFrame::MainFrame() : mFolderView(this) {}
+
+MainFrame::MainFrame() {}
 
 
 void MainFrame::openFile(const boost::filesystem::path &filePath) {

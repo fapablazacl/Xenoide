@@ -70,7 +70,7 @@ private:
 
 private:
     CodeView mCodeView;
-    FolderView mFolderView;
+    CXenoFolderView mFolderView;
     DocumentManager mDocumentManager;
 
     CString mFolderPath;

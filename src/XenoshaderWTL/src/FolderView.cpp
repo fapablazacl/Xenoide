@@ -9,53 +9,57 @@ int CALLBACK FolderView_CompareFunc(LPARAM lParam1, LPARAM lParam2, LPARAM lPara
 }
 
 
-FolderView::FolderView (AppController *controller) : mPresenter(controller) {
-    m_bMsgHandled = false;
+FolderExplorerWTL::FolderExplorerWTL(CXenoFolderView& folderView): folderView(folderView) {}
+
+
+void FolderExplorerWTL::clear() {
+    folderView.mTreeView.DeleteAllItems();
 }
 
 
-void FolderView::clear() {
-    mTreeView.DeleteAllItems();
-}
-
-
-int FolderView::insert(const std::string &title, const std::optional<int> parentItemId, const bool hasChildren) {
-    const int itemId = ++mItemCount;
+int FolderExplorerWTL::insert(const std::string &title, const std::optional<int> parentItemId, const bool hasChildren) {
+    const int itemId = ++folderView.mItemCount;
 
     HTREEITEM hItem = NULL;
 
     if (! parentItemId) {
-        hItem = InsertTreeItem(mTreeView, title.c_str(), itemId);
+        hItem = folderView.InsertTreeItem(folderView.mTreeView, title.c_str(), itemId);
     } else {
-        const HTREEITEM hParentItem = mTreeItemBimap.right.find(*parentItemId)->second;
+        const HTREEITEM hParentItem = folderView.mTreeItemBimap.right.find(*parentItemId)->second;
 
-        hItem = InsertTreeItem(mTreeView, title.c_str(), itemId, hParentItem, hasChildren);
+        hItem = folderView.InsertTreeItem(folderView.mTreeView, title.c_str(), itemId, hParentItem, hasChildren);
     }
 
-    mTreeItemBimap.insert({hItem, itemId});
+    folderView.mTreeItemBimap.insert({hItem, itemId});
 
     return itemId;
 }
 
 
-void FolderView::sort(const int itemId) {
-    const HTREEITEM hItem = mTreeItemBimap.right.find(itemId)->second;
-    mTreeView.SortChildren(hItem);
+void FolderExplorerWTL::sort(const int itemId) {
+    const HTREEITEM hItem = folderView.mTreeItemBimap.right.find(itemId)->second;
+    folderView.mTreeView.SortChildren(hItem);
 }
 
 
-void FolderView::sort(const int itemId, std::function<int (int, int)> cmp) {
+void FolderExplorerWTL::sort(const int itemId, std::function<int (int, int)> cmp) {
     TVSORTCB sort = {};
 
-    sort.hParent = mTreeItemBimap.right.find(itemId)->second;
+    sort.hParent = folderView.mTreeItemBimap.right.find(itemId)->second;
     sort.lpfnCompare = FolderView_CompareFunc;
     sort.lParam = reinterpret_cast<LPARAM>(&cmp);
 
-    mTreeView.SortChildrenCB(&sort, FALSE);
+    folderView.mTreeView.SortChildrenCB(&sort, FALSE);
 }
 
 
-LRESULT FolderView::OnCreate(LPCREATESTRUCT cs) {
+CXenoFolderView::CXenoFolderView(): mPresenter(nullptr) {
+    mView = std::make_unique<FolderExplorerWTL>(*this);
+    m_bMsgHandled = false;
+}
+
+
+LRESULT CXenoFolderView::OnCreate(LPCREATESTRUCT cs) {
     SetMsgHandled(true);
 
     const DWORD dwStyle = TVS_FULLROWSELECT | TVS_SHOWSELALWAYS | TVS_HASBUTTONS | TVS_LINESATROOT | WS_VISIBLE | WS_CHILD;
@@ -63,25 +67,25 @@ LRESULT FolderView::OnCreate(LPCREATESTRUCT cs) {
     mTreeView.Create(m_hWnd, rcDefault, "", dwStyle, 0L, ID_FOLDERVIEW_TREEVIEW);
     mTreeView.SetExtendedStyle(TVS_EX_DOUBLEBUFFER, TVS_EX_DOUBLEBUFFER);
 
-    mPresenter.attachView(this);
+    mPresenter.attachView(mView.get());
 
     return 0;
 }
 
 
-void FolderView::OnDestroy() {
+void CXenoFolderView::OnDestroy() {
     SetMsgHandled(false);
 }
 
 
-void FolderView::OnSize(UINT nType, CSize size) {
+void CXenoFolderView::OnSize(UINT nType, CSize size) {
     const CRect rect = { 0, 0, size.cx, size.cy };
 
     mTreeView.SetWindowPos(NULL, rect, 0);
 }
 
 
-LRESULT FolderView::OnNotify(int idCtrl, LPNMHDR pnmh) {
+LRESULT CXenoFolderView::OnNotify(int idCtrl, LPNMHDR pnmh) {
     SetMsgHandled(true);
 
     switch (pnmh->code) {
@@ -114,17 +118,17 @@ LRESULT FolderView::OnNotify(int idCtrl, LPNMHDR pnmh) {
 }
 
 
-LRESULT FolderView::OnEraseBkgnd(HDC hDC) {
+LRESULT CXenoFolderView::OnEraseBkgnd(HDC hDC) {
     return TRUE;
 }
 
 
-void FolderView::DisplayFolder(const boost::filesystem::path &folderPath) {
+void CXenoFolderView::DisplayFolder(const boost::filesystem::path &folderPath) {
     mPresenter.displayFolder(folderPath);
 }
 
 
-HTREEITEM FolderView::InsertTreeItem(CTreeViewCtrl &treeView, const char *text, const int itemId) {
+HTREEITEM CXenoFolderView::InsertTreeItem(CTreeViewCtrl &treeView, const char *text, const int itemId) {
     const DWORD style = TVIF_PARAM | TVIF_TEXT | TVIF_CHILDREN /*| TVIF_IMAGE | TVIF_SELECTEDIMAGE*/;
 
     TVINSERTSTRUCT insertStruct = {};
@@ -139,7 +143,7 @@ HTREEITEM FolderView::InsertTreeItem(CTreeViewCtrl &treeView, const char *text, 
 }
 
 
-HTREEITEM FolderView::InsertTreeItem(CTreeViewCtrl &treeView, const char *text, const int itemId, const HTREEITEM parentItem, const bool hasChildren) {
+HTREEITEM CXenoFolderView::InsertTreeItem(CTreeViewCtrl &treeView, const char *text, const int itemId, const HTREEITEM parentItem, const bool hasChildren) {
     const DWORD style = TVIF_PARAM | TVIF_TEXT | (hasChildren ? TVIF_CHILDREN : 0) /*| TVIF_IMAGE | TVIF_SELECTEDIMAGE*/;
 
     TVINSERTSTRUCT insertStruct = {};

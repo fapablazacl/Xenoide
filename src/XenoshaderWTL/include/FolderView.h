@@ -1,6 +1,7 @@
 
 #pragma once 
 
+#include <memory>
 #include <string>
 #include <optional>
 #include <functional>
@@ -103,11 +104,13 @@ public:
         });
     }
 
+
     bool itemIsPopulated(const int itemId) const {
         const auto it = mPopulatedItems.find(itemId); 
 
         return it != mPopulatedItems.end();
     }
+
 
     int compare(const int itemId1, const int itemId2) const {
         const auto path1 = mPathItemsCache.left.find(itemId1)->second;
@@ -132,23 +135,10 @@ private:
 };
 
 
-class FolderView : public CWindowImpl<FolderView>, public FolderExplorerView {
+class CXenoFolderView;
+class FolderExplorerWTL : public FolderExplorerView {
 public:
-    enum { ID_FOLDERVIEW_TREEVIEW = 10000 };
-
-public:
-    DECLARE_WND_CLASS(NULL)
-
-    BEGIN_MSG_MAP_EX(FolderView)
-        MSG_WM_CREATE(OnCreate)
-        MSG_WM_DESTROY(OnDestroy)
-        MSG_WM_SIZE(OnSize)
-        MSG_WM_NOTIFY(OnNotify)
-        MSG_WM_ERASEBKGND(OnEraseBkgnd)
-    END_MSG_MAP()
-
-public:
-    FolderView(AppController* controller);
+    FolderExplorerWTL(CXenoFolderView& folderView);
 
     void clear() override;
 
@@ -158,7 +148,32 @@ public:
 
     void sort(const int itemId, std::function<int(int, int)> cmp) override;
 
+private:
+    CXenoFolderView& folderView;
+};
+
+
+class FolderExplorerWTL;
+class CXenoFolderView : public CWindowImpl<CXenoFolderView> {
+    friend class FolderExplorerWTL;
+
 public:
+    enum { ID_FOLDERVIEW_TREEVIEW = 10000 };
+
+public:
+    DECLARE_WND_CLASS(NULL)
+
+    BEGIN_MSG_MAP_EX(CXenoFolderView)
+        MSG_WM_CREATE(OnCreate)
+        MSG_WM_DESTROY(OnDestroy)
+        MSG_WM_SIZE(OnSize)
+        MSG_WM_NOTIFY(OnNotify)
+        MSG_WM_ERASEBKGND(OnEraseBkgnd)
+    END_MSG_MAP()
+
+public:
+    CXenoFolderView();
+
     LRESULT OnCreate(LPCREATESTRUCT cs);
 
     void OnDestroy();
@@ -177,9 +192,11 @@ private:
     HTREEITEM InsertTreeItem(CTreeViewCtrl& treeView, const char* text, const int itemId, const HTREEITEM parentItem, const bool hasChildren);
 
 private:
+    std::unique_ptr<FolderExplorerWTL> mView;
+    FolderExplorerPresenter mPresenter;
+
     int mItemCount = 0;
 
     CTreeViewCtrl mTreeView;
     boost::bimap<HTREEITEM, int> mTreeItemBimap;
-    FolderExplorerPresenter mPresenter;
 };
