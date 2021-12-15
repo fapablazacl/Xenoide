@@ -37,4 +37,34 @@ namespace Xenoide {
 			++current;
 		}
 	}
+
+
+	std::vector<Path> FileSystemServiceBoost::enumerate(const Folder& folder) {
+		std::vector<Path> children;
+
+	// using boost::filesystem::recursive_directory_iterator;
+		using boost::filesystem::directory_iterator;
+		using boost::filesystem::is_directory;
+		using boost::filesystem::path;
+
+		directory_iterator current{folder.path}, end;
+
+		while (current != end) {
+			const path currentPath = current->path();
+
+			children.push_back({
+				is_directory(currentPath) ? PathType::Folder : PathType::File,
+				currentPath.string()
+			});
+
+			++current;
+		}
+
+		return children;
+	}
+
+
+	std::string FileSystemServiceBoost::extractName(const Path& path) const {
+		return boost::filesystem::path(path.value).filename().string();
+	}
 }

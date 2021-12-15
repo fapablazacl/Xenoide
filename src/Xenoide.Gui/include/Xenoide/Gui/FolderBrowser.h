@@ -78,7 +78,7 @@ namespace Xenoide {
         virtual void displayContextualMenu(const Point &point, const Menu &menu) = 0;
 
     protected:
-        FolderBrowser::Presenter *mPresenter;
+        FolderBrowser::Presenter *presenter;
     };
 } 
 

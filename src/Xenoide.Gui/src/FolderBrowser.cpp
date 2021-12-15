@@ -14,7 +14,7 @@
 
 namespace Xenoide {
     FolderBrowser::FolderBrowser(FolderBrowser::Presenter *presenter) {
-        mPresenter = presenter;
+        presenter = presenter;
     }
 
     FolderBrowser::~FolderBrowser() {}

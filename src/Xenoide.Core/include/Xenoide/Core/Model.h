@@ -32,6 +32,30 @@ namespace Xenoide {
 
 	struct PathCompareResult {
 		int value = 0;
+
+		bool operator== (const PathCompareResult& rhs) const {
+			return value == rhs.value;
+		}
+
+		bool operator!= (const PathCompareResult& rhs) const {
+			return value != rhs.value;
+		}
+
+		bool operator< (const PathCompareResult& rhs) const {
+			return value < rhs.value;
+		}
+
+		bool operator> (const PathCompareResult& rhs) const {
+			return value > rhs.value;
+		}
+
+		bool operator<= (const PathCompareResult& rhs) const {
+			return value <= rhs.value;
+		}
+
+		bool operator>= (const PathCompareResult& rhs) const {
+			return value >= rhs.value;
+		}
 	};
 
 
@@ -39,6 +63,37 @@ namespace Xenoide {
 		PathType type;
 		std::string value;
 
+		bool isFolder() const {
+			return type == PathType::Folder;
+		}
+
+		bool isFile() const {
+			return type == PathType::File;
+		}
+
+		bool operator!= (const Path& other) const {
+			return compare(other) != PathCompareResult{ 0 };
+		}
+
+		bool operator== (const Path& other) const {
+			return compare(other) == PathCompareResult{ 0 };
+		}
+
+		bool operator< (const Path& other) const {
+			return compare(other) < PathCompareResult{ 0 };
+		}
+
+		bool operator<= (const Path& other) const {
+			return compare(other) <= PathCompareResult{ 0 };
+		}
+
+		bool operator> (const Path& other) const {
+			return compare(other) > PathCompareResult{ 0 };
+		}
+
+		bool operator>= (const Path& other) const {
+			return compare(other) >= PathCompareResult{ 0 };
+		}
 
 		PathCompareResult compare(const Path& rhs) const {
 			if (type == PathType::Folder && rhs.type != PathType::Folder) {

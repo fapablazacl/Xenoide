@@ -12,9 +12,18 @@
 #include "framework.h"
 
 #include "AppController.h"
+#include <Xenoide/Core/FolderExplorer.h>
+#include <Xenoide/Core/FileSystemServiceBoost.h>
 
 
 class FolderExplorerView {
+public:
+    struct TreeItem {
+        int value = 0;
+
+
+    };
+
 public:
     virtual ~FolderExplorerView() {}
 
@@ -30,108 +39,69 @@ public:
 
 class FolderExplorerPresenter {
 public:
-    FolderExplorerPresenter(AppController *controller) : mController(controller) {}
+    FolderExplorerPresenter(AppController *controller, Xenoide::FolderExplorer *folderExplorer) 
+        : mController(controller), folderExplorer(folderExplorer) {}
+
 
     void attachView(FolderExplorerView *view) {
-        mView = view;
+        this->view = view;
     }
 
-    void displayFolder(const boost::filesystem::path &folderPath) {
-        mView->clear();
+    void displayFolder(const Xenoide::Folder &folder) {
+        Xenoide::FolderExplorer* model = this->folderExplorer;
+        FolderExplorerView* view = this->view;
+        
+        view->clear();
 
-        mPathItemsCache.clear();
-        mPopulatedItems.clear();
+        folderExplorer->setFolder(folder, [view, model](const Xenoide::Path path, const std::string &name) {
+            const int itemId = view->insert(name);
 
-        const std::string folderName = folderPath.filename().string();
-        const int itemId = mView->insert(folderName);
-
-        mPathItemsCache.insert({itemId, folderPath});
+            model->insertItem(itemId, path);
+        });
     }
+
 
     void onItemActivated(const int itemId) {
+        /*
         const auto pathIt = mPathItemsCache.left.find(itemId);
 
         if (pathIt == mPathItemsCache.left.end()) {
             return;
         }
 
-        if (boost::filesystem::is_regular_file(pathIt->second)) {
-            const auto filePath = pathIt->second;
+        if (pathIt->second.type == Xenoide::PathType::File) {
+            const std::string filePath = pathIt->second.value;
+
             mController->openFile(filePath);
         }
+        */
     }
+
 
     void onItemExpanded(const int itemId) {
-        if (! itemIsPopulated(itemId)) {
-            populateItem(itemId);
-        }
-    }
-
-public:
-    void populateItem(const int parentItemId) {
-        using boost::filesystem::recursive_directory_iterator;
-        using boost::filesystem::directory_iterator;
-
-        const auto folderPathIt = mPathItemsCache.left.find(parentItemId);
-
-        if (folderPathIt == mPathItemsCache.left.end()) {
+        if (this->folderExplorer->itemIsPopulated(itemId)) {
             return;
         }
 
-        directory_iterator current{folderPathIt->second}, end;
+        Xenoide::FolderExplorer* folderExplorer = this->folderExplorer;
+        
+        const std::vector<Xenoide::FolderExplorerItem> items = folderExplorer->populateItem(itemId);
 
-        while (current != end) {
-            const auto currentPath = current->path();
-
-            const auto parentCacheIt = mPathItemsCache.right.find(currentPath.parent_path());
-
-            if (parentCacheIt == mPathItemsCache.right.end()) {
-                continue;
-            }
-
-            const bool isDirectory = boost::filesystem::is_directory(currentPath);
-            const std::string name = currentPath.filename().string();
-            const int itemId = mView->insert(name, parentItemId, isDirectory);
-            mPathItemsCache.insert({itemId, currentPath});
-            
-            ++current;
+        for (const Xenoide::FolderExplorerItem& item : items) {
+            const int childId = view->insert(item.title, itemId, item.path.isFolder());
+            folderExplorer->insertItem(childId, item.path);
         }
 
-        mPopulatedItems.insert(parentItemId);
-
-        mView->sort(parentItemId, [this](const int i1, const int i2) {
-            return this->compare(i1, i2);
+        view->sort(itemId, [folderExplorer](const int i1, const int i2) {
+            return folderExplorer->compare(i1, i2);
         });
     }
 
 
-    bool itemIsPopulated(const int itemId) const {
-        const auto it = mPopulatedItems.find(itemId); 
-
-        return it != mPopulatedItems.end();
-    }
-
-
-    int compare(const int itemId1, const int itemId2) const {
-        const auto path1 = mPathItemsCache.left.find(itemId1)->second;
-        const auto path2 = mPathItemsCache.left.find(itemId2)->second;
-
-        if (boost::filesystem::is_directory(path1) && !boost::filesystem::is_directory(path2)) {
-            return -1;
-        }
-
-        if (!boost::filesystem::is_directory(path1) && boost::filesystem::is_directory(path2)) {
-            return 1;
-        }
-        
-        return path1.filename().string().compare(path2.filename().string());
-    }
-
 private:
-    FolderExplorerView *mView = nullptr;
+    FolderExplorerView *view = nullptr;
+    Xenoide::FolderExplorer* folderExplorer = nullptr;
     AppController *mController = nullptr;
-    boost::bimap<int, boost::filesystem::path> mPathItemsCache;
-    std::set<int> mPopulatedItems;
 };
 
 
@@ -192,8 +162,11 @@ private:
     HTREEITEM InsertTreeItem(CTreeViewCtrl& treeView, const char* text, const int itemId, const HTREEITEM parentItem, const bool hasChildren);
 
 private:
+    Xenoide::FileSystemServiceBoost fileSystemService;
+    Xenoide::FolderExplorer folderExplorer;
+    
     std::unique_ptr<FolderExplorerWTL> mView;
-    FolderExplorerPresenter mPresenter;
+    FolderExplorerPresenter presenter;
 
     int mItemCount = 0;
 

@@ -10,6 +10,10 @@ namespace Xenoide {
 
 		bool exists(const Path& path) const override;
 
-		void enumerate(const Folder& folder, FileSystemVisitor visitor);
+		void enumerate(const Folder& folder, FileSystemVisitor visitor) override;
+
+		std::vector<Path> enumerate(const Folder& folder) override;
+
+		std::string extractName(const Path& path) const override;
 	};
 }

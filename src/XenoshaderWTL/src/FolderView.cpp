@@ -53,7 +53,7 @@ void FolderExplorerWTL::sort(const int itemId, std::function<int (int, int)> cmp
 }
 
 
-CXenoFolderView::CXenoFolderView(): mPresenter(nullptr) {
+CXenoFolderView::CXenoFolderView(): folderExplorer(&fileSystemService), presenter(nullptr, &folderExplorer) {
     mView = std::make_unique<FolderExplorerWTL>(*this);
     m_bMsgHandled = false;
 }
@@ -67,7 +67,7 @@ LRESULT CXenoFolderView::OnCreate(LPCREATESTRUCT cs) {
     mTreeView.Create(m_hWnd, rcDefault, "", dwStyle, 0L, ID_FOLDERVIEW_TREEVIEW);
     mTreeView.SetExtendedStyle(TVS_EX_DOUBLEBUFFER, TVS_EX_DOUBLEBUFFER);
 
-    mPresenter.attachView(mView.get());
+    presenter.attachView(mView.get());
 
     return 0;
 }
@@ -94,7 +94,7 @@ LRESULT CXenoFolderView::OnNotify(int idCtrl, LPNMHDR pnmh) {
 
         if (selectedItem) {
             const int itemId = mTreeItemBimap.left.find(selectedItem)->second;
-            mPresenter.onItemActivated(itemId);
+            presenter.onItemActivated(itemId);
         }
 
         break;
@@ -104,7 +104,7 @@ LRESULT CXenoFolderView::OnNotify(int idCtrl, LPNMHDR pnmh) {
         const auto &pnmtv = *reinterpret_cast<LPNMTREEVIEW>(pnmh);
 
         if (pnmtv.action == TVE_EXPAND) {
-            mPresenter.onItemExpanded(static_cast<int>(pnmtv.itemNew.lParam));
+            presenter.onItemExpanded(static_cast<int>(pnmtv.itemNew.lParam));
         }
 
         break;
@@ -124,7 +124,7 @@ LRESULT CXenoFolderView::OnEraseBkgnd(HDC hDC) {
 
 
 void CXenoFolderView::DisplayFolder(const boost::filesystem::path &folderPath) {
-    mPresenter.displayFolder(folderPath);
+    presenter.displayFolder(Xenoide::Folder{ folderPath.string() });
 }
 
 
