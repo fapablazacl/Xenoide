@@ -16,24 +16,46 @@
 #include <Xenoide/Core/FileSystemServiceBoost.h>
 
 
+struct TreeItemHandle {
+    int value = 0;
+
+	bool operator== (const TreeItemHandle& rhs) const {
+		return value == rhs.value;
+	}
+
+	bool operator!= (const TreeItemHandle& rhs) const {
+		return value != rhs.value;
+	}
+
+	bool operator< (const TreeItemHandle& rhs) const {
+		return value < rhs.value;
+	}
+
+	bool operator> (const TreeItemHandle& rhs) const {
+		return value > rhs.value;
+	}
+
+	bool operator<= (const TreeItemHandle& rhs) const {
+		return value <= rhs.value;
+	}
+
+	bool operator>= (const TreeItemHandle& rhs) const {
+		return value >= rhs.value;
+	}
+};
+
+
 class FolderExplorerView {
-public:
-    struct TreeItem {
-        int value = 0;
-
-
-    };
-
 public:
     virtual ~FolderExplorerView() {}
 
     virtual void clear() = 0;
 
-    virtual int insert(const std::string &title, const std::optional<int> parentItemId = {}, const bool isDirectory = false) = 0;
+    virtual TreeItemHandle insert(const std::string &title, const std::optional<TreeItemHandle> parentItemId = {}, const bool hasChildren = false) = 0;
 
-    virtual void sort(const int itemId) = 0;
+    virtual void sort(const TreeItemHandle itemId) = 0;
 
-    virtual void sort(const int itemId, std::function<int (int, int)> cmp) = 0;
+    virtual void sort(const TreeItemHandle itemId, std::function<int (const TreeItemHandle, const TreeItemHandle)> cmp) = 0;
 };
 
 
@@ -54,14 +76,14 @@ public:
         view->clear();
 
         folderExplorer->setFolder(folder, [view, model](const Xenoide::Path path, const std::string &name) {
-            const int itemId = view->insert(name);
+            const TreeItemHandle itemId = view->insert(name);
 
-            model->insertItem(itemId, path);
+            model->insertItem(itemId.value, path);
         });
     }
 
 
-    void onItemActivated(const int itemId) {
+    void onItemActivated(const TreeItemHandle itemId) {
         /*
         const auto pathIt = mPathItemsCache.left.find(itemId);
 
@@ -78,22 +100,22 @@ public:
     }
 
 
-    void onItemExpanded(const int itemId) {
-        if (this->folderExplorer->itemIsPopulated(itemId)) {
+    void onItemExpanded(const TreeItemHandle itemId) {
+        if (this->folderExplorer->itemIsPopulated(itemId.value)) {
             return;
         }
 
         Xenoide::FolderExplorer* folderExplorer = this->folderExplorer;
         
-        const std::vector<Xenoide::FolderExplorerItem> items = folderExplorer->populateItem(itemId);
+        const std::vector<Xenoide::FolderExplorerItem> items = folderExplorer->populateItem(itemId.value);
 
         for (const Xenoide::FolderExplorerItem& item : items) {
-            const int childId = view->insert(item.title, itemId, item.path.isFolder());
-            folderExplorer->insertItem(childId, item.path);
+            const TreeItemHandle childId = view->insert(item.title, itemId, item.path.isFolder());
+            folderExplorer->insertItem(childId.value, item.path);
         }
 
-        view->sort(itemId, [folderExplorer](const int i1, const int i2) {
-            return folderExplorer->compare(i1, i2);
+        view->sort(itemId, [folderExplorer](const TreeItemHandle i1, const TreeItemHandle i2) {
+            return folderExplorer->compare(i1.value, i2.value);
         });
     }
 
@@ -112,11 +134,11 @@ public:
 
     void clear() override;
 
-    int insert(const std::string& title, const std::optional<int> parentItemId, const bool hasChildren) override;
+    TreeItemHandle insert(const std::string& title, const std::optional<TreeItemHandle> parentItemId, const bool hasChildren) override;
 
-    void sort(const int itemId) override;
+    void sort(const TreeItemHandle itemId) override;
 
-    void sort(const int itemId, std::function<int(int, int)> cmp) override;
+    void sort(const TreeItemHandle itemId, std::function<int(const TreeItemHandle, const TreeItemHandle)> cmp) override;
 
 private:
     CXenoFolderView& folderView;

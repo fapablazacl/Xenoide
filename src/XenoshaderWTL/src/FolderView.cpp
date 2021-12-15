@@ -17,35 +17,35 @@ void FolderExplorerWTL::clear() {
 }
 
 
-int FolderExplorerWTL::insert(const std::string &title, const std::optional<int> parentItemId, const bool hasChildren) {
-    const int itemId = ++folderView.mItemCount;
+TreeItemHandle FolderExplorerWTL::insert(const std::string &title, const std::optional<TreeItemHandle> parentItemId, const bool hasChildren) {
+    const auto itemId = TreeItemHandle{ ++folderView.mItemCount };
 
     HTREEITEM hItem = NULL;
 
     if (! parentItemId) {
-        hItem = folderView.InsertTreeItem(folderView.mTreeView, title.c_str(), itemId);
+        hItem = folderView.InsertTreeItem(folderView.mTreeView, title.c_str(), itemId.value);
     } else {
-        const HTREEITEM hParentItem = folderView.mTreeItemBimap.right.find(*parentItemId)->second;
+        const HTREEITEM hParentItem = folderView.mTreeItemBimap.right.find(parentItemId->value)->second;
 
-        hItem = folderView.InsertTreeItem(folderView.mTreeView, title.c_str(), itemId, hParentItem, hasChildren);
+        hItem = folderView.InsertTreeItem(folderView.mTreeView, title.c_str(), itemId.value, hParentItem, hasChildren);
     }
 
-    folderView.mTreeItemBimap.insert({hItem, itemId});
+    folderView.mTreeItemBimap.insert({hItem, itemId.value});
 
     return itemId;
 }
 
 
-void FolderExplorerWTL::sort(const int itemId) {
-    const HTREEITEM hItem = folderView.mTreeItemBimap.right.find(itemId)->second;
+void FolderExplorerWTL::sort(const TreeItemHandle itemId) {
+    const HTREEITEM hItem = folderView.mTreeItemBimap.right.find(itemId.value)->second;
     folderView.mTreeView.SortChildren(hItem);
 }
 
 
-void FolderExplorerWTL::sort(const int itemId, std::function<int (int, int)> cmp) {
+void FolderExplorerWTL::sort(const TreeItemHandle itemId, std::function<int (const TreeItemHandle, const TreeItemHandle)> cmp) {
     TVSORTCB sort = {};
 
-    sort.hParent = folderView.mTreeItemBimap.right.find(itemId)->second;
+    sort.hParent = folderView.mTreeItemBimap.right.find(itemId.value)->second;
     sort.lpfnCompare = FolderView_CompareFunc;
     sort.lParam = reinterpret_cast<LPARAM>(&cmp);
 
@@ -93,7 +93,7 @@ LRESULT CXenoFolderView::OnNotify(int idCtrl, LPNMHDR pnmh) {
         const HTREEITEM selectedItem = mTreeView.GetSelectedItem();
 
         if (selectedItem) {
-            const int itemId = mTreeItemBimap.left.find(selectedItem)->second;
+            const TreeItemHandle itemId{ mTreeItemBimap.left.find(selectedItem)->second };
             presenter.onItemActivated(itemId);
         }
 
@@ -104,7 +104,8 @@ LRESULT CXenoFolderView::OnNotify(int idCtrl, LPNMHDR pnmh) {
         const auto &pnmtv = *reinterpret_cast<LPNMTREEVIEW>(pnmh);
 
         if (pnmtv.action == TVE_EXPAND) {
-            presenter.onItemExpanded(static_cast<int>(pnmtv.itemNew.lParam));
+            const TreeItemHandle itemId{ static_cast<int>(pnmtv.itemNew.lParam) };
+            presenter.onItemExpanded(itemId);
         }
 
         break;
