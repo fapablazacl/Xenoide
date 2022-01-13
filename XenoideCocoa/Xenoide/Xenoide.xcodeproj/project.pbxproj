@@ -1,0 +1,598 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		F7E4B519278FB93B001D4511 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E4B518278FB93B001D4511 /* AppDelegate.swift */; };
+		F7E4B51B278FB93D001D4511 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F7E4B51A278FB93D001D4511 /* Assets.xcassets */; };
+		F7E4B51E278FB93D001D4511 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7E4B51C278FB93D001D4511 /* MainMenu.xib */; };
+		F7E4B529278FB93D001D4511 /* XenoideTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E4B528278FB93D001D4511 /* XenoideTests.swift */; };
+		F7E4B533278FB93E001D4511 /* XenoideUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E4B532278FB93E001D4511 /* XenoideUITests.swift */; };
+		F7E4B535278FB93E001D4511 /* XenoideUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E4B534278FB93E001D4511 /* XenoideUITestsLaunchTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		F7E4B525278FB93D001D4511 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F7E4B50D278FB93B001D4511 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F7E4B514278FB93B001D4511;
+			remoteInfo = Xenoide;
+		};
+		F7E4B52F278FB93E001D4511 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F7E4B50D278FB93B001D4511 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F7E4B514278FB93B001D4511;
+			remoteInfo = Xenoide;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		F7E4B515278FB93B001D4511 /* Xenoide.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Xenoide.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F7E4B518278FB93B001D4511 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		F7E4B51A278FB93D001D4511 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F7E4B51D278FB93D001D4511 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		F7E4B51F278FB93D001D4511 /* Xenoide.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Xenoide.entitlements; sourceTree = "<group>"; };
+		F7E4B524278FB93D001D4511 /* XenoideTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XenoideTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F7E4B528278FB93D001D4511 /* XenoideTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XenoideTests.swift; sourceTree = "<group>"; };
+		F7E4B52E278FB93E001D4511 /* XenoideUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XenoideUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F7E4B532278FB93E001D4511 /* XenoideUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XenoideUITests.swift; sourceTree = "<group>"; };
+		F7E4B534278FB93E001D4511 /* XenoideUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XenoideUITestsLaunchTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F7E4B512278FB93B001D4511 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F7E4B521278FB93D001D4511 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F7E4B52B278FB93E001D4511 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		F7E4B50C278FB93B001D4511 = {
+			isa = PBXGroup;
+			children = (
+				F7E4B517278FB93B001D4511 /* Xenoide */,
+				F7E4B527278FB93D001D4511 /* XenoideTests */,
+				F7E4B531278FB93E001D4511 /* XenoideUITests */,
+				F7E4B516278FB93B001D4511 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F7E4B516278FB93B001D4511 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F7E4B515278FB93B001D4511 /* Xenoide.app */,
+				F7E4B524278FB93D001D4511 /* XenoideTests.xctest */,
+				F7E4B52E278FB93E001D4511 /* XenoideUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F7E4B517278FB93B001D4511 /* Xenoide */ = {
+			isa = PBXGroup;
+			children = (
+				F7E4B518278FB93B001D4511 /* AppDelegate.swift */,
+				F7E4B51A278FB93D001D4511 /* Assets.xcassets */,
+				F7E4B51C278FB93D001D4511 /* MainMenu.xib */,
+				F7E4B51F278FB93D001D4511 /* Xenoide.entitlements */,
+			);
+			path = Xenoide;
+			sourceTree = "<group>";
+		};
+		F7E4B527278FB93D001D4511 /* XenoideTests */ = {
+			isa = PBXGroup;
+			children = (
+				F7E4B528278FB93D001D4511 /* XenoideTests.swift */,
+			);
+			path = XenoideTests;
+			sourceTree = "<group>";
+		};
+		F7E4B531278FB93E001D4511 /* XenoideUITests */ = {
+			isa = PBXGroup;
+			children = (
+				F7E4B532278FB93E001D4511 /* XenoideUITests.swift */,
+				F7E4B534278FB93E001D4511 /* XenoideUITestsLaunchTests.swift */,
+			);
+			path = XenoideUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F7E4B514278FB93B001D4511 /* Xenoide */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F7E4B538278FB93E001D4511 /* Build configuration list for PBXNativeTarget "Xenoide" */;
+			buildPhases = (
+				F7E4B511278FB93B001D4511 /* Sources */,
+				F7E4B512278FB93B001D4511 /* Frameworks */,
+				F7E4B513278FB93B001D4511 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Xenoide;
+			productName = Xenoide;
+			productReference = F7E4B515278FB93B001D4511 /* Xenoide.app */;
+			productType = "com.apple.product-type.application";
+		};
+		F7E4B523278FB93D001D4511 /* XenoideTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F7E4B53B278FB93E001D4511 /* Build configuration list for PBXNativeTarget "XenoideTests" */;
+			buildPhases = (
+				F7E4B520278FB93D001D4511 /* Sources */,
+				F7E4B521278FB93D001D4511 /* Frameworks */,
+				F7E4B522278FB93D001D4511 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F7E4B526278FB93D001D4511 /* PBXTargetDependency */,
+			);
+			name = XenoideTests;
+			productName = XenoideTests;
+			productReference = F7E4B524278FB93D001D4511 /* XenoideTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		F7E4B52D278FB93E001D4511 /* XenoideUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F7E4B53E278FB93E001D4511 /* Build configuration list for PBXNativeTarget "XenoideUITests" */;
+			buildPhases = (
+				F7E4B52A278FB93E001D4511 /* Sources */,
+				F7E4B52B278FB93E001D4511 /* Frameworks */,
+				F7E4B52C278FB93E001D4511 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F7E4B530278FB93E001D4511 /* PBXTargetDependency */,
+			);
+			name = XenoideUITests;
+			productName = XenoideUITests;
+			productReference = F7E4B52E278FB93E001D4511 /* XenoideUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F7E4B50D278FB93B001D4511 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1310;
+				LastUpgradeCheck = 1310;
+				TargetAttributes = {
+					F7E4B514278FB93B001D4511 = {
+						CreatedOnToolsVersion = 13.1;
+					};
+					F7E4B523278FB93D001D4511 = {
+						CreatedOnToolsVersion = 13.1;
+						TestTargetID = F7E4B514278FB93B001D4511;
+					};
+					F7E4B52D278FB93E001D4511 = {
+						CreatedOnToolsVersion = 13.1;
+						TestTargetID = F7E4B514278FB93B001D4511;
+					};
+				};
+			};
+			buildConfigurationList = F7E4B510278FB93B001D4511 /* Build configuration list for PBXProject "Xenoide" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = F7E4B50C278FB93B001D4511;
+			productRefGroup = F7E4B516278FB93B001D4511 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F7E4B514278FB93B001D4511 /* Xenoide */,
+				F7E4B523278FB93D001D4511 /* XenoideTests */,
+				F7E4B52D278FB93E001D4511 /* XenoideUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F7E4B513278FB93B001D4511 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F7E4B51B278FB93D001D4511 /* Assets.xcassets in Resources */,
+				F7E4B51E278FB93D001D4511 /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F7E4B522278FB93D001D4511 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F7E4B52C278FB93E001D4511 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F7E4B511278FB93B001D4511 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F7E4B519278FB93B001D4511 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F7E4B520278FB93D001D4511 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F7E4B529278FB93D001D4511 /* XenoideTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F7E4B52A278FB93E001D4511 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F7E4B533278FB93E001D4511 /* XenoideUITests.swift in Sources */,
+				F7E4B535278FB93E001D4511 /* XenoideUITestsLaunchTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		F7E4B526278FB93D001D4511 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F7E4B514278FB93B001D4511 /* Xenoide */;
+			targetProxy = F7E4B525278FB93D001D4511 /* PBXContainerItemProxy */;
+		};
+		F7E4B530278FB93E001D4511 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F7E4B514278FB93B001D4511 /* Xenoide */;
+			targetProxy = F7E4B52F278FB93E001D4511 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		F7E4B51C278FB93D001D4511 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F7E4B51D278FB93D001D4511 /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		F7E4B536278FB93E001D4511 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 11.6;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		F7E4B537278FB93E001D4511 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 11.6;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		F7E4B539278FB93E001D4511 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Xenoide/Xenoide.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSMainNibFile = MainMenu;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = fapablazacl.Xenoide;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		F7E4B53A278FB93E001D4511 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Xenoide/Xenoide.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSMainNibFile = MainMenu;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = fapablazacl.Xenoide;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		F7E4B53C278FB93E001D4511 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 11.6;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = fapablazacl.XenoideTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Xenoide.app/Contents/MacOS/Xenoide";
+			};
+			name = Debug;
+		};
+		F7E4B53D278FB93E001D4511 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 11.6;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = fapablazacl.XenoideTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Xenoide.app/Contents/MacOS/Xenoide";
+			};
+			name = Release;
+		};
+		F7E4B53F278FB93E001D4511 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = fapablazacl.XenoideUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = Xenoide;
+			};
+			name = Debug;
+		};
+		F7E4B540278FB93E001D4511 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = fapablazacl.XenoideUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = Xenoide;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F7E4B510278FB93B001D4511 /* Build configuration list for PBXProject "Xenoide" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F7E4B536278FB93E001D4511 /* Debug */,
+				F7E4B537278FB93E001D4511 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F7E4B538278FB93E001D4511 /* Build configuration list for PBXNativeTarget "Xenoide" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F7E4B539278FB93E001D4511 /* Debug */,
+				F7E4B53A278FB93E001D4511 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F7E4B53B278FB93E001D4511 /* Build configuration list for PBXNativeTarget "XenoideTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F7E4B53C278FB93E001D4511 /* Debug */,
+				F7E4B53D278FB93E001D4511 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F7E4B53E278FB93E001D4511 /* Build configuration list for PBXNativeTarget "XenoideUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F7E4B53F278FB93E001D4511 /* Debug */,
+				F7E4B540278FB93E001D4511 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F7E4B50D278FB93B001D4511 /* Project object */;
+}
