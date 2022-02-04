@@ -161,14 +161,7 @@ namespace Xenoide {
         LRESULT OnEraseBkgnd(HDC hDC);
 
     private:
-        HTREEITEM InsertTreeItem(
-            CTreeViewCtrl& treeView, 
-            const char* text, 
-            const LPARAM lParam, 
-            const HTREEITEM parentItem, 
-            const bool hasChildren);
-
-    private:
+        HIMAGELIST hImageList = NULL;
         std::set<CTreeItemId> populated;
         CTreeViewCtrl treeView;
         CTreeManagerController *controller = nullptr;

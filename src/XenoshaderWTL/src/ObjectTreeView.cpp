@@ -1,9 +1,44 @@
 
 #include "ObjectTreeView.h"
 
+#include <CommonControls.h>
 #include <iostream>
 #include <map>
 #include <boost/filesystem.hpp>
+
+
+int GetIconFromPath(const char *strPath) {
+    SHFILEINFO sfi;
+    memset(&sfi, 0, sizeof(sfi));
+
+    // SHGFI_SYSICONINDEX will return the icon's index within the shell image list
+    SHGetFileInfo(strPath, FILE_ATTRIBUTE_NORMAL, &sfi, sizeof(sfi), SHGFI_SYSICONINDEX | SHGFI_USEFILEATTRIBUTES);
+
+    return sfi.iIcon;
+}
+
+
+HTREEITEM InsertTreeItem(
+    CTreeViewCtrl &treeView, 
+    const char *text, 
+    const LPARAM lParam, 
+    const HTREEITEM parentItem, 
+    const bool hasChildren,
+    const int image) {
+
+    const DWORD style = TVIF_PARAM | TVIF_TEXT | (hasChildren ? TVIF_CHILDREN : 0) | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+
+    TVINSERTSTRUCT insertStruct = {};
+
+    insertStruct.hParent = parentItem;
+    insertStruct.item.lParam = lParam;
+    insertStruct.item.mask = style;
+    insertStruct.item.pszText = const_cast<char*>(text);
+    insertStruct.item.cChildren = hasChildren ? 1 : 0;
+    insertStruct.item.iImage = image;
+    insertStruct.item.iSelectedImage = image;
+    return treeView.InsertItem(&insertStruct);
+}
 
 
 namespace Xenoide {
@@ -102,7 +137,9 @@ namespace Xenoide {
             const auto it = itemPathMap.find(itemId);
             assert(it != itemPathMap.end());
 
-            return boost::filesystem::is_directory(it->second) ? 0 : 1;
+            return GetIconFromPath(it->second.string().c_str());
+
+            // return boost::filesystem::is_directory(it->second) ? 0 : 1;
         }
 
     private:
@@ -168,14 +205,19 @@ namespace Xenoide {
         treeView.Create(m_hWnd, rcDefault, "", dwStyle, 0L, ID_FOLDERVIEW_TREEVIEW);
         treeView.SetExtendedStyle(TVS_EX_DOUBLEBUFFER, TVS_EX_DOUBLEBUFFER);
 
+        // obtain 
+        SHGetImageList(SHIL_SMALL, IID_IImageList, reinterpret_cast<void**>(&hImageList));
+        treeView.SetImageList(hImageList);
+
         // start with the first level
         for (int i = 0; i < controller->getChildCount({}); i++) {
             const CTreeItemId id = controller->getChildId({}, i);
 
             const std::string name = controller->getItemCaption(id);
             const bool hasChildren = controller->getChildCount(id) > 0;
+            const int image = controller->getItemImage(id);
 
-            InsertTreeItem(treeView, name.c_str(), static_cast<LPARAM>(id.value), NULL, hasChildren);
+            InsertTreeItem(treeView, name.c_str(), static_cast<LPARAM>(id.value), NULL, hasChildren, image);
         }
 
         return 0;
@@ -218,8 +260,9 @@ namespace Xenoide {
 
                         const std::string name = controller->getItemCaption(childId);
                         const bool hasChildren = controller->getChildCount(childId) > 0;
+                        const int image = controller->getItemImage(childId);
 
-                        InsertTreeItem(treeView, name.c_str(), static_cast<LPARAM>(childId.value), pnmtv.itemNew.hItem, hasChildren);
+                        InsertTreeItem(treeView, name.c_str(), static_cast<LPARAM>(childId.value), pnmtv.itemNew.hItem, hasChildren, image);
                     }
 
                     populated.insert(itemId);
@@ -236,27 +279,5 @@ namespace Xenoide {
 
     LRESULT CTreeManager::OnEraseBkgnd(HDC hDC) {
         return TRUE;
-    }
-
-
-    HTREEITEM CTreeManager::InsertTreeItem(
-        CTreeViewCtrl &treeView, 
-        const char *text, 
-        const LPARAM lParam, 
-        const HTREEITEM parentItem, 
-        const bool hasChildren) {
-
-        const DWORD style = TVIF_PARAM | TVIF_TEXT | (hasChildren ? TVIF_CHILDREN : 0) /*| TVIF_IMAGE | TVIF_SELECTEDIMAGE*/;
-
-        TVINSERTSTRUCT insertStruct = {};
-
-        insertStruct.hParent = parentItem;
-        insertStruct.item.lParam = lParam;
-        insertStruct.item.mask = style;
-        insertStruct.item.pszText = const_cast<char*>(text);
-        insertStruct.item.cChildren = hasChildren ? 1 : 0;
-        // insertStruct.item.iImage = 1;
-        // insertStruct.item.iSelectedImage = 1;
-        return treeView.InsertItem(&insertStruct);
     }
 }
