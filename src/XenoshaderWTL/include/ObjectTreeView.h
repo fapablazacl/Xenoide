@@ -124,6 +124,9 @@ namespace Xenoide {
 
         //! get the caption text from a given item
         virtual std::string getItemCaption(const CTreeItemId itemId) const = 0;
+
+        //! get the image text from a given item
+        virtual int getItemImage(const CTreeItemId itemId) const = 0;
     };
 
 

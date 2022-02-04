@@ -30,6 +30,10 @@ namespace Xenoide {
         std::string getItemCaption(const CTreeItemId itemId) const override {
             return "ItemId: " + std::to_string(itemId.value);
         }
+
+        int getItemImage(const CTreeItemId itemId) const override {
+            return 0;
+        }
     };
 
 
@@ -40,6 +44,7 @@ namespace Xenoide {
         void clicked(const CTreeItemId itemId) override {}
 
         int getChildCount(const CTreeItemId itemId) const override {
+
             // determine current path
             const boost::filesystem::path path = (itemId == CTreeItemId{} ?  rootPath : itemPathMap[itemId]);
 
@@ -87,10 +92,17 @@ namespace Xenoide {
 
         std::string getItemCaption(const CTreeItemId itemId) const override {
             const auto it = itemPathMap.find(itemId);
-
             assert(it != itemPathMap.end());
 
             return "ItemId: " + std::to_string(itemId.value) + " " + it->second.filename().string();
+        }
+
+
+        int getItemImage(const CTreeItemId itemId) const override {
+            const auto it = itemPathMap.find(itemId);
+            assert(it != itemPathMap.end());
+
+            return boost::filesystem::is_directory(it->second) ? 0 : 1;
         }
 
     private:
