@@ -11,7 +11,8 @@ set (sources
 	"include/FolderView.h" 
 	"include/MainFrame.h" 
 	"include/AboutDlg.h" 
-	
+	"include/ObjectTreeView.h" 
+
 	"src/LexillaAccess.cxx"
 	"src/XenoShader.cpp"
 	"src/FolderExplorer.cpp"
@@ -20,6 +21,7 @@ set (sources
 	"src/FolderView.cpp" 
 	"src/MainFrame.cpp" 
 	"src/AboutDlg.cpp" 
+	"src/ObjectTreeView.cpp"
 	
 	"res/Resource.rc"
 	"res/resource.h"

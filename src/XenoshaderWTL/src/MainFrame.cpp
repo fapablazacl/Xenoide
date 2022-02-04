@@ -22,12 +22,14 @@ LRESULT MainFrame::OnCreate(LPCREATESTRUCT cs) {
 
     mSplitterWindow.Create(*this, rcDefault);
 
-    mFolderView.Create(mSplitterWindow, rcDefault, NULL);
+    // mFolderView.Create(mSplitterWindow, rcDefault, NULL);
+    mFolderManager.Create(mSplitterWindow, rcDefault, NULL);
     mCodeView.Create(mSplitterWindow, rcDefault, NULL, dwClientStyle, dwClientExStyle);
     mDocumentManager.Create(mSplitterWindow, rcDefault, NULL, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN, WS_EX_CLIENTEDGE);
 
-    mSplitterWindow.SetSplitterPanes(mFolderView, mDocumentManager);
-
+    // mSplitterWindow.SetSplitterPanes(mFolderView, mDocumentManager);
+    mSplitterWindow.SetSplitterPanes(mFolderManager, mDocumentManager);
+    
     m_hWndClient = mSplitterWindow;
     UpdateLayout();
     mSplitterWindow.SetSplitterPos(200);

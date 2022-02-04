@@ -9,6 +9,7 @@
 #include "CodeView.h"
 #include "DocumentManager.h"
 #include "FolderView.h"
+#include "ObjectTreeView.h"
 
 
 // Frame Windows are defined with CFrameWindowImpl
@@ -71,6 +72,9 @@ private:
 private:
     CodeView mCodeView;
     CXenoFolderView mFolderView;
+
+    Xenoide::CTreeManager mFolderManager;
+
     DocumentManager mDocumentManager;
 
     CString mFolderPath;
