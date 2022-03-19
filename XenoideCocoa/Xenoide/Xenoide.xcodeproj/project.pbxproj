@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F790BE0A27A9936700F0097E /* FolderExplorerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F790BE0927A9936700F0097E /* FolderExplorerController.swift */; };
+		F790BE0C27A9946300F0097E /* FolderExplorerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F790BE0B27A9946300F0097E /* FolderExplorerService.swift */; };
+		F7D4AC5F27B6E3E400A7D807 /* Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D4AC5E27B6E3E400A7D807 /* Feed.swift */; };
 		F7E4B519278FB93B001D4511 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E4B518278FB93B001D4511 /* AppDelegate.swift */; };
 		F7E4B51B278FB93D001D4511 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F7E4B51A278FB93D001D4511 /* Assets.xcassets */; };
 		F7E4B51E278FB93D001D4511 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7E4B51C278FB93D001D4511 /* MainMenu.xib */; };
@@ -33,6 +36,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F790BE0927A9936700F0097E /* FolderExplorerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderExplorerController.swift; sourceTree = "<group>"; };
+		F790BE0B27A9946300F0097E /* FolderExplorerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderExplorerService.swift; sourceTree = "<group>"; };
+		F7D4AC5E27B6E3E400A7D807 /* Feed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feed.swift; sourceTree = "<group>"; };
 		F7E4B515278FB93B001D4511 /* Xenoide.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Xenoide.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F7E4B518278FB93B001D4511 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F7E4B51A278FB93D001D4511 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -97,6 +103,9 @@
 				F7E4B51A278FB93D001D4511 /* Assets.xcassets */,
 				F7E4B51C278FB93D001D4511 /* MainMenu.xib */,
 				F7E4B51F278FB93D001D4511 /* Xenoide.entitlements */,
+				F790BE0927A9936700F0097E /* FolderExplorerController.swift */,
+				F790BE0B27A9946300F0097E /* FolderExplorerService.swift */,
+				F7D4AC5E27B6E3E400A7D807 /* Feed.swift */,
 			);
 			path = Xenoide;
 			sourceTree = "<group>";
@@ -248,7 +257,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F790BE0A27A9936700F0097E /* FolderExplorerController.swift in Sources */,
+				F7D4AC5F27B6E3E400A7D807 /* Feed.swift in Sources */,
 				F7E4B519278FB93B001D4511 /* AppDelegate.swift in Sources */,
+				F790BE0C27A9946300F0097E /* FolderExplorerService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
