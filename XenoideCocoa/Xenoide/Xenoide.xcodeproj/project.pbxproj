@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		F790BE0A27A9936700F0097E /* FolderExplorerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F790BE0927A9936700F0097E /* FolderExplorerController.swift */; };
-		F790BE0C27A9946300F0097E /* FolderExplorerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F790BE0B27A9946300F0097E /* FolderExplorerService.swift */; };
 		F7D4AC5F27B6E3E400A7D807 /* Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D4AC5E27B6E3E400A7D807 /* Feed.swift */; };
 		F7E4B519278FB93B001D4511 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E4B518278FB93B001D4511 /* AppDelegate.swift */; };
 		F7E4B51B278FB93D001D4511 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F7E4B51A278FB93D001D4511 /* Assets.xcassets */; };
@@ -36,8 +34,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		F790BE0927A9936700F0097E /* FolderExplorerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderExplorerController.swift; sourceTree = "<group>"; };
-		F790BE0B27A9946300F0097E /* FolderExplorerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderExplorerService.swift; sourceTree = "<group>"; };
 		F7D4AC5E27B6E3E400A7D807 /* Feed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feed.swift; sourceTree = "<group>"; };
 		F7E4B515278FB93B001D4511 /* Xenoide.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Xenoide.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F7E4B518278FB93B001D4511 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -103,8 +99,6 @@
 				F7E4B51A278FB93D001D4511 /* Assets.xcassets */,
 				F7E4B51C278FB93D001D4511 /* MainMenu.xib */,
 				F7E4B51F278FB93D001D4511 /* Xenoide.entitlements */,
-				F790BE0927A9936700F0097E /* FolderExplorerController.swift */,
-				F790BE0B27A9946300F0097E /* FolderExplorerService.swift */,
 				F7D4AC5E27B6E3E400A7D807 /* Feed.swift */,
 			);
 			path = Xenoide;
@@ -257,10 +251,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F790BE0A27A9936700F0097E /* FolderExplorerController.swift in Sources */,
 				F7D4AC5F27B6E3E400A7D807 /* Feed.swift in Sources */,
 				F7E4B519278FB93B001D4511 /* AppDelegate.swift in Sources */,
-				F790BE0C27A9946300F0097E /* FolderExplorerService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -359,6 +351,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				LD_RUNPATH_SEARCH_PATHS = /Users/fapablaza/Desktop/scintilla/cocoa/Scintilla/build/Debug/;
 				MACOSX_DEPLOYMENT_TARGET = 11.6;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -414,6 +407,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				LD_RUNPATH_SEARCH_PATHS = /Users/fapablaza/Desktop/scintilla/cocoa/Scintilla/build/Release/;
 				MACOSX_DEPLOYMENT_TARGET = 11.6;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -432,6 +426,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				FRAMEWORK_SEARCH_PATHS = /Users/fapablaza/Desktop/scintilla/cocoa/Scintilla;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSMainNibFile = MainMenu;
@@ -457,6 +452,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				FRAMEWORK_SEARCH_PATHS = /Users/fapablaza/Desktop/scintilla/cocoa/Scintilla;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSMainNibFile = MainMenu;
