@@ -9,7 +9,7 @@
 #include "DocumentManager.h"
 #include "FolderView.h"
 
-#include <xeno/wtl/CodeView.h>
+#include <xeno/wtl/CodeEditor.h>
 #include <xeno/wtl/TreeManager.h>
 
 
@@ -70,7 +70,7 @@ private:
     void doOpenFile(const boost::filesystem::path& filePath);
 
 private:
-    CodeView mCodeView;
+    CodeEditor mCodeView;
     CXenoFolderView mFolderView;
 
     Xenoide::CTreeManager mFolderManager;

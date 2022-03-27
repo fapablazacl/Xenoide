@@ -2,10 +2,10 @@
 set (target "xeno-wtl")
 set (sources 
     "include/xeno/wtl/TreeManager.h"
-    "include/xeno/wtl/CodeView.h"
+    "include/xeno/wtl/CodeEditor.h"
     
     "src/TreeManager.cpp"
-    "src/CodeView.cpp"
+    "src/CodeEditor.cpp"
 )
 
 add_library (${target} ${sources})

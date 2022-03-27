@@ -66,11 +66,11 @@ extern std::vector<std::string> extensionsGLSL;
 extern CodeLanguage getCodeLanguage(const boost::filesystem::path& filePath);
 
 
-class CodeView : public CWindowImpl<CodeView> {
+class CodeEditor : public CWindowImpl<CodeEditor> {
 public:
     DECLARE_WND_CLASS(NULL)
 
-    BEGIN_MSG_MAP_EX(CodeView)
+    BEGIN_MSG_MAP_EX(CodeEditor)
         MSG_WM_CREATE(OnCreate)
         MSG_WM_DESTROY(OnDestroy)
         MSG_WM_SIZE(OnSize)
@@ -79,7 +79,7 @@ public:
     END_MSG_MAP()
 
 public:
-    CodeView();
+    CodeEditor();
 
     LRESULT OnCreate(LPCREATESTRUCT cs);
 

@@ -1,5 +1,5 @@
 
-#include <xeno/wtl/CodeView.h>
+#include <xeno/wtl/CodeEditor.h>
 #include <boost/filesystem/path.hpp>
 
 
@@ -166,12 +166,12 @@ CodeLanguage getCodeLanguage(const boost::filesystem::path &filePath) {
 }
 
 
-CodeView::CodeView() {
+CodeEditor::CodeEditor() {
     m_bMsgHandled = false;
 }
 
 
-LRESULT CodeView::OnCreate(LPCREATESTRUCT cs) {
+LRESULT CodeEditor::OnCreate(LPCREATESTRUCT cs) {
     mWndScintilla.Create(_T("Scintilla"), m_hWnd, rcDefault, _T(""), WS_CHILD | WS_VISIBLE);
     mWndScintilla.SendMessage(SCI_SETUSETABS, 0);
     mWndScintilla.SendMessage(SCI_SETTABWIDTH, 4);
@@ -186,7 +186,7 @@ LRESULT CodeView::OnCreate(LPCREATESTRUCT cs) {
     return 0;
 }
 
-LRESULT CodeView::OnNotify(int idCtrl, LPNMHDR pnmh) {
+LRESULT CodeEditor::OnNotify(int idCtrl, LPNMHDR pnmh) {
     if (pnmh->code == SCN_DWELLSTART) {
         auto notification = reinterpret_cast<SCNotification*>(pnmh);
 
@@ -221,20 +221,20 @@ LRESULT CodeView::OnNotify(int idCtrl, LPNMHDR pnmh) {
 }
 
 
-void CodeView::OnDestroy() {
+void CodeEditor::OnDestroy() {
     mWndScintilla.DestroyWindow();
     mWndScintilla.Detach();
 
     SetMsgHandled(false);
 }
 
-void CodeView::OnSize(UINT nType, CSize size) {
+void CodeEditor::OnSize(UINT nType, CSize size) {
     const CRect rect = { 0, 0, size.cx, size.cy };
 
     mWndScintilla.SetWindowPos(NULL, rect, 0);
 }
 
-void CodeView::SetStyleAttribs(const int style, const CodeViewStyleAttribs &attribs) {
+void CodeEditor::SetStyleAttribs(const int style, const CodeViewStyleAttribs &attribs) {
     mWndScintilla.SendMessage(SCI_STYLESETFORE, style, attribs.fore);
     mWndScintilla.SendMessage(SCI_STYLESETBACK, style, attribs.back);
 
@@ -247,12 +247,12 @@ void CodeView::SetStyleAttribs(const int style, const CodeViewStyleAttribs &attr
     }
 }
 
-void CodeView::ClearLanguage() {
+void CodeEditor::ClearLanguage() {
     mWndScintilla.SendMessage(SCI_STYLECLEARALL);
     mWndScintilla.SendMessage(SCI_CLEARDOCUMENTSTYLE);
 }
 
-void CodeView::SetLanguage(const ILexer5 *lexer, const CodeViewLanguageConfig &config) {
+void CodeEditor::SetLanguage(const ILexer5 *lexer, const CodeViewLanguageConfig &config) {
     mWndScintilla.SendMessage(SCI_STYLECLEARALL);
     mWndScintilla.SendMessage(SCI_CLEARDOCUMENTSTYLE);
 
@@ -268,13 +268,13 @@ void CodeView::SetLanguage(const ILexer5 *lexer, const CodeViewLanguageConfig &c
     mWndScintilla.SendMessage(SCI_STYLESETBOLD, SCE_C_WORD2, 1);
 }
 
-void CodeView::SetInitialContent(const char *textContent) {
+void CodeEditor::SetInitialContent(const char *textContent) {
     mWndScintilla.SendMessage(SCI_SETTEXT, 0, reinterpret_cast<LPARAM>(textContent));
     mWndScintilla.SendMessage(SCI_EMPTYUNDOBUFFER);
     mWndScintilla.SendMessage(SCI_SETSAVEPOINT);
 }
 
-std::string CodeView::GetContent() const {
+std::string CodeEditor::GetContent() const {
     std::string content;
 
     const LRESULT contentLength = mWndScintilla.SendMessage(SCI_GETLENGTH);
@@ -286,6 +286,6 @@ std::string CodeView::GetContent() const {
     return content;
 }
 
-void CodeView::ClearSaveState() {
+void CodeEditor::ClearSaveState() {
     mWndScintilla.SendMessage(SCI_SETSAVEPOINT);
 }

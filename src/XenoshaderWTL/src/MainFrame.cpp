@@ -49,7 +49,7 @@ void MainFrame::OnFileMenu(UINT uCode, int nID, HWND hwndCtrl) {
         const DWORD dwClientStyle = WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN;
         const DWORD dwClientExStyle = WS_EX_CLIENTEDGE;
 
-        auto codeView = new CodeView();
+        auto codeView = new CodeEditor();
         codeView->Create(mDocumentManager, rcDefault, NULL, dwClientStyle, dwClientExStyle);
 
         mDocumentManager.AddPage(codeView->m_hWnd, _T("New 01"));
