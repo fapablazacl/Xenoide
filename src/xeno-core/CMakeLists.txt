@@ -24,6 +24,7 @@ set (sources
     "src/FolderExplorer.cpp"
 ) 
 
+add_library(${target} ${sources})
 
 target_include_directories( ${target} PUBLIC "include/")
 target_compile_definitions (${target} PRIVATE "XENOIDE_BUILD")
