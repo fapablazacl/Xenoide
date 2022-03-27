@@ -20,21 +20,22 @@
 #include <atlsplit.h>
 #include <atldlgs.h>
 
+
 namespace Xenoide {
-    struct CTreeItemId {
-        CTreeItemId() {}
+    struct TreeItemId {
+        TreeItemId() {}
         
-        CTreeItemId(const int value) : value(value) {}
+        explicit TreeItemId(const int value) : value(value) {}
         
-        bool operator== (const CTreeItemId& item) const {
+        bool operator== (const TreeItemId& item) const {
             return value == item.value;
         }
 
-        bool operator!= (const CTreeItemId& item) const {
+        bool operator!= (const TreeItemId& item) const {
             return value != item.value;
         }
         
-        bool operator< (const CTreeItemId& item) const {
+        bool operator< (const TreeItemId& item) const {
             return value < item.value;
         }
 
@@ -42,23 +43,23 @@ namespace Xenoide {
     };
     
 
-    class CTreeManagerController {
+    class TreeManagerController {
     public:
-        virtual ~CTreeManagerController() {}
+        virtual ~TreeManagerController() {}
 
-        virtual void clicked(const CTreeItemId itemId) = 0;
+        virtual void clicked(const TreeItemId itemId) = 0;
 
         //! the number of children for a given tree item
-        virtual int getChildCount(const CTreeItemId itemId) const = 0;
+        virtual int getChildCount(const TreeItemId itemId) const = 0;
 
         //! get the unique treeitem ID for a parent and its i-th child
-        virtual CTreeItemId getChildId(const CTreeItemId itemId, const int i) const = 0;
+        virtual TreeItemId getChildId(const TreeItemId itemId, const int i) const = 0;
 
         //! get the caption text from a given item
-        virtual std::string getItemCaption(const CTreeItemId itemId) const = 0;
+        virtual std::string getItemCaption(const TreeItemId itemId) const = 0;
 
         //! get the image text from a given item
-        virtual int getItemImage(const CTreeItemId itemId) const = 0;
+        virtual int getItemImage(const TreeItemId itemId) const = 0;
     };
 
 
@@ -92,10 +93,16 @@ namespace Xenoide {
 
         LRESULT OnEraseBkgnd(HDC hDC);
 
+        void SetController(TreeManagerController* controller);
+
+        const TreeManagerController* GetController() const {
+            return controller;
+        }
+
     private:
         HIMAGELIST hImageList = NULL;
-        std::set<CTreeItemId> populated;
+        std::set<TreeItemId> populated;
         CTreeViewCtrl treeView;
-        CTreeManagerController *controller = nullptr;
+        TreeManagerController *controller = nullptr;
     };
 }

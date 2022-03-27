@@ -42,15 +42,15 @@ HTREEITEM InsertTreeItem(
 
 
 namespace Xenoide {
-    class CTreeManagerControllerMock : public CTreeManagerController {
+    class CTreeManagerControllerMock : public TreeManagerController {
     public:
-        void clicked(const CTreeItemId itemId) override {
+        void clicked(const TreeItemId itemId) override {
             
         }
 
-        int getChildCount(const CTreeItemId itemId) const override {
+        int getChildCount(const TreeItemId itemId) const override {
             // check for the root
-            if (itemId == CTreeItemId{}) {
+            if (itemId == TreeItemId{}) {
                 return 10;
             }
 
@@ -58,30 +58,30 @@ namespace Xenoide {
             return 3;
         }
 
-        CTreeItemId getChildId(const CTreeItemId parentId, const int i) const override {
-            return CTreeItemId{(10 * parentId.value + 1) + i};
+        TreeItemId getChildId(const TreeItemId parentId, const int i) const override {
+            return TreeItemId{(10 * parentId.value + 1) + i};
         }
 
-        std::string getItemCaption(const CTreeItemId itemId) const override {
+        std::string getItemCaption(const TreeItemId itemId) const override {
             return "ItemId: " + std::to_string(itemId.value);
         }
 
-        int getItemImage(const CTreeItemId itemId) const override {
+        int getItemImage(const TreeItemId itemId) const override {
             return 0;
         }
     };
 
 
-    class CTreeManagerControllerFileSystem : public CTreeManagerController {
+    class CTreeManagerControllerFileSystem : public TreeManagerController {
     public:
         explicit CTreeManagerControllerFileSystem(const boost::filesystem::path& rootPath) : rootPath{rootPath} {}
 
-        void clicked(const CTreeItemId itemId) override {}
+        void clicked(const TreeItemId itemId) override {}
 
-        int getChildCount(const CTreeItemId itemId) const override {
+        int getChildCount(const TreeItemId itemId) const override {
 
             // determine current path
-            const boost::filesystem::path path = (itemId == CTreeItemId{} ?  rootPath : itemPathMap[itemId]);
+            const boost::filesystem::path path = (itemId == TreeItemId{} ?  rootPath : itemPathMap[itemId]);
 
             // if the current path is not a directory, it can't have subpath.
             if (!boost::filesystem::is_directory(path)) {
@@ -100,7 +100,7 @@ namespace Xenoide {
                 const boost::filesystem::path childPath = path_it->path();
                 itemChildMap[itemId].push_back(childPath);
 
-                const CTreeItemId childId = getChildId(itemId, i);
+                const TreeItemId childId = getChildId(itemId, i);
                 itemPathMap[childId] = childPath;
 
                 i++;
@@ -110,14 +110,14 @@ namespace Xenoide {
         }
 
 
-        CTreeItemId getChildId(const CTreeItemId parentId, const int i) const override {
+        TreeItemId getChildId(const TreeItemId parentId, const int i) const override {
             const auto key = std::tuple(parentId, i);
 
             if (const auto it = parentItemMap.find(key); it != parentItemMap.end()) {
                 return it->second;
             }
             
-            const CTreeItemId itemId = generateItemId();
+            const TreeItemId itemId = generateItemId();
 
             parentItemMap.insert({ key, itemId });
 
@@ -125,7 +125,7 @@ namespace Xenoide {
         }
 
 
-        std::string getItemCaption(const CTreeItemId itemId) const override {
+        std::string getItemCaption(const TreeItemId itemId) const override {
             const auto it = itemPathMap.find(itemId);
             assert(it != itemPathMap.end());
 
@@ -133,7 +133,7 @@ namespace Xenoide {
         }
 
 
-        int getItemImage(const CTreeItemId itemId) const override {
+        int getItemImage(const TreeItemId itemId) const override {
             const auto it = itemPathMap.find(itemId);
             assert(it != itemPathMap.end());
 
@@ -143,17 +143,17 @@ namespace Xenoide {
         }
 
     private:
-        CTreeItemId generateItemId() const {
-            return CTreeItemId { ++count };
+        TreeItemId generateItemId() const {
+            return TreeItemId { ++count };
         }
 
     private:
         const boost::filesystem::path rootPath;
 
         mutable int count = 0;
-        mutable std::map<std::tuple<CTreeItemId, int>, CTreeItemId> parentItemMap;
-        mutable std::map<CTreeItemId, boost::filesystem::path> itemPathMap;
-        mutable std::map<CTreeItemId, std::vector<boost::filesystem::path>> itemChildMap;
+        mutable std::map<std::tuple<TreeItemId, int>, TreeItemId> parentItemMap;
+        mutable std::map<TreeItemId, boost::filesystem::path> itemPathMap;
+        mutable std::map<TreeItemId, std::vector<boost::filesystem::path>> itemChildMap;
     };
 }
 
@@ -185,7 +185,7 @@ namespace Xenoide {
 
         // start with the first level
         for (int i = 0; i < controller->getChildCount({}); i++) {
-            const CTreeItemId id = controller->getChildId({}, i);
+            const TreeItemId id = controller->getChildId({}, i);
 
             const std::string name = controller->getItemCaption(id);
             const bool hasChildren = controller->getChildCount(id) > 0;
@@ -217,20 +217,20 @@ namespace Xenoide {
             const HTREEITEM selectedItem = treeView.GetSelectedItem();
 
             if (selectedItem) {
-
+                // TODO: Call the Click
             }
         }
         else if (pnmh->code == TVN_ITEMEXPANDING) {
             const auto &pnmtv = *reinterpret_cast<LPNMTREEVIEW>(pnmh);
 
             if (pnmtv.action == TVE_EXPAND) {
-                CTreeItemId itemId{static_cast<int>(pnmtv.itemNew.lParam)};
+                TreeItemId itemId{static_cast<int>(pnmtv.itemNew.lParam)};
 
                 const auto it = populated.find(itemId);
 
                 if (it == populated.end()) {
                     for (int i = 0; i < controller->getChildCount(itemId); i++) {
-                        const CTreeItemId childId = controller->getChildId(itemId, i);
+                        const TreeItemId childId = controller->getChildId(itemId, i);
 
                         const std::string name = controller->getItemCaption(childId);
                         const bool hasChildren = controller->getChildCount(childId) > 0;
@@ -253,5 +253,9 @@ namespace Xenoide {
 
     LRESULT CTreeManager::OnEraseBkgnd(HDC hDC) {
         return TRUE;
+    }
+
+    void CTreeManager::SetController(TreeManagerController* controller) {
+        this->controller = controller;
     }
 }
