@@ -21,37 +21,6 @@
 #include <atldlgs.h>
 
 namespace Xenoide {
-    struct CTreeItem {
-        CTreeItem() {}
-        
-        CTreeItem(void* value) : value(value) {}
-        
-        bool operator!= (const CTreeItem& item) const {
-            return value != item.value;
-        }
-
-        bool operator== (const CTreeItem& item) const {
-            return value == item.value;
-        }
-        
-        bool operator< (const CTreeItem& item) const {
-            return value < item.value;
-        }
-     
-        void* value = nullptr;
-    };
-
-
-    class CTreeManagerItemAction {
-    public:
-        virtual ~CTreeManagerItemAction() {}
-
-        virtual std::string getCaption() const = 0;
-
-        virtual void perform() = 0;
-    };
-
-
     struct CTreeItemId {
         CTreeItemId() {}
         
@@ -72,51 +41,6 @@ namespace Xenoide {
         const int value = 0;
     };
     
-    struct CTreeItemIndex {
-        unsigned short level = 0;
-        unsigned short row = 0;
-
-        CTreeItemIndex() {}
-
-        CTreeItemIndex(const unsigned short level, const unsigned short row) 
-            : level(level), row(row) {
-        
-            // checks for invalid in
-            assert(level != 0 || ((level == 0) && row == 0));
-        }
-
-        bool operator== (const CTreeItemIndex& rhs) const {
-            if (level != rhs.level) {
-                return false;
-            }
-
-            if (row != rhs.row) {
-                return false;
-            }
-
-            return true;
-        }
-
-        bool operator!= (const CTreeItemIndex& rhs) const {
-            return !(*this == rhs);
-        }
-
-        bool operator< (const CTreeItemIndex& rhs) const {
-            if (level == rhs.level) {
-                return row < rhs.row;
-            }
-
-            return level < rhs.level;
-        }
-
-        static CTreeItemIndex rootIndex() {
-            return { 0, 0 };
-        }
-
-        CTreeItemIndex indexAtRow(const unsigned short row) const {
-            return { level, row };
-        }
-    };
 
     class CTreeManagerController {
     public:

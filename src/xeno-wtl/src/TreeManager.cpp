@@ -159,32 +159,6 @@ namespace Xenoide {
 
 
 namespace Xenoide {
-    union IndexLParamConversionHelper {
-        CTreeItemIndex index;
-        LRESULT lParam;
-    };
-
-    LPARAM create_lParam(const CTreeItemIndex index) {
-        static_assert(sizeof(LPARAM) >= sizeof(CTreeItemIndex));
-
-        IndexLParamConversionHelper helper{};
-
-        helper.lParam = 0;
-        helper.index = index;
-
-        return helper.lParam;
-    }
-
-    CTreeItemIndex create_index(const LPARAM lParam) {
-        static_assert(sizeof(LPARAM) >= sizeof(CTreeItemIndex));
-
-        IndexLParamConversionHelper helper{};
-
-        helper.lParam = lParam;
-
-        return helper.index;
-    }
-
     CTreeManager::CTreeManager() {
         m_bMsgHandled = false;
         // controller = new CTreeManagerControllerMock();
