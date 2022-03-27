@@ -1,0 +1,16 @@
+
+{
+    "name": "bok",
+    "description": "Build orchrestation system based on modularity and reusability",
+    "version": "1.0.0",
+    "type": "application/cli",
+    "language": "c++/17",
+    "sources": [
+        {
+            "path": "src",
+            "public_": true
+        },
+        "src"
+    ],
+    "dependencies": []
+}

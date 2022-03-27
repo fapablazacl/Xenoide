@@ -1,0 +1,11 @@
+name: HelloWorld
+dependencies:
+  - name: catch
+    version: '3.0.0-rc3'
+    url: 'https://github.com/catchorg/Catch2.git'
+    tag: 'v3.0.0-preview3'
+    definitions:
+      CATCH_BUILD_TESTING: OFF
+      CATCH_INSTALL_DOCS: OFF
+    publicdefs:
+      CATCH2_DIR: '${installPrefix}/lib/cmake/catch'
