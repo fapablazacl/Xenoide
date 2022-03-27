@@ -28,4 +28,4 @@ add_executable (${target} WIN32 ${sources})
 target_include_directories (${target} PUBLIC "include")
 target_include_directories (${target} PUBLIC "res")
 
-target_link_libraries(${target} wtl xeno-ui)
+target_link_libraries(${target} wtl xeno-ui xeno-scintilla)

@@ -4,7 +4,6 @@ set (target XenoshaderWTL)
 set (sources
 	"include/framework.h"
 	"include/AppController.h"
-	"include/LexillaAccess.h"
 	"include/FolderExplorer.h"
 	"include/CodeView.h" 
 	"include/DocumentManager.h" 
@@ -13,7 +12,6 @@ set (sources
 	"include/AboutDlg.h" 
 	"include/ObjectTreeView.h" 
 
-	"src/LexillaAccess.cxx"
 	"src/XenoShader.cpp"
 	"src/FolderExplorer.cpp"
 	"src/CodeView.cpp" 
@@ -37,4 +35,4 @@ target_compile_definitions (${target} PRIVATE _WTL_USE_CSTRING)
 target_include_directories (${target} PUBLIC "include")
 target_include_directories (${target} PRIVATE "res")
 
-target_link_libraries (${target} xeno-ui wtl Scintilla Lexilla)
+target_link_libraries (${target} xeno-ui xeno-scintilla wtl)

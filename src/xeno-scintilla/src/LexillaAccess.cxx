@@ -23,7 +23,7 @@
 
 #include "ILexer.h"
 
-#include "Lexilla.h"
+#include <Lexilla.h>
 
 #include "LexillaAccess.h"
 
