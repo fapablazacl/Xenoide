@@ -3,8 +3,8 @@ cmake_minimum_required (VERSION 3.10)
 
 project (Xenoide LANGUAGES C CXX)
 
-option (XENOBUILD_ENABLE_LINTER "Enable the use of Linter Tool. clang-tidy must be installed." OFF)
-option (XENOBUILD_ENABLE_TESTS "Enable the automated self-tests for all libraries." OFF)
+option (XENOIDE_ENABLE_LINTER "Enable the use of Linter Tool. clang-tidy must be installed." OFF)
+option (XENOIDE_ENABLE_TESTS "Enable the automated self-tests for all libraries." OFF)
 option (XENOIDE_BUILD_POC_GTKCLASSBROWSER "" OFF)
 option (XENOIDE_BUILD_POC_GUIMVP "" OFF)
 option (XENOIDE_BUILD_POC_GUIWX "" OFF)
@@ -42,12 +42,12 @@ set(YAML_CPP_INSTALL "OFF" CACHE STRING "" FORCE)
 add_subdirectory("dependencies/yaml-cpp")
 
 # add unit test support libraries
-if (XENOBUILD_ENABLE_TESTS)
+if (XENOIDE_ENABLE_TESTS)
     add_subdirectory("dependencies/googletest")
     include(CTest)
 endif()
 
-if (XENOBUILD_ENABLE_LINTER)
+if (XENOIDE_ENABLE_LINTER)
     set(CMAKE_CXX_CLANG_TIDY "clang-tidy")
 else ()
     set(CMAKE_CXX_CLANG_TIDY "")

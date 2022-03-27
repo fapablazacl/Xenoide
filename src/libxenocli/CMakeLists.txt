@@ -21,6 +21,6 @@ add_library(${target} ${sources})
 target_include_directories(${target} PUBLIC "./include/")
 target_link_libraries(${target} core)
 
-if (XENOBUILD_ENABLE_TESTS)
+if (XENOIDE_ENABLE_TESTS)
     add_subdirectory("test")
 endif()

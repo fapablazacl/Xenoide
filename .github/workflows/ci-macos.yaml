@@ -42,7 +42,7 @@ jobs:
       - name: Setup
         run: |
           brew install boost
-          cmake -G "Unix Makefiles" -DXENOBUILD_ENABLE_LINTER=ON -DCMAKE_BUILD_TYPE=Debug -B build/debug
+          cmake -G "Unix Makefiles" -DXENOIDE_ENABLE_LINTER=ON -DCMAKE_BUILD_TYPE=Debug -B build/debug
 
       - name: Lint (clang-tidy)
         run: cmake --build build/debug
@@ -59,7 +59,7 @@ jobs:
       - name: Setup
         run: |
           brew install boost
-          cmake -G "Unix Makefiles" -DXENOBUILD_ENABLE_TESTS=ON -DCMAKE_BUILD_TYPE=Debug -B build/debug
+          cmake -G "Unix Makefiles" -DXENOIDE_ENABLE_TESTS=ON -DCMAKE_BUILD_TYPE=Debug -B build/debug
 
       - name: Test (gtest)
         run: |
