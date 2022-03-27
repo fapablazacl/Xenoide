@@ -1,8 +1,6 @@
 
-#include "CodeView.h"
-
+#include <xeno/wtl/CodeView.h>
 #include <boost/filesystem/path.hpp>
-
 
 
 CodeViewLanguageConfig languageConfigC = {

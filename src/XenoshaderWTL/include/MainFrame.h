@@ -6,10 +6,10 @@
 #include "framework.h"
 #include "resource.h"
 #include "AppController.h"
-#include "CodeView.h"
 #include "DocumentManager.h"
 #include "FolderView.h"
 
+#include <xeno/wtl/CodeView.h>
 #include <xeno/wtl/TreeManager.h>
 
 
@@ -68,7 +68,6 @@ public:
 
 private:
     void doOpenFile(const boost::filesystem::path& filePath);
-
 
 private:
     CodeView mCodeView;

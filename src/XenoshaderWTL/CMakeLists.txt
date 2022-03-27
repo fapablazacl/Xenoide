@@ -5,7 +5,6 @@ set (sources
 	"include/framework.h"
 	"include/AppController.h"
 	"include/FolderExplorer.h"
-	"include/CodeView.h" 
 	"include/DocumentManager.h" 
 	"include/FolderView.h" 
 	"include/MainFrame.h" 
@@ -13,7 +12,6 @@ set (sources
 
 	"src/XenoShader.cpp"
 	"src/FolderExplorer.cpp"
-	"src/CodeView.cpp" 
 	"src/DocumentManager.cpp" 
 	"src/FolderView.cpp" 
 	"src/MainFrame.cpp" 
