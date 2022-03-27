@@ -2,10 +2,10 @@
 set (target "gui-mvp")
 
 set (sources
-    "include/Xenoide/Gui/mvp/MainFrame.hpp"
-	"include/Xenoide/Gui/mvp/DocumentManager.hpp"
-	"include/Xenoide/Gui/mvp/Document.hpp"
-	"include/Xenoide/Gui/mvp/FindReplace.hpp"
+    "include/xeno/ui/mvp/MainFrame.hpp"
+	"include/xeno/ui/mvp/DocumentManager.hpp"
+	"include/xeno/ui/mvp/Document.hpp"
+	"include/xeno/ui/mvp/FindReplace.hpp"
 
     "src/MainFrame.cpp"
     "src/DocumentManager.cpp"

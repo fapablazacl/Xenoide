@@ -5,7 +5,7 @@
 #include <QDockWidget>
 #include <QTextEdit>
 #include <QTreeView>
-#include <Xenoide/Gui/mvp/MainFrame.hpp>
+#include <xeno/ui/mvp/MainFrame.hpp>
 
 #include <Qsci/qsciscintilla.h>
 #include <Qsci/qscilexer.h>

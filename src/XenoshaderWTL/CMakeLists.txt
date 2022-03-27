@@ -37,4 +37,4 @@ target_compile_definitions (${target} PRIVATE _WTL_USE_CSTRING)
 target_include_directories (${target} PUBLIC "include")
 target_include_directories (${target} PRIVATE "res")
 
-target_link_libraries (${target} Xenoide.Core Xenoide.Gui wtl Scintilla Lexilla)
+target_link_libraries (${target} xeno-ui wtl Scintilla Lexilla)

@@ -10,7 +10,7 @@
 #include <atlcrack.h>
 #include <atlsplit.h>
 
-#include <Xenoide/Gui/FolderBrowser.h>
+#include <xeno/ui/FolderBrowser.h>
 
 namespace Xenoide {
     class CFolderBrowser : public CWindowImpl<CFolderBrowser, CWindow, CControlWinTraits>, public FolderBrowser {

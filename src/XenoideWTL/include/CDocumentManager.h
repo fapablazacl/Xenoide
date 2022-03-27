@@ -1,7 +1,7 @@
 
 #pragma once 
 
-#include <Xenoide/Gui/DocumentManager.h>
+#include <xeno/ui/DocumentManager.h>
 
 #include <atlbase.h>
 #include <atlwin.h>

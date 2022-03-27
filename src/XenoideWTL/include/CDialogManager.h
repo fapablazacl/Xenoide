@@ -1,7 +1,7 @@
 
 #pragma once 
 
-#include <Xenoide/Gui/DialogManager.h>
+#include <xeno/ui/DialogManager.h>
 
 #include <atlbase.h>
 #include <atlapp.h>

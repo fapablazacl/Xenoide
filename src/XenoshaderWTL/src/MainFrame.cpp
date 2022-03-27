@@ -2,7 +2,7 @@
 #include "MainFrame.h"
 #include "AboutDlg.h"
 
-#include <Xenoide/Core/FileService.h>
+#include <xeno/core/FileService.h>
 
 
 MainFrame::MainFrame() {}

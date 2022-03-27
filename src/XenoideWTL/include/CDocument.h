@@ -1,7 +1,7 @@
 
 #pragma once 
 
-#include <Xenoide/Gui/Document.h>
+#include <xeno/ui/Document.h>
 
 #include <atlbase.h>
 #include <atlwin.h>

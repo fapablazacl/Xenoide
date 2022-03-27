@@ -12,8 +12,8 @@
 #include "framework.h"
 
 #include "AppController.h"
-#include <Xenoide/Core/FolderExplorer.h>
-#include <Xenoide/Core/FileSystemServiceBoost.h>
+#include <xeno/core/FolderExplorer.h>
+#include <xeno/core/FileSystemServiceBoost.h>
 
 
 struct TreeItemHandle {

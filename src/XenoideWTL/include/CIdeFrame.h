@@ -12,9 +12,9 @@
 #include <atlcrack.h>
 #include <atlsplit.h>
 
-#include <Xenoide/Core/FolderService.h>
-#include <Xenoide/Gui/MenuPanel.h>
-#include <Xenoide/Gui/IDEFrame.h>
+#include <xeno/core/FolderService.h>
+#include <xeno/ui/MenuPanel.h>
+#include <xeno/ui/IDEFrame.h>
 
 #include "CDocument.h"
 #include "CDocumentManager.h"
