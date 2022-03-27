@@ -6,10 +6,19 @@
 #include <optional>
 #include <functional>
 #include <set>
+#include <cassert>
 
-#include "framework.h"
-
-#include "AppController.h"
+#include <atlbase.h>
+#include <atlapp.h>
+#include <atlwin.h>
+#include <atlframe.h>
+#include <atlctrls.h>
+#include <atlctrlx.h>
+#include <atluser.h>
+#include <atlmisc.h>
+#include <atlcrack.h>
+#include <atlsplit.h>
+#include <atldlgs.h>
 
 namespace Xenoide {
     struct CTreeItem {
@@ -72,7 +81,6 @@ namespace Xenoide {
         CTreeItemIndex(const unsigned short level, const unsigned short row) 
             : level(level), row(row) {
         
-
             // checks for invalid in
             assert(level != 0 || ((level == 0) && row == 0));
         }

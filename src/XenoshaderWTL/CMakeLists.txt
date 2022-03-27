@@ -10,7 +10,6 @@ set (sources
 	"include/FolderView.h" 
 	"include/MainFrame.h" 
 	"include/AboutDlg.h" 
-	"include/ObjectTreeView.h" 
 
 	"src/XenoShader.cpp"
 	"src/FolderExplorer.cpp"
@@ -19,7 +18,6 @@ set (sources
 	"src/FolderView.cpp" 
 	"src/MainFrame.cpp" 
 	"src/AboutDlg.cpp" 
-	"src/ObjectTreeView.cpp"
 	
 	"res/Resource.rc"
 	"res/resource.h"
@@ -35,4 +33,4 @@ target_compile_definitions (${target} PRIVATE _WTL_USE_CSTRING)
 target_include_directories (${target} PUBLIC "include")
 target_include_directories (${target} PRIVATE "res")
 
-target_link_libraries (${target} xeno-ui xeno-scintilla wtl)
+target_link_libraries (${target} xeno-ui xeno-scintilla xeno-wtl)

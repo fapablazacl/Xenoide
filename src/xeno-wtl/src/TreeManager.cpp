@@ -1,5 +1,5 @@
 
-#include "ObjectTreeView.h"
+#include <xeno/wtl/TreeManager.h>
 
 #include <CommonControls.h>
 #include <iostream>

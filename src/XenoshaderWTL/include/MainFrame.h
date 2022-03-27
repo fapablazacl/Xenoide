@@ -9,7 +9,8 @@
 #include "CodeView.h"
 #include "DocumentManager.h"
 #include "FolderView.h"
-#include "ObjectTreeView.h"
+
+#include <xeno/wtl/TreeManager.h>
 
 
 // Frame Windows are defined with CFrameWindowImpl
