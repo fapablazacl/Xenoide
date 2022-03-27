@@ -13,6 +13,7 @@ set (sources
     "include/Xenoide/Gui/Menu.h"
     "include/Xenoide/Gui/MenuPanel.h"
     "include/Xenoide/Gui/FileFilter.h"
+    "include/Xenoide/Gui/ObjectTreeView.h"
 
     "src/WindowsUtils.cpp"
     "src/FindReplaceDialog.cpp"
@@ -25,6 +26,7 @@ set (sources
     "src/Menu.cpp"
     "src/MenuPanel.cpp"
     "src/FileFilter.cpp"
+    "src/ObjectTreeView.cpp"
 )
 
 add_library (${target} ${sources})

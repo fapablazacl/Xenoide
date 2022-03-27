@@ -3,8 +3,15 @@ cmake_minimum_required (VERSION 3.10)
 
 project (Xenoide LANGUAGES C CXX)
 
-option (XENOIDE_TESTS "Builds experimental programs and libraries for development and testing purposes" OFF)
-option (XENOIDE_TEST_SANDBOX "" OFF)
+# Specify the use of the C++17 standard
+set (CMAKE_CXX_STANDARD 17)
+
+# generic build options
+option (XENOIDE_BUILD_POC_GTKCLASSBROWSER "" OFF)
+option (XENOIDE_BUILD_POC_GUIMVP "" OFF)
+option (XENOIDE_BUILD_POC_GUIWX "" OFF)
+option (XENOIDE_BUILD_POC_QT5SCINTILLAPOC "" OFF)
+option (XENOIDE_BUILD_POC_SANDBOX "" OFF)
 
 set (CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 add_definitions (-DPROJECT_SOURCE_DIR=${PROJECT_SOURCE_DIR})
@@ -24,23 +31,31 @@ if (UNIX)
     set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 endif ()
 
-# Specify the use of the C++17 standard
-set (CMAKE_CXX_STANDARD 17)
-
 # if (UNIX)
 #     add_definitions ("-fPIC")
 # endif ()
 
 add_subdirectory("dep")
+
+# add IDE core 
 add_subdirectory("src")
 
-# IDE Core
-if (XENOIDE_TESTS)
-    add_subdirectory ("tests/gui-mvp")
-    add_subdirectory ("tests/qt5-scintilla-poc")
-    add_subdirectory ("tests/gui-wx")
+if (XENOIDE_BUILD_POC_GTKCLASSBROWSER)
+    add_subdirectory ("pocs/gtk-class-browser")
+endif()
+
+if (XENOIDE_BUILD_POC_GUIMVP)
+    add_subdirectory ("pocs/gui-mvp")
 endif ()
 
-if (XENOIDE_TEST_SANDBOX)
-	add_subdirectory ("tests/sandbox")
+if (XENOIDE_BUILD_POC_GUIWX)
+    add_subdirectory ("pocs/gui-wx")
+endif ()
+
+if (XENOIDE_BUILD_POC_QT5SCINTILLAPOC)
+    add_subdirectory ("pocs/qt5-scintilla-poc")
+endif ()
+
+if (XENOIDE_BUILD_POC_SANDBOX)
+    add_subdirectory ("pocs/sandbox")
 endif ()
