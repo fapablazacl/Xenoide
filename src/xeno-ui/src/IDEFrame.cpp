@@ -37,44 +37,44 @@ namespace Xenoide {
         this->dialogView = dialogView;
         this->menuView = menuView;
 
-        const auto menu = Menu{Menu::menuBar({
-            Menu::menu("&File", {
-                Menu::action([this] () { this->onFileNew(); }, "&New", {Modifier::Ctrl, Key::N}),
-                Menu::separator(),
-                Menu::action([this] () { this->onFileOpen(); }, "&Open ...", {Modifier::Ctrl, Key::O}),
-                Menu::action([this] () { this->onFileOpenFolder(); }, "Open &Folder ...", {Modifier::CtrlShift, Key::O}),
-                Menu::separator(),
-                Menu::action([this] () { this->onFileSave(); }, "&Save", {Modifier::Ctrl, Key::S}),
-                Menu::action([this] () { this->onFileSaveAs(); }, "Sa&ve As ..."),
-                Menu::action([this] () { this->onFileSaveAll(); }, "Save &All"),
-                Menu::separator(),
-                Menu::action([this] () { this->onFileClose(); }, "&Close"),
-                Menu::separator(),
-                Menu::action([this] () { this->onFileExit(); }, "&Exit")
+        const auto menu = MenuData{MenuData::menuBar({
+            MenuData::menu("&File", {
+                MenuData::action([this] () { this->onFileNew(); }, "&New", {Modifier::Ctrl, Key::N}),
+                MenuData::separator(),
+                MenuData::action([this] () { this->onFileOpen(); }, "&Open ...", {Modifier::Ctrl, Key::O}),
+                MenuData::action([this] () { this->onFileOpenFolder(); }, "Open &Folder ...", {Modifier::CtrlShift, Key::O}),
+                MenuData::separator(),
+                MenuData::action([this] () { this->onFileSave(); }, "&Save", {Modifier::Ctrl, Key::S}),
+                MenuData::action([this] () { this->onFileSaveAs(); }, "Sa&ve As ..."),
+                MenuData::action([this] () { this->onFileSaveAll(); }, "Save &All"),
+                MenuData::separator(),
+                MenuData::action([this] () { this->onFileClose(); }, "&Close"),
+                MenuData::separator(),
+                MenuData::action([this] () { this->onFileExit(); }, "&Exit")
             }),
-            Menu::menu("&Edit", {
-                Menu::action([this] () { this->onEditUndo(); }, "&Undo", {Modifier::Ctrl, Key::Z}),
-                Menu::action([this] () { this->onEditRedo(); }, "&Redo", {Modifier::CtrlShift, Key::Z}),
-                Menu::separator(),
-                Menu::action([this] () { this->onEditCut(); }, "&Cut", {Modifier::Ctrl, Key::X}),
-                Menu::action([this] () { this->onEditCopy(); }, "C&opy", {Modifier::Ctrl, Key::C}),
-                Menu::action([this] () { this->onEditPaste(); }, "&Paste", {Modifier::Ctrl, Key::V}),
-                Menu::separator(),
-                Menu::action([] () {}, "Find ..."),
-                Menu::action([] () {}, "Replace ..."),
+            MenuData::menu("&Edit", {
+                MenuData::action([this] () { this->onEditUndo(); }, "&Undo", {Modifier::Ctrl, Key::Z}),
+                MenuData::action([this] () { this->onEditRedo(); }, "&Redo", {Modifier::CtrlShift, Key::Z}),
+                MenuData::separator(),
+                MenuData::action([this] () { this->onEditCut(); }, "&Cut", {Modifier::Ctrl, Key::X}),
+                MenuData::action([this] () { this->onEditCopy(); }, "C&opy", {Modifier::Ctrl, Key::C}),
+                MenuData::action([this] () { this->onEditPaste(); }, "&Paste", {Modifier::Ctrl, Key::V}),
+                MenuData::separator(),
+                MenuData::action([] () {}, "Find ..."),
+                MenuData::action([] () {}, "Replace ..."),
             }),
-            Menu::menu("&View", {
-                Menu::action([this] () { this->onViewFolderBrowser(); }, "&Folder Browser")
+            MenuData::menu("&View", {
+                MenuData::action([this] () { this->onViewFolderBrowser(); }, "&Folder Browser")
             }),
-            Menu::menu("&Tools", {
-                Menu::action([this] () { this->onToolsFileSearch(); }, "File &Search ...", {Modifier::CtrlShift, Key::P})
+            MenuData::menu("&Tools", {
+                MenuData::action([this] () { this->onToolsFileSearch(); }, "File &Search ...", {Modifier::CtrlShift, Key::P})
             }),
-            Menu::menu("&Build", {
-                Menu::action([] () {}, "&Clean"),
-                Menu::action([] () {}, "&Execute")
+            MenuData::menu("&Build", {
+                MenuData::action([] () {}, "&Clean"),
+                MenuData::action([] () {}, "&Execute")
             }),
-            Menu::menu("&Help", {
-                Menu::action([] () {}, "&About", {Key::F1})
+            MenuData::menu("&Help", {
+                MenuData::action([] () {}, "&About", {Key::F1})
             }),
         })};
 

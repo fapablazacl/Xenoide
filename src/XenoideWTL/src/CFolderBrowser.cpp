@@ -18,7 +18,7 @@ namespace Xenoide {
         return {};
     }
 
-    void CFolderBrowser::displayContextualMenu(const Point &point, const Menu &menu) {
+    void CFolderBrowser::displayContextualMenu(const Point &point, const MenuData &menu) {
 
     }
 }

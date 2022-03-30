@@ -325,14 +325,14 @@ namespace Xenoide {
     }
 
     void FolderBrowser::Presenter::onContextMenuRequested(const Point &point) {
-        const auto menu = Menu::menu("Context Menu", {
-            Menu::action([this] () { this->onOpenSelectedFile(); }, "Open"),
-            Menu::separator(),
-            Menu::action([this] () { this->onCreateFile(); }, "Create File"),
-            Menu::action([this] () { this->onCreateFolder(); }, "Create Folder"),
-            Menu::separator(),
-            Menu::action([this] () { this->onRenameSelectedPath(); }, "Rename"),
-            Menu::action([this] () { this->onDeleteSelectedPath(); }, "Delete")
+        const auto menu = MenuData::menu("Context Menu", {
+            MenuData::action([this] () { this->onOpenSelectedFile(); }, "Open"),
+            MenuData::separator(),
+            MenuData::action([this] () { this->onCreateFile(); }, "Create File"),
+            MenuData::action([this] () { this->onCreateFolder(); }, "Create Folder"),
+            MenuData::separator(),
+            MenuData::action([this] () { this->onRenameSelectedPath(); }, "Rename"),
+            MenuData::action([this] () { this->onDeleteSelectedPath(); }, "Delete")
         });
 
         view->displayContextualMenu(point, menu);

@@ -1,17 +1,7 @@
 
 #pragma once 
 
-#include <atlbase.h>
-#include <atlapp.h>
-#include <atlwin.h>
-#include <atlframe.h>
-#include <atlctrls.h>
-#include <atlctrlx.h>
-#include <atluser.h>
-#include <atlmisc.h>
-#include <atlcrack.h>
-#include <atlsplit.h>
-#include <atldlgs.h>
+#include "wtl.h"
 
 #include <string>
 #include <vector>
@@ -22,7 +12,7 @@
 #include <Sci_Position.h>
 #include <SciLexer.h>
 #include <Lexilla.h>
-#include "LexillaAccess.h"
+#include <LexillaAccess.h>
 
 
 struct CodeViewStyleAttribs {

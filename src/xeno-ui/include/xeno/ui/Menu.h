@@ -55,20 +55,20 @@ namespace Xenoide {
         }
     };
 
-    struct Menu {
+    struct MenuData {
         std::string text;
         Shortcut shortcut;
-        std::vector<Menu> childs;
+        std::vector<MenuData> childs;
         MenuKind kind;
         std::function<void()> callback;
         
-        static Menu menuBar(const std::vector<Menu> &childs);
+        static MenuData menuBar(const std::vector<MenuData> &childs);
 
-        static Menu menu(const std::string &text, const std::vector<Menu> &childs);
+        static MenuData menu(const std::string &text, const std::vector<MenuData> &childs);
 
-        static Menu action(const std::function<void()> &callback, const std::string &text, const Shortcut &shortcut = {});
+        static MenuData action(const std::function<void()> &callback, const std::string &text, const Shortcut &shortcut = {});
 
-        static Menu separator();
+        static MenuData separator();
     };
 }
 

@@ -8,17 +8,10 @@
 #include <set>
 #include <cassert>
 
-#include <atlbase.h>
-#include <atlapp.h>
-#include <atlwin.h>
-#include <atlframe.h>
-#include <atlctrls.h>
-#include <atlctrlx.h>
-#include <atluser.h>
-#include <atlmisc.h>
-#include <atlcrack.h>
-#include <atlsplit.h>
-#include <atldlgs.h>
+#include "wtl.h"
+#include "MenuFactory.h"
+
+#include <xeno/ui/Menu.h>
 
 
 namespace Xenoide {
@@ -41,12 +34,15 @@ namespace Xenoide {
 
         const int value = 0;
     };
-    
 
     class TreeManagerController {
     public:
         virtual ~TreeManagerController() {}
 
+        //! gets the contextual menu data model from the specified TreeItem.
+        virtual std::vector<MenuData> getItemPopupMenuData(const TreeItemId itemId) const = 0;
+
+        // 
         virtual void clicked(const TreeItemId itemId) = 0;
 
         //! the number of children for a given tree item
@@ -62,7 +58,16 @@ namespace Xenoide {
         virtual int getItemImage(const TreeItemId itemId) const = 0;
     };
 
-
+    /**
+     * @brief TreeManager class component. Augment a native TreeView with additional features.
+     * 
+     * Features:
+     * - Initial Item Populate Action from Controller
+     * 
+     * TODO Features:
+     * - Update Tree Item when the underlying model changes.
+     * - Implement contextual menu.
+     */
     class CTreeManager : public CWindowImpl<CTreeManager> {
     public:
         enum { ID_FOLDERVIEW_TREEVIEW = 10000 };
@@ -76,6 +81,8 @@ namespace Xenoide {
             MSG_WM_SIZE(OnSize)
             MSG_WM_NOTIFY(OnNotify)
             MSG_WM_ERASEBKGND(OnEraseBkgnd)
+            MSG_WM_CONTEXTMENU(OnContextMenu)
+            MSG_WM_COMMAND();
         END_MSG_MAP()
 
     public:
@@ -99,10 +106,16 @@ namespace Xenoide {
             return controller;
         }
 
+        void OnContextMenu(CWindow wnd, CPoint point);
+
+        int OnCommand(WORD wNotifyCode, WORD wID, HWND hWndCtrl, BOOL& bHandled);
+
     private:
         HIMAGELIST hImageList = NULL;
         std::set<TreeItemId> populated;
         CTreeViewCtrl treeView;
         TreeManagerController *controller = nullptr;
+
+        CCommandMap commandMap;
     };
 }

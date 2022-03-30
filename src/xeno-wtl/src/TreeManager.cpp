@@ -44,6 +44,10 @@ HTREEITEM InsertTreeItem(
 namespace Xenoide {
     class CTreeManagerControllerMock : public TreeManagerController {
     public:
+        CTreeManagerControllerMock() {
+
+        }
+
         void clicked(const TreeItemId itemId) override {
             
         }
@@ -74,13 +78,39 @@ namespace Xenoide {
 
     class CTreeManagerControllerFileSystem : public TreeManagerController {
     public:
-        explicit CTreeManagerControllerFileSystem(const boost::filesystem::path& rootPath) : rootPath{rootPath} {}
+        explicit CTreeManagerControllerFileSystem(const boost::filesystem::path& rootPath) : rootPath{rootPath} {
+            fileContextMenu = {
+                MenuData::action([]() {}, "&Open"),
+                MenuData::action([]() {}, "&Open in Dedicated Window"),
+                MenuData::separator(),
+                MenuData::action([]() {}, "&Cut"),
+                MenuData::action([]() {}, "&Copy"),
+                MenuData::action([]() {}, "&Paste"),
+                MenuData::separator(),
+                MenuData::action([]() {}, "&Rename"),
+                MenuData::action([]() {}, "&Delete")
+            };
 
-        void clicked(const TreeItemId itemId) override {}
+            folderContextMenu = {
+                MenuData::action([]() {}, "&New File"),
+                MenuData::action([]() {}, "&New Folder"),
+                MenuData::separator(),
+                MenuData::action([]() {}, "&Cut"),
+                MenuData::action([]() {}, "&Copy"),
+                MenuData::action([]() {}, "&Paste"),
+                MenuData::separator(),
+                MenuData::action([]() {}, "&Rename"),
+                MenuData::action([]() {}, "&Delete")
+            };
+        }
+
+        void clicked(const TreeItemId itemId) override {
+
+        }
 
         int getChildCount(const TreeItemId itemId) const override {
-
             // determine current path
+            // TODO: refactor into an utility method
             const boost::filesystem::path path = (itemId == TreeItemId{} ?  rootPath : itemPathMap[itemId]);
 
             // if the current path is not a directory, it can't have subpath.
@@ -142,12 +172,26 @@ namespace Xenoide {
             // return boost::filesystem::is_directory(it->second) ? 0 : 1;
         }
 
+        std::vector<MenuData> getItemPopupMenuData(const TreeItemId itemId) const override {
+            // TODO: Refactor into an utility method
+            const boost::filesystem::path path = (itemId == TreeItemId{} ?  rootPath : itemPathMap[itemId]);
+
+            if (boost::filesystem::is_directory(path)) {
+                return folderContextMenu;
+            }
+
+            return fileContextMenu;
+        }
+
     private:
         TreeItemId generateItemId() const {
             return TreeItemId { ++count };
         }
 
     private:
+        std::vector<MenuData> fileContextMenu;
+        std::vector<MenuData> folderContextMenu;
+
         const boost::filesystem::path rootPath;
 
         mutable int count = 0;
@@ -210,6 +254,27 @@ namespace Xenoide {
     }
 
 
+    void CTreeManager::OnContextMenu(CWindow wnd, CPoint point) {
+        if (wnd == treeView) {
+            const HTREEITEM hItem = treeView.GetSelectedItem();
+            const TreeItemId itemId{static_cast<int>(treeView.GetItemData(hItem))};
+
+            CRect itemRect;
+            if (treeView.GetItemRect(hItem, &itemRect, FALSE) == FALSE) {
+                return;
+            }
+
+            const HMENU hMenu = CreatePopupMenu();
+            const CMenuFactory factory{ 100000 };
+            const std::vector<MenuData> menuItems = controller->getItemPopupMenuData(itemId);
+
+            factory.fillMenu(hMenu, commandMap, menuItems);
+
+            TrackPopupMenuEx(hMenu, TPM_TOPALIGN | TPM_LEFTALIGN, point.x, point.y, m_hWnd, nullptr);
+        }
+    }
+
+
     LRESULT CTreeManager::OnNotify(int idCtrl, LPNMHDR pnmh) {
         SetMsgHandled(true);
 
@@ -224,6 +289,7 @@ namespace Xenoide {
             const auto &pnmtv = *reinterpret_cast<LPNMTREEVIEW>(pnmh);
 
             if (pnmtv.action == TVE_EXPAND) {
+                // TODO: Refactor to a common function
                 TreeItemId itemId{static_cast<int>(pnmtv.itemNew.lParam)};
 
                 const auto it = populated.find(itemId);
@@ -257,5 +323,11 @@ namespace Xenoide {
 
     void CTreeManager::SetController(TreeManagerController* controller) {
         this->controller = controller;
+    }
+
+
+    int CTreeManager::OnCommand(WORD wNotifyCode, WORD wID, HWND hWndCtrl, BOOL& bHandled) {
+
+        return 0;
     }
 }

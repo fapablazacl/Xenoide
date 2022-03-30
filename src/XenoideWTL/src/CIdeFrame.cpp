@@ -63,7 +63,7 @@ namespace Xenoide {
 namespace Xenoide {
     const int commandIdBase = 1000;
 
-    void CIdeFrame::fillMenuItem(CMenuHandle parent, const Menu &menu) {
+    void CIdeFrame::fillMenuItem(CMenuHandle parent, const MenuData &menu) {
         switch (menu.kind) {
             case MenuKind::Action: {
                 const int commandId = commandIdBase + static_cast<int>(commandMap.size());
@@ -86,7 +86,7 @@ namespace Xenoide {
                 menuItemHandle.CreateMenu();
                 parent.AppendMenu(MF_STRING, menuItemHandle, menu.text.c_str());
 
-                for (const Menu& child : menu.childs) {
+                for (const MenuData& child : menu.childs) {
                     this->fillMenuItem(menuItemHandle, child);
                 }
 
@@ -96,7 +96,7 @@ namespace Xenoide {
     }
 
 
-    std::string CIdeFrame::mapMenuTitle(const Menu &menu) const {
+    std::string CIdeFrame::mapMenuTitle(const MenuData &menu) const {
         if (menu.shortcut.isNone()) {
             return menu.text;
         }
@@ -169,11 +169,11 @@ namespace Xenoide {
     }
 
 
-    void CIdeFrame::setupMenuBar(const Menu &menu) {
+    void CIdeFrame::setupMenuBar(const MenuData &menu) {
         // create the menu 
         menuBar.CreateMenu();
 
-        for (const Menu &menuItem : menu.childs) {
+        for (const MenuData &menuItem : menu.childs) {
             this->fillMenuItem(menuBar.m_hMenu, menuItem);
         }
 

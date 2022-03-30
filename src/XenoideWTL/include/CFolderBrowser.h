@@ -38,7 +38,7 @@ namespace Xenoide {
 
         virtual boost::optional<std::string> getSelectedPath() const override;
 
-        virtual void displayContextualMenu(const Point &point, const Menu &menu) override;
+        virtual void displayContextualMenu(const Point &point, const MenuData &menu) override;
 
     private:
         void PopulateItems(LPCTSTR folderPath, LPCTSTR title);

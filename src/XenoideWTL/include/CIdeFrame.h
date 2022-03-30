@@ -42,11 +42,11 @@ namespace Xenoide {
         virtual void showPanel(const Panel panel) override;
 
     public:
-        void fillMenuItem(CMenuHandle parent, const Menu &menu);
+        void fillMenuItem(CMenuHandle parent, const MenuData &menu);
 
-        std::string mapMenuTitle(const Menu& menu) const;
+        std::string mapMenuTitle(const MenuData& menu) const;
 
-        virtual void setupMenuBar(const Menu &menu) override;
+        virtual void setupMenuBar(const MenuData &menu) override;
 
     public:
         DECLARE_WND_CLASS(_T("CIdeFrame"))

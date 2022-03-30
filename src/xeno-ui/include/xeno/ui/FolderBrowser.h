@@ -75,7 +75,7 @@ namespace Xenoide {
 
         virtual boost::optional<std::string> getSelectedPath() const = 0;
 
-        virtual void displayContextualMenu(const Point &point, const Menu &menu) = 0;
+        virtual void displayContextualMenu(const Point &point, const MenuData &menu) = 0;
 
     protected:
         FolderBrowser::Presenter *presenter;

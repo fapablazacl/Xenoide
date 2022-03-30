@@ -5,7 +5,7 @@
 #include <xeno/core/Predef.h>
 
 namespace Xenoide {
-    struct Menu;
+    struct MenuData;
 
     /**
      * @brief View that shows to the user a MenuBar.
@@ -14,7 +14,7 @@ namespace Xenoide {
     public:
         virtual ~MenuPanel();
 
-        virtual void setupMenuBar(const Menu &menu) = 0;
+        virtual void setupMenuBar(const MenuData &menu) = 0;
     };
 }
 
