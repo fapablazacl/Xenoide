@@ -7,56 +7,39 @@
 #include <functional>
 #include <set>
 #include <cassert>
+#include <vector>
 
 #include "wtl.h"
 #include "MenuFactory.h"
 
-#include <xeno/ui/Menu.h>
+#include "TreeManagerController.h"
 
 
 namespace Xenoide {
-    struct TreeItemId {
-        TreeItemId() {}
-        
-        explicit TreeItemId(const int value) : value(value) {}
-        
-        bool operator== (const TreeItemId& item) const {
-            return value == item.value;
-        }
-
-        bool operator!= (const TreeItemId& item) const {
-            return value != item.value;
-        }
-        
-        bool operator< (const TreeItemId& item) const {
-            return value < item.value;
-        }
-
-        const int value = 0;
+    struct CImageListCreateData {
+        int cx;
+        int cy;
+        UINT flags;
+        std::vector<HICON> icons;
     };
 
-    class TreeManagerController {
-    public:
-        virtual ~TreeManagerController() {}
 
-        //! gets the contextual menu data model from the specified TreeItem.
-        virtual std::vector<MenuData> getItemPopupMenuData(const TreeItemId itemId) const = 0;
+    inline CImageList CreateImageList(const int cx, const int cy, const UINT flags, const std::vector<HICON>& icons) {
+        CImageList imageList;
 
-        // 
-        virtual void clicked(const TreeItemId itemId) = 0;
+        imageList.Create(cx, cy, flags, static_cast<int>(icons.size()), 0);
 
-        //! the number of children for a given tree item
-        virtual int getChildCount(const TreeItemId itemId) const = 0;
+        for (const HICON hIcon : icons) {
+            assert(hIcon);
+            int index = imageList.AddIcon(hIcon);
 
-        //! get the unique treeitem ID for a parent and its i-th child
-        virtual TreeItemId getChildId(const TreeItemId itemId, const int i) const = 0;
+            assert(index >= 0);
+        }
 
-        //! get the caption text from a given item
-        virtual std::string getItemCaption(const TreeItemId itemId) const = 0;
+        return imageList;
+    }
 
-        //! get the image text from a given item
-        virtual int getItemImage(const TreeItemId itemId) const = 0;
-    };
+    class TreeManagerController;
 
     /**
      * @brief TreeManager class component. Augment a native TreeView with additional features.
@@ -82,11 +65,13 @@ namespace Xenoide {
             MSG_WM_NOTIFY(OnNotify)
             MSG_WM_ERASEBKGND(OnEraseBkgnd)
             MSG_WM_CONTEXTMENU(OnContextMenu)
-            MSG_WM_COMMAND();
+            MSG_WM_COMMAND(OnCommand);
         END_MSG_MAP()
 
     public:
-        explicit CTreeManager();
+        CTreeManager();
+
+        explicit CTreeManager(const HIMAGELIST hImageList);
 
         ~CTreeManager();
 
@@ -108,7 +93,7 @@ namespace Xenoide {
 
         void OnContextMenu(CWindow wnd, CPoint point);
 
-        int OnCommand(WORD wNotifyCode, WORD wID, HWND hWndCtrl, BOOL& bHandled);
+        int OnCommand(UINT uNotifyCode, int nID, CWindow wndCtl);
 
     private:
         HIMAGELIST hImageList = NULL;
@@ -116,6 +101,6 @@ namespace Xenoide {
         CTreeViewCtrl treeView;
         TreeManagerController *controller = nullptr;
 
-        CCommandMap commandMap;
+        CCommandMap commandMap;  
     };
 }

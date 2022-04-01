@@ -23,7 +23,6 @@ namespace Xenoide {
 	private:
 		std::map<int, std::function<void()>> commandIdCallbackMap;
 	};
-
 }
 
 

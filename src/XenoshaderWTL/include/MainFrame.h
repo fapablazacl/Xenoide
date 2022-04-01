@@ -2,6 +2,7 @@
 #pragma once 
 
 #include <optional>
+#include <memory>
 
 #include "framework.h"
 #include "resource.h"
@@ -73,11 +74,13 @@ private:
     CodeEditor mCodeView;
     CXenoFolderView mFolderView;
 
-    Xenoide::CTreeManager mFolderManager;
+    std::unique_ptr<Xenoide::CTreeManager> mFolderManager;
 
     DocumentManager mDocumentManager;
 
     CString mFolderPath;
     CSplitterWindow mSplitterWindow;
     std::optional<boost::filesystem::path> mFilePath;
+
+    CImageList folderImageList;
 };

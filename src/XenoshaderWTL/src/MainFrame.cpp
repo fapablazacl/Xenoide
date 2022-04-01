@@ -5,7 +5,15 @@
 #include <xeno/core/FileService.h>
 
 
-MainFrame::MainFrame() {}
+MainFrame::MainFrame() {
+    folderImageList = Xenoide::CreateImageList(48, 48, ILC_COLOR32, {
+        LoadIcon(GetModuleHandle(NULL), MAKEINTRESOURCE(IDI_FILE)),
+        LoadIcon(GetModuleHandle(NULL), MAKEINTRESOURCE(IDI_FOLDER_2)),
+        LoadIcon(GetModuleHandle(NULL), MAKEINTRESOURCE(IDI_FOLDER_OPEN_5))
+    });
+
+    mFolderManager = std::make_unique<Xenoide::CTreeManager>(folderImageList);
+}
 
 
 void MainFrame::openFile(const boost::filesystem::path &filePath) {
@@ -17,18 +25,18 @@ LRESULT MainFrame::OnCreate(LPCREATESTRUCT cs) {
     CreateSimpleToolBar();
     CreateSimpleStatusBar();
 
-    const DWORD dwClientStyle = WS_CHILD | /*WS_VISIBLE | */ WS_CLIPSIBLINGS | WS_CLIPCHILDREN;
+    const DWORD dwClientStyle = WS_CHILD | WS_CLIPSIBLINGS | WS_CLIPCHILDREN;
     const DWORD dwClientExStyle = WS_EX_CLIENTEDGE;
 
     mSplitterWindow.Create(*this, rcDefault);
 
     // mFolderView.Create(mSplitterWindow, rcDefault, NULL);
-    mFolderManager.Create(mSplitterWindow, rcDefault, NULL);
+    mFolderManager->Create(mSplitterWindow, rcDefault, NULL);
     mCodeView.Create(mSplitterWindow, rcDefault, NULL, dwClientStyle, dwClientExStyle);
     mDocumentManager.Create(mSplitterWindow, rcDefault, NULL, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN, WS_EX_CLIENTEDGE);
 
     // mSplitterWindow.SetSplitterPanes(mFolderView, mDocumentManager);
-    mSplitterWindow.SetSplitterPanes(mFolderManager, mDocumentManager);
+    mSplitterWindow.SetSplitterPanes(*mFolderManager, mDocumentManager);
     
     m_hWndClient = mSplitterWindow;
     UpdateLayout();

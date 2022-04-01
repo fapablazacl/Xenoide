@@ -2,6 +2,8 @@
 // Microsoft Visual C++ generated include file.
 // Used by Resource.rc
 //
+#include <Windows.h>
+
 #define SW_HIDE                         0
 #define HIDE_WINDOW                     0
 #define WM_NULL                         0x0000
@@ -601,6 +603,7 @@
 #define SUBLANG_SPANISH_US              0x15
 #define WM_ENDSESSION                   0x0016
 #define LANG_PORTUGUESE                 0x16
+#define VK_IME_ON                       0x16
 #define VK_JUNJA                        0x17
 #define LANG_ROMANSH                    0x17
 #define RT_MANIFEST                     24
@@ -614,6 +617,7 @@
 #define LANG_BOSNIAN                    0x1a
 #define LANG_CROATIAN                   0x1a
 #define LANG_SERBIAN                    0x1a
+#define VK_IME_OFF                      0x1A
 #define VK_ESCAPE                       0x1B
 #define WM_DEVMODECHANGE                0x001B
 #define LANG_SLOVAK                     0x1b
@@ -830,8 +834,12 @@
 #define VK_F5                           0x74
 #define VK_F6                           0x75
 #define LANG_HAWAIIAN                   0x75
+#define IDI_FOLDER_2                    117
 #define VK_F7                           0x76
+#define IDI_FOLDER_OPEN_5_ICON          118
+#define IDI_FOLDER_OPEN_5               118
 #define VK_F8                           0x77
+#define IDI_FILE                        119
 #define VK_F9                           0x78
 #define WHEEL_DELTA                     120
 #define LANG_YI                         0x78
@@ -1638,7 +1646,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        117
+#define _APS_NEXT_RESOURCE_VALUE        120
 #define _APS_NEXT_COMMAND_VALUE         40020
 #define _APS_NEXT_CONTROL_VALUE         1002
 #define _APS_NEXT_SYMED_VALUE           101
