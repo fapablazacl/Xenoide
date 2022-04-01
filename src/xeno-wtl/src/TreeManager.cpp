@@ -46,21 +46,15 @@ HTREEITEM InsertTreeItem(
 namespace Xenoide {
     CTreeManager::CTreeManager() {
         m_bMsgHandled = false;
-        controller = nullptr;
     }
 
 
     CTreeManager::CTreeManager(const HIMAGELIST hImageList) : hImageList{hImageList} {
         m_bMsgHandled = false;
-        controller = new CTreeManagerControllerFileSystem(boost::filesystem::current_path());
     }
 
 
-    CTreeManager::~CTreeManager() {
-        if (controller) {
-            delete controller;
-        }
-    }
+    CTreeManager::~CTreeManager() {}
 
     LRESULT CTreeManager::OnCreate(LPCREATESTRUCT cs) {
         SetMsgHandled(true);
@@ -71,16 +65,7 @@ namespace Xenoide {
         treeView.SetExtendedStyle(TVS_EX_DOUBLEBUFFER, TVS_EX_DOUBLEBUFFER);
         treeView.SetImageList(hImageList);
 
-        // start with the first level
-        for (int i = 0; i < controller->getChildCount({}); i++) {
-            const TreeItemId id = controller->getChildId({}, i);
-
-            const std::string name = controller->getItemCaption(id);
-            const bool hasChildren = controller->getChildCount(id) > 0;
-            const int image = controller->getItemImage(id);
-
-            InsertTreeItem(treeView, name.c_str(), static_cast<LPARAM>(id.value), NULL, hasChildren, image);
-        }
+        ReloadContent();
 
         return 0;
     }
@@ -131,6 +116,7 @@ namespace Xenoide {
         }
         else if (pnmh->code == TVN_ITEMEXPANDING) {
             const auto &pnmtv = *reinterpret_cast<LPNMTREEVIEW>(pnmh);
+            const HTREEITEM hItem = pnmtv.itemNew.hItem;
 
             if (pnmtv.action == TVE_EXPAND) {
                 // TODO: Refactor to a common function
@@ -146,10 +132,13 @@ namespace Xenoide {
                         const bool hasChildren = controller->getChildCount(childId) > 0;
                         const int image = controller->getItemImage(childId);
 
-                        InsertTreeItem(treeView, name.c_str(), static_cast<LPARAM>(childId.value), pnmtv.itemNew.hItem, hasChildren, image);
+                        InsertTreeItem(treeView, name.c_str(), static_cast<LPARAM>(childId.value), hItem, hasChildren, image);
                     }
 
                     populated.insert(itemId);
+
+                    // perform a Sort
+                    Sort(hItem);
                 }
             }
         }
@@ -173,5 +162,49 @@ namespace Xenoide {
     int CTreeManager::OnCommand(UINT uNotifyCode, int nID, CWindow wndCtl) {
 
         return 0;
+    }
+
+
+    static int CALLBACK CTreeManager_CompareFunc(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort) {
+        const auto controller = reinterpret_cast<TreeManagerController*>(lParamSort);
+        const auto item1 = TreeItemId{ static_cast<int>(lParam1) };
+        const auto item2 = TreeItemId{ static_cast<int>(lParam2) };
+
+        return controller->compare(item1, item2);
+    }
+
+
+    void CTreeManager::ReloadContent() {
+        treeView.DeleteAllItems();
+
+        if (!controller) {
+            return;
+        }
+
+        for (int i = 0; i < controller->getChildCount({}); i++) {
+            const TreeItemId id = controller->getChildId({}, i);
+
+            const std::string name = controller->getItemCaption(id);
+            const bool hasChildren = controller->getChildCount(id) > 0;
+            const int image = controller->getItemImage(id);
+
+            InsertTreeItem(treeView, name.c_str(), static_cast<LPARAM>(id.value), NULL, hasChildren, image);
+        }
+
+        Sort(NULL);
+    }
+
+    void CTreeManager::Sort(HTREEITEM hItem) {
+        if (!controller) {
+            return;
+        }
+
+        TVSORTCB sort = {};
+
+        sort.hParent = hItem;
+        sort.lpfnCompare = CTreeManager_CompareFunc;
+        sort.lParam = reinterpret_cast<LPARAM>(controller);
+
+        treeView.SortChildrenCB(&sort, FALSE);
     }
 }

@@ -95,6 +95,10 @@ namespace Xenoide {
 
         int OnCommand(UINT uNotifyCode, int nID, CWindow wndCtl);
 
+        void ReloadContent();
+
+        void Sort(HTREEITEM hItem);
+
     private:
         HIMAGELIST hImageList = NULL;
         std::set<TreeItemId> populated;

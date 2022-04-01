@@ -1,9 +1,10 @@
 
 #include <xeno/wtl/TreeManagerControllerFileSystem.h>
 
+#include <boost/algorithm/string/predicate.hpp>
 
 namespace Xenoide {
-    CTreeManagerControllerFileSystem::CTreeManagerControllerFileSystem(const boost::filesystem::path& rootPath) 
+    TreeManagerControllerFileSystem::TreeManagerControllerFileSystem(const boost::filesystem::path& rootPath) 
         : rootPath{rootPath} {
 
         fileContextMenu = {
@@ -31,14 +32,13 @@ namespace Xenoide {
         };
     }
 
-    CTreeManagerControllerFileSystem::~CTreeManagerControllerFileSystem() {}
+    TreeManagerControllerFileSystem::~TreeManagerControllerFileSystem() {}
 
-    void CTreeManagerControllerFileSystem::clicked(const TreeItemId itemId) {}
+    void TreeManagerControllerFileSystem::clicked(const TreeItemId itemId) {}
 
-    int CTreeManagerControllerFileSystem::getChildCount(const TreeItemId itemId) const {
+    int TreeManagerControllerFileSystem::getChildCount(const TreeItemId itemId) const {
         // determine current path
-        // TODO: refactor into an utility method
-        const boost::filesystem::path path = (itemId == TreeItemId{} ?  rootPath : itemPathMap[itemId]);
+        const boost::filesystem::path path = pathFromItem(itemId);
 
         // if the current path is not a directory, it can't have children subpaths.
         if (!boost::filesystem::is_directory(path)) {
@@ -67,7 +67,7 @@ namespace Xenoide {
     }
 
 
-    TreeItemId CTreeManagerControllerFileSystem::getChildId(const TreeItemId parentId, const int i) const {
+    TreeItemId TreeManagerControllerFileSystem::getChildId(const TreeItemId parentId, const int i) const {
         const auto key = std::tuple(parentId, i);
 
         if (const auto it = parentItemMap.find(key); it != parentItemMap.end()) {
@@ -82,7 +82,7 @@ namespace Xenoide {
     }
 
 
-    std::string CTreeManagerControllerFileSystem::getItemCaption(const TreeItemId itemId) const {
+    std::string TreeManagerControllerFileSystem::getItemCaption(const TreeItemId itemId) const {
         const auto it = itemPathMap.find(itemId);
         assert(it != itemPathMap.end());
 
@@ -90,18 +90,15 @@ namespace Xenoide {
     }
 
 
-    int CTreeManagerControllerFileSystem::getItemImage(const TreeItemId itemId) const {
+    int TreeManagerControllerFileSystem::getItemImage(const TreeItemId itemId) const {
         const auto it = itemPathMap.find(itemId);
         assert(it != itemPathMap.end());
-
-        // return GetIconFromPath(it->second.string().c_str());
 
         return boost::filesystem::is_directory(it->second) ? 1 : 0;
     }
 
-    std::vector<MenuData> CTreeManagerControllerFileSystem::getItemPopupMenuData(const TreeItemId itemId) const {
-        // TODO: Refactor into an utility method
-        const boost::filesystem::path path = (itemId == TreeItemId{} ?  rootPath : itemPathMap[itemId]);
+    std::vector<MenuData> TreeManagerControllerFileSystem::getItemPopupMenuData(const TreeItemId itemId) const {
+        const boost::filesystem::path path = pathFromItem(itemId);
 
         if (boost::filesystem::is_directory(path)) {
             return folderContextMenu;
@@ -110,7 +107,35 @@ namespace Xenoide {
         return fileContextMenu;
     }
 
-    TreeItemId CTreeManagerControllerFileSystem::generateItemId() const {
+    TreeItemId TreeManagerControllerFileSystem::generateItemId() const {
         return TreeItemId { ++count };
+    }
+
+    int TreeManagerControllerFileSystem::compare(const TreeItemId& item1, const TreeItemId& item2) const {
+        namespace fs = boost::filesystem;
+
+        if (item1 == item2) {
+            return 0;
+        }
+
+        const auto path1 = pathFromItem(item1);
+        const auto path2 = pathFromItem(item2);
+
+        if (fs::is_directory(path1) && !fs::is_directory(path2)) {
+            return -1;
+        }
+
+        if (!fs::is_directory(path1) && fs::is_directory(path2)) {
+            return 1;
+        }
+
+        const auto name1 = path1.filename().string();
+        const auto name2 = path2.filename().string();
+
+        return boost::iequals(name1, name2);
+    }
+
+    const boost::filesystem::path& TreeManagerControllerFileSystem::pathFromItem(const TreeItemId itemId) const {
+        return (itemId == TreeItemId{} ?  rootPath : itemPathMap[itemId]);
     }
 }

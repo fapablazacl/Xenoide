@@ -3,6 +3,7 @@
 #include "AboutDlg.h"
 
 #include <xeno/core/FileService.h>
+#include <xeno/wtl/TreeManagerControllerFileSystem.h>
 
 
 MainFrame::MainFrame() {
@@ -82,7 +83,9 @@ void MainFrame::OnFileMenu(UINT uCode, int nID, HWND hwndCtrl) {
 
         const boost::filesystem::path folderPath = folderDialog.GetFolderPath();
 
-        mFolderView.DisplayFolder(folderPath);
+        folderManagerController = std::make_unique<Xenoide::TreeManagerControllerFileSystem>(folderPath);
+        mFolderManager->SetController(folderManagerController.get());
+        mFolderManager->ReloadContent();
     }
 
     if (nID == ID_FILE_SAVE) {

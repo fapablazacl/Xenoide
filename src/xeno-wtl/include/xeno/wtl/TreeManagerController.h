@@ -56,5 +56,8 @@ namespace Xenoide {
 
         //! get the image text from a given item
         virtual int getItemImage(const TreeItemId itemId) const = 0;
+        
+        //! compares two items, for sorting operations in the treeview
+        virtual int compare(const TreeItemId& item1, const TreeItemId& item2) const = 0;
     };
 }

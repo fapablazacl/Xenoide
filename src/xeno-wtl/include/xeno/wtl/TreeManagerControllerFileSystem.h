@@ -9,11 +9,11 @@
 
 
 namespace Xenoide {
-    class CTreeManagerControllerFileSystem : public TreeManagerController {
+    class TreeManagerControllerFileSystem : public TreeManagerController {
     public:
-        explicit CTreeManagerControllerFileSystem(const boost::filesystem::path& rootPath);
+        explicit TreeManagerControllerFileSystem(const boost::filesystem::path& rootPath);
 
-        virtual ~CTreeManagerControllerFileSystem();
+        virtual ~TreeManagerControllerFileSystem();
 
         void clicked(const TreeItemId itemId) override;
 
@@ -26,9 +26,13 @@ namespace Xenoide {
         int getItemImage(const TreeItemId itemId) const override;
 
         std::vector<MenuData> getItemPopupMenuData(const TreeItemId itemId) const override;
+        
+        int compare(const TreeItemId& item1, const TreeItemId& item2) const override;
 
     private:
         TreeItemId generateItemId() const;
+
+        const boost::filesystem::path& pathFromItem(const TreeItemId) const;
 
     private:
         std::vector<MenuData> fileContextMenu;
@@ -42,4 +46,3 @@ namespace Xenoide {
         mutable std::map<TreeItemId, std::vector<boost::filesystem::path>> itemChildMap;
     };
 }
-

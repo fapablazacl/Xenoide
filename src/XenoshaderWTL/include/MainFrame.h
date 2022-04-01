@@ -12,6 +12,7 @@
 
 #include <xeno/wtl/CodeEditor.h>
 #include <xeno/wtl/TreeManager.h>
+#include <xeno/wtl/TreeManagerController.h>
 
 
 // Frame Windows are defined with CFrameWindowImpl
@@ -72,9 +73,10 @@ private:
 
 private:
     CodeEditor mCodeView;
-    CXenoFolderView mFolderView;
+    // CXenoFolderView mFolderView;
 
     std::unique_ptr<Xenoide::CTreeManager> mFolderManager;
+    std::unique_ptr<Xenoide::TreeManagerController> folderManagerController;
 
     DocumentManager mDocumentManager;
 
