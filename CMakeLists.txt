@@ -5,6 +5,8 @@ project (Xenoide LANGUAGES C CXX)
 
 option (XENOIDE_ENABLE_LINTER "Enable the use of Linter Tool. clang-tidy must be installed." OFF)
 option (XENOIDE_ENABLE_TESTS "Enable the automated self-tests for all libraries." OFF)
+option (XENOIDE_BUILD_UI_WTL "Build WTL based Frontend" OFF)
+option (XENOIDE_BUILD_UI_GTK "Build GTK based Frontend" OFF)
 option (XENOIDE_BUILD_POC_GTKCLASSBROWSER "" OFF)
 option (XENOIDE_BUILD_POC_GUIMVP "" OFF)
 option (XENOIDE_BUILD_POC_GUIWX "" OFF)

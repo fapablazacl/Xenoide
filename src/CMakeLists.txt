@@ -1,16 +1,22 @@
 
-# ide
+# IDE Core
 add_subdirectory ("xeno-core")
-add_subdirectory ("xeno-scintilla")
 add_subdirectory ("xeno-ui")
-add_subdirectory ("xeno-wtl")
-add_subdirectory ("XenoideWTL")
-add_subdirectory ("XenoshaderWTL")
+
+# WTL UI 
+if (XENOIDE_BUILD_UI_WTL)
+    add_subdirectory ("xeno-scintilla")
+    add_subdirectory ("xeno-wtl")
+    add_subdirectory ("XenoideWTL")
+    add_subdirectory ("XenoshaderWTL")
+endif ()
 
 # build system
 add_subdirectory ("core")
 add_subdirectory ("libxenocli")
 add_subdirectory ("xenocli")
+
+# unused sources (for now)
 # add_subdirectory("build-core")
 # add_subdirectory("build-core-io")
 # add_subdirectory("build-core-pipeline")
