@@ -11,6 +11,10 @@ if (XENOIDE_BUILD_UI_WTL)
     add_subdirectory ("XenoshaderWTL")
 endif ()
 
+if (XENOIDE_BUILD_UI_GTK)
+    add_subdirectory ("XenoideGTK")
+endif ()
+
 # build system
 add_subdirectory ("core")
 add_subdirectory ("libxenocli")

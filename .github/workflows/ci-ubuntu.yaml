@@ -16,7 +16,7 @@ jobs:
           submodules: true
 
       - name: Install Dependencies
-        run: sudo apt-get install libboost-all-dev
+        run: sudo apt-get install libboost-all-dev libgtksourceviewmm-3.0-dev libgtkmm-3.0-dev
 
       - name: Configure [Debug]
         run: cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug -B build/debug
