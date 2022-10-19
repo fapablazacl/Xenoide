@@ -11,9 +11,6 @@
 
 #include <xeno/ui/Menu.h>
 
-#include "wtl.h"
-
-
 namespace Xenoide {
     struct TreeItemId {
         TreeItemId() {}

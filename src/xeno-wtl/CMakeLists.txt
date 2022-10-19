@@ -15,13 +15,10 @@ set (sources
     "include/xeno/wtl/TreeManager.h"
     "include/xeno/wtl/CodeEditor.h"
     "include/xeno/wtl/MenuFactory.h"
-    "include/xeno/wtl/TreeManagerController.h"
-    "include/xeno/wtl/TreeManagerControllerFileSystem.h"
     
     "src/TreeManager.cpp"
     "src/CodeEditor.cpp"
     "src/MenuFactory.cpp"
-    "src/TreeManagerControllerFileSystem.cpp"
 )
 
 add_library (${target} ${sources})

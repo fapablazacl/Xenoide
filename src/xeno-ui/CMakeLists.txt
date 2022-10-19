@@ -14,7 +14,9 @@ set (sources
     "include/xeno/ui/MenuPanel.h"
     "include/xeno/ui/FileFilter.h"
     "include/xeno/ui/ObjectTreeView.h"
-
+    "include/xeno/ui/TreeManagerController.h"
+    "include/xeno/ui/TreeManagerControllerFileSystem.h"
+    
     "src/WindowsUtils.cpp"
     "src/FindReplaceDialog.cpp"
     "src/Document.cpp"
@@ -27,6 +29,7 @@ set (sources
     "src/MenuPanel.cpp"
     "src/FileFilter.cpp"
     "src/ObjectTreeView.cpp"
+    "src/TreeManagerControllerFileSystem.cpp"
 )
 
 add_library (${target} ${sources})

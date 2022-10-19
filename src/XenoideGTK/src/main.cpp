@@ -1,8 +1,4 @@
 
-
-#include <gtkmm.h>
-#include <gtksourceviewmm.h>
-
 #include "MainWindow.h"
 #include "MainApplication.h"
 
