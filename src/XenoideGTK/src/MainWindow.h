@@ -6,8 +6,8 @@
 #include <gtksourceviewmm.h>
 #include <string>
 
-#include "DocumentManagerGtk.h"
-#include "FolderBrowserGtk.h"
+#include "document-manager/DocumentManagerGtk.h"
+#include "folder-browser/FolderBrowserGtk.h"
 
 namespace Xenoide {
     class MainWindow : public Gtk::ApplicationWindow {

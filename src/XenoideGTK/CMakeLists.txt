@@ -11,14 +11,14 @@ set(target "XenoideGTK")
 
 set(sources 
     "src/main.cpp"
-    src/DocumentHeader.h     
-    src/DocumentHeader.cpp      
-    src/DocumentManagerGtk.h  
-    src/DocumentManagerGtk.cpp  
-    src/DocumentGtk.h    
-    src/DocumentGtk.cpp  
-    src/FolderBrowserGtk.h    
-    src/FolderBrowserGtk.cpp  
+    src/document-manager/DocumentHeader.h     
+    src/document-manager/DocumentHeader.cpp      
+    src/document-manager/DocumentManagerGtk.h  
+    src/document-manager/DocumentManagerGtk.cpp  
+    src/document-manager/DocumentGtk.h    
+    src/document-manager/DocumentGtk.cpp  
+    src/folder-browser/FolderBrowserGtk.h    
+    src/folder-browser/FolderBrowserGtk.cpp  
     src/MainApplication.h    
     src/MainApplication.cpp  
     src/MainWindow.h
@@ -28,7 +28,10 @@ set(sources
 
 add_executable(${target} ${sources})
 
-#
+# Core 
+target_link_libraries(${target} xeno-core xeno-ui)
+
+# GTK
 target_include_directories(${target} PUBLIC ${GTKMM_INCLUDE_DIRS})
 target_link_directories(${target} PUBLIC ${GTKMM_LIBRARY_DIRS})
 target_link_libraries(${target} ${GTK4_LIBRARIES} ${GTKMM_LIBRARIES})

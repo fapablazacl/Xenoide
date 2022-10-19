@@ -11,6 +11,7 @@ if (XENOIDE_BUILD_UI_WTL)
     add_subdirectory ("XenoshaderWTL")
 endif ()
 
+# GTK UI
 if (XENOIDE_BUILD_UI_GTK)
     add_subdirectory ("XenoideGTK")
 endif ()
