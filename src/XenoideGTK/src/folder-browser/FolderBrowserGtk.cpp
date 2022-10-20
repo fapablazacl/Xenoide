@@ -29,30 +29,41 @@ namespace Xenoide {
 
     void FolderBrowserGtk::displayFolder(const std::string &projectPath) {
         // internal variable cleanup
-        m_projectPath = projectPath;
+        controller = std::make_unique<TreeManagerControllerFileSystem>(projectPath);
         m_refTreeStore->clear();
 
-        // populate the model
-        fs::path path(projectPath);
-        Gtk::TreeModel::iterator treeIterator = m_refTreeStore->append();
-        Gtk::TreeModel::Row row = *treeIterator;
-        row[m_treeModel.m_itemName] = this->GetPathName(path);
-        row[m_treeModel.m_itemPath] = path.string();
+        // populate the model rool model
+        rootNodeIterator = appendPathTreeNode(controller->getItemCaption({}), "", {});
 
-        this->PopulateTreeNode(path, treeIterator);
+        // PopulateTreeNode(path, treeIterator);
 
+        expandRootNode();
+    }
+
+
+    void FolderBrowserGtk::expandRootNode() {
         Gtk::TreeModel::Path treePath;
         treePath.push_back(0);
-
         m_treeView.expand_row(treePath, false);
     }
 
 
-    std::optional<std::string> FolderBrowserGtk::getSelectedPath() const {
-        if (m_projectPath != "") {
-            return m_projectPath;
-        }
+    Gtk::TreeModel::iterator FolderBrowserGtk::appendPathTreeNode (
+        const std::string &name, 
+        const std::string &path,
+        Gtk::TreeModel::iterator treeIterator
+    ) {
+        Gtk::TreeModel::iterator childIterator = m_refTreeStore->append(treeIterator->children());
+        Gtk::TreeModel::Row childRow = *childIterator;
 
+        childRow[m_treeModel.m_itemName] = name;
+        childRow[m_treeModel.m_itemPath] = path;
+
+        return childIterator;
+    }
+
+
+    std::optional<std::string> FolderBrowserGtk::getSelectedPath() const {
         return {};
     }
 
@@ -91,10 +102,7 @@ namespace Xenoide {
         */
     }
 
-    std::string FolderBrowserGtk::GetPathName(const fs::path &path) {
-        return path.filename().string();
-    }
-
+    /*
     void FolderBrowserGtk::PopulateTreeNode(fs::path path, Gtk::TreeModel::iterator treeIterator) {
         if (fs::is_directory(path)) {
             fs::directory_iterator subPathIterator(path);
@@ -115,4 +123,5 @@ namespace Xenoide {
             }
         }
     }
+    */
 }

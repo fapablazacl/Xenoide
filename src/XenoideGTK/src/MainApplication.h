@@ -2,8 +2,7 @@
 #ifndef __FELIDE_GTK3_MAINAPPLICATION_HPP__
 #define __FELIDE_GTK3_MAINAPPLICATION_HPP__
 
-#include <gtkmm.h>
-#include <gtksourceviewmm.h>
+#include <Xenoide/gtkmm.h>
 
 namespace Xenoide {
     class MainApplication : public Gtk::Application {

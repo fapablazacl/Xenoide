@@ -2,8 +2,7 @@
 #ifndef __FELIDE_GTK3_EDITORHEADER_HPP__
 #define __FELIDE_GTK3_EDITORHEADER_HPP__
 
-#include <gtkmm.h>
-#include <gtksourceviewmm.h>
+#include <Xenoide/gtkmm.h>
 #include <string>
 
 namespace Xenoide {

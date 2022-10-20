@@ -29,6 +29,7 @@ set(sources
 add_executable(${target} ${sources})
 
 # Core 
+target_include_directories(${target} PRIVATE "include")
 target_link_libraries(${target} xeno-core xeno-ui)
 
 # GTK

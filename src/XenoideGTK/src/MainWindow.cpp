@@ -93,8 +93,8 @@ namespace Xenoide {
 
         if (result == Gtk::RESPONSE_OK) {            
             const std::string path = dialog.get_filename();
-            const std::string name = fs::path(path).filename().string();
-            const std::string content = ""/*Xenoide::FileUtil::load(path)*/;
+            const std::string name = "Name";
+            const std::string content = "TODO: Implement File Loading"/*Xenoide::FileUtil::load(path)*/;
 
             documentManager.open_editor(path, name, content);
         }
@@ -127,11 +127,13 @@ namespace Xenoide {
 
 
     void MainWindow::on_item_activated(std::string path) {
+        /*
         if (fs::is_directory(path)) {
             return;
         }
+        */
 
-        const std::string name = fs::path(path).filename().string();
+        const std::string name = "fs::path(path).filename().string();";
         const std::string content = "" /*TODO: Implement Xenoide::FileUtil::load(path)*/;
 
         documentManager.open_editor(path, name, content);

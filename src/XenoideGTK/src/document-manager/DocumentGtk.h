@@ -3,9 +3,7 @@
 #define __FELIDE_GTK3_EDITOR_HPP__
 
 #include <string>
-
-#include <gtkmm.h>
-#include <gtksourceviewmm.h>
+#include <Xenoide/gtkmm.h>
 
 namespace Xenoide {
     typedef sigc::signal<void> signal_editor_dirty_changed_t;

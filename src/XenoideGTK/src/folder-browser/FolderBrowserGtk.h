@@ -3,14 +3,11 @@
 #define __FELIDE_GTK3_PROJECTEXPLORER_HPP__
 
 #include <string>
-#include <gtkmm.h>
-#include <gtksourceviewmm.h>
-
 #include <optional>
 #include <iostream>
-#include <filesystem>
-
-namespace fs = std::filesystem;
+#include <memory>
+#include <Xenoide/gtkmm.h>
+#include <xeno/ui/TreeManagerControllerFileSystem.h>
 
 namespace Xenoide {
     /**
@@ -39,27 +36,34 @@ namespace Xenoide {
 
         std::optional<std::string> getSelectedPath() const;
 
+        void expandRootNode();
+
     public:
         signal_item_activated_t signal_item_activated();
 
     private:
-        void OnItemActivated(const Gtk::TreeModel::Path& treePath, Gtk::TreeViewColumn* column);
+        Gtk::TreeModel::iterator appendPathTreeNode (
+            const std::string &name, 
+            const std::string &path,
+            Gtk::TreeModel::iterator treeIterator);
+
+        void OnItemActivated(
+            const Gtk::TreeModel::Path& treePath, 
+            Gtk::TreeViewColumn* column);
 
         void OnItemSelected();
-
-        std::string GetPathName(const fs::path &path);
-
-        void PopulateTreeNode(fs::path path, Gtk::TreeModel::iterator treeIterator);
 
     private:
         signal_item_activated_t m_signal_item_activated;
 
-        std::string m_projectPath;
         Gtk::ScrolledWindow m_scrolled;
 
         ProjectItemModel m_treeModel;
+        Gtk::TreeModel::iterator rootNodeIterator;
         Gtk::TreeView m_treeView;
         Glib::RefPtr<Gtk::TreeStore> m_refTreeStore;
+
+        std::unique_ptr<TreeManagerController> controller;
     };
 }
 
