@@ -62,6 +62,5 @@ else()
     add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
-add_subdirectory("dep")
 add_subdirectory("src")
 add_subdirectory("pocs")
