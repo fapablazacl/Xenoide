@@ -11,19 +11,18 @@ set(target "XenoideGTK")
 
 set(sources 
     "src/main.cpp"
-    src/document-manager/DocumentHeader.h     
-    src/document-manager/DocumentHeader.cpp      
-    src/document-manager/DocumentManagerGtk.h  
-    src/document-manager/DocumentManagerGtk.cpp  
-    src/document-manager/DocumentGtk.h    
-    src/document-manager/DocumentGtk.cpp  
-    src/folder-browser/FolderBrowserGtk.h    
-    src/folder-browser/FolderBrowserGtk.cpp  
-    src/MainApplication.h    
-    src/MainApplication.cpp  
-    src/MainWindow.h
-    src/MainWindow.cpp
-    src/main.cpp
+    "src/document-manager/DocumentHeader.h"
+    "src/document-manager/DocumentHeader.cpp"
+    "src/document-manager/DocumentManagerGtk.h"
+    "src/document-manager/DocumentManagerGtk.cpp"
+    "src/document-manager/DocumentGtk.h"
+    "src/document-manager/DocumentGtk.cpp"
+    "src/folder-browser/FolderBrowserGtk.h"
+    "src/folder-browser/FolderBrowserGtk.cpp"
+    "src/MainApplication.h"
+    "src/MainApplication.cpp"
+    "src/MainWindow.h"
+    "src/MainWindow.cpp"
 )
 
 add_executable(${target} ${sources})

@@ -1,6 +1,8 @@
 
 #include "FolderBrowserGtk.h"
 
+#include <xeno/ui/TreeManagerControllerFileSystem.h>
+
 namespace Xenoide {
     FolderBrowserGtk::FolderBrowserGtk() {
         // setup UI
@@ -33,7 +35,7 @@ namespace Xenoide {
         m_refTreeStore->clear();
 
         // populate the model rool model
-        rootNodeIterator = appendPathTreeNode(controller->getItemCaption({}), "", {});
+        rootNodeIterator = appendPathTreeNode({}, {});
 
         // PopulateTreeNode(path, treeIterator);
 
@@ -49,16 +51,15 @@ namespace Xenoide {
 
 
     Gtk::TreeModel::iterator FolderBrowserGtk::appendPathTreeNode (
-        const std::string &name, 
-        const std::string &path,
+        const TreeItemId itemId,
         Gtk::TreeModel::iterator treeIterator
     ) {
         Gtk::TreeModel::iterator childIterator = m_refTreeStore->append(treeIterator->children());
         Gtk::TreeModel::Row childRow = *childIterator;
 
-        childRow[m_treeModel.m_itemName] = name;
-        childRow[m_treeModel.m_itemPath] = path;
-
+        childRow[m_treeModel.m_itemName] = controller->getItemCaption(itemId);
+        childRow[m_treeModel.m_itemPath] = "path";
+        
         return childIterator;
     }
 

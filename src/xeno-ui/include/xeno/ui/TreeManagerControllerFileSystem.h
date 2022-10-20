@@ -34,6 +34,8 @@ namespace Xenoide {
 
         const boost::filesystem::path& pathFromItem(const TreeItemId) const;
 
+        int populateChildren(const TreeItemId itemId, const boost::filesystem::path &path) const;
+
     private:
         std::vector<MenuData> fileContextMenu;
         std::vector<MenuData> folderContextMenu;

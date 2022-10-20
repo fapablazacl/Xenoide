@@ -84,7 +84,7 @@ namespace Xenobuild {
         const std::vector<Dependency> dependencies = context.package.dependencies;
         
         // 
-        for (const Dependency dep : dependencies) {
+        for (const Dependency &dep : dependencies) {
             if (! dependencyManager.download(dep)) {
                 throw std::runtime_error("Download command failed.");
             }

@@ -30,6 +30,10 @@ namespace Xenoide {
             MenuData::action([]() {}, "&Rename"),
             MenuData::action([]() {}, "&Delete")
         };
+
+        //
+        itemPathMap[{}] = rootPath;
+        populateChildren({}, rootPath);
     }
 
     TreeManagerControllerFileSystem::~TreeManagerControllerFileSystem() {}
@@ -51,6 +55,11 @@ namespace Xenoide {
         }
 
         // populate child elements
+        return populateChildren(itemId, path);
+    }
+
+
+    int TreeManagerControllerFileSystem::populateChildren(const TreeItemId itemId, const boost::filesystem::path &path) const {
         int i = 0;
 
         for (boost::filesystem::directory_iterator end, path_it{ path }; path_it != end; path_it++) {

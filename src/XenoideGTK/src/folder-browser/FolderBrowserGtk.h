@@ -7,7 +7,7 @@
 #include <iostream>
 #include <memory>
 #include <Xenoide/gtkmm.h>
-#include <xeno/ui/TreeManagerControllerFileSystem.h>
+#include <xeno/ui/TreeManagerController.h>
 
 namespace Xenoide {
     /**
@@ -43,8 +43,7 @@ namespace Xenoide {
 
     private:
         Gtk::TreeModel::iterator appendPathTreeNode (
-            const std::string &name, 
-            const std::string &path,
+            const TreeItemId itemId,
             Gtk::TreeModel::iterator treeIterator);
 
         void OnItemActivated(
