@@ -2,17 +2,17 @@
 #ifndef __FELIDE_GTK3_PROJECTEXPLORER_HPP__
 #define __FELIDE_GTK3_PROJECTEXPLORER_HPP__
 
-#include <string>
-#include <optional>
+#include <Xenoide/gtkmm.h>
 #include <iostream>
 #include <memory>
-#include <Xenoide/gtkmm.h>
+#include <optional>
+#include <string>
 #include <xeno/ui/TreeManagerController.h>
 
 namespace Xenoide {
     /**
      * @brief FolderBrowserGtk that opens a "vanilla" project style (it just open a folder and shows it contents)
-     */ 
+     */
     class ProjectItemModel : public Gtk::TreeModel::ColumnRecord {
     public:
         ProjectItemModel() {
@@ -42,13 +42,9 @@ namespace Xenoide {
         signal_item_activated_t signal_item_activated();
 
     private:
-        Gtk::TreeModel::iterator appendPathTreeNode (
-            const TreeItemId itemId,
-            Gtk::TreeModel::iterator treeIterator);
+        Gtk::TreeModel::iterator appendPathTreeNode(const TreeItemId itemId, Gtk::TreeModel::iterator treeIterator);
 
-        void OnItemActivated(
-            const Gtk::TreeModel::Path& treePath, 
-            Gtk::TreeViewColumn* column);
+        void OnItemActivated(const Gtk::TreeModel::Path &treePath, Gtk::TreeViewColumn *column);
 
         void OnItemSelected();
 
