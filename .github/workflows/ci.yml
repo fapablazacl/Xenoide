@@ -1,11 +1,11 @@
 name: Continuous Integration Pipeline
 on: [push]
 jobs:
-  ubuntu-build:
+  build:
     strategy:
       matrix:
         build-type: [Debug, Release]
-        os: [ubuntu-22.04, ubuntu-20.04]
+        os: [ubuntu-22.04, ubuntu-20.04, macos-latest]
     runs-on: ${{ matrix.os }}
     steps:
       - name: Check out repository code
@@ -13,11 +13,16 @@ jobs:
         with:
           submodules: true
 
-      - name: Install OS Dependencies
-        run: sudo apt-get install libboost-all-dev libgtkmm-3.0-dev libgtksourceviewmm-3.0-dev
+      - name: Install Ubuntu Dependencies
+        if: startsWith(${{ matrix.os }}, 'ubuntu')
+        run: sudo apt-get install libboost-all-dev
+
+      - name: Install macOS Dependencies
+        if: startsWith(${{ matrix.os }}, 'macos')
+        run: brew install boost
 
       - name: Configure
-        run: cmake -B build/${{ matrix.build-type }} -G "Unix Makefiles" -DXENOIDE_GUI_GTK3=ON -DCMAKE_BUILD_TYPE=${{ matrix.build-type }}
+        run: cmake -B build/${{ matrix.build-type }} -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=${{ matrix.build-type }}
 
       - name: Build 
         run: cmake --build build/${{ matrix.build-type }}
