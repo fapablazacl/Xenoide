@@ -21,6 +21,10 @@ jobs:
         if: ${{startsWith(matrix.os, 'macos')}}
         run: brew install boost
 
+      - name: Install Windows Dependencies
+        if: ${{startsWith(matrix.os, 'windows')}}
+        run: vcpkg install boost && vcpkg integrate install
+
       - name: Configure
         run: cmake -B build/${{ matrix.build-type }} -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=${{ matrix.build-type }}
 
