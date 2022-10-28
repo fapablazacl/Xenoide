@@ -3,9 +3,9 @@ on: [push]
 jobs:
   ubuntu-build:
     strategy:
-    matrix:
-      build-type: [Debug, Release]
-      os: [ubuntu-22.04, ubuntu-20.04]
+      matrix:
+        build-type: [Debug, Release]
+        os: [ubuntu-22.04, ubuntu-20.04]
     runs-on: ${{ matrix.os }}
     steps:
       - name: Check out repository code
