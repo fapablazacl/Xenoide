@@ -4,8 +4,8 @@ jobs:
   build:
     strategy:
       matrix:
-        build-type: [Debug, Release]
         os: [ubuntu-22.04, ubuntu-20.04, macos-latest]
+        build-type: [Debug, Release]
     runs-on: ${{ matrix.os }}
     steps:
       - name: Check out repository code
@@ -14,11 +14,11 @@ jobs:
           submodules: true
 
       - name: Install Ubuntu Dependencies
-        if: startsWith(${{ matrix.os }}, 'ubuntu')
+        if: ${{startsWith(matrix.os, 'ubuntu')}}
         run: sudo apt-get install libboost-all-dev
 
       - name: Install macOS Dependencies
-        if: startsWith(${{ matrix.os }}, 'macos')
+        if: ${{startsWith(matrix.os, 'macos')}}
         run: brew install boost
 
       - name: Configure
