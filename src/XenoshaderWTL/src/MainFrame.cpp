@@ -42,13 +42,11 @@ LRESULT MainFrame::OnCreate(LPCREATESTRUCT cs) {
     // mFolderView.Create(mSplitterWindow, rcDefault, NULL);
     mFolderManager->Create(mSplitterWindow, rcDefault, NULL);
     mCodeView.Create(mSplitterWindow, rcDefault, NULL, WS_CHILD | WS_CLIPSIBLINGS | WS_CLIPCHILDREN, WS_EX_CLIENTEDGE);
-    mDocumentManager.Create(mSplitterWindow, rcDefault, NULL, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN, WS_EX_CLIENTEDGE);
-
+    
     CreateSimpleReBar(ATL_SIMPLE_REBAR_NOBORDER_STYLE);
     AddSimpleReBarBand(m_wndCmdBar);
 
-    // mSplitterWindow.SetSplitterPanes(mFolderView, mDocumentManager);
-    mSplitterWindow.SetSplitterPanes(*mFolderManager, mDocumentManager);
+    mSplitterWindow.SetSplitterPanes(*mFolderManager, mCodeView);
     
     m_hWndClient = mSplitterWindow;
     UpdateLayout();
@@ -64,62 +62,47 @@ void MainFrame::OnDestroy() {
 }
 
 
-void MainFrame::OnFileMenu(UINT uCode, int nID, HWND hwndCtrl) {
-    if (nID == ID_FILE_NEW) {
-        const DWORD dwClientStyle = WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN;
-        const DWORD dwClientExStyle = WS_EX_CLIENTEDGE;
+void MainFrame::OnOpenFile(UINT uCode, int nID, HWND hwndCtrl) {
+    auto dialog = CFileDialog{TRUE, _T("All Files\0*.*")};
 
-        auto codeView = new CodeEditor();
-        codeView->Create(mDocumentManager, rcDefault, NULL, dwClientStyle, dwClientExStyle);
-
-        mDocumentManager.AddPage(codeView->m_hWnd, _T("New 01"));
+    if (dialog.DoModal() != IDOK) {
+        return;
     }
 
-    if (nID == ID_FILE_OPEN) {
-        auto dialog = CFileDialog{TRUE, _T("All Files\0*.*")};
+    doOpenFile(boost::filesystem::path{dialog.m_szFileName});
+}
 
-        if (dialog.DoModal() != IDOK) {
-            return;
-        }
+void MainFrame::OnOpenFolder(UINT uCode, int nID, HWND hwndCtrl) {
+    auto folderDialog = CFolderDialog(m_hWnd, _T("Open Folder"));
 
-        doOpenFile(boost::filesystem::path{dialog.m_szFileName});
-    }
-        
-    if (nID == ID_FILE_OPENFOLDER) {
-        auto folderDialog = CFolderDialog(m_hWnd, _T("Open Folder"));
-
-        if (folderDialog.DoModal() != IDOK) {
-            return;
-        }
-
-        const boost::filesystem::path folderPath = folderDialog.GetFolderPath();
-
-        folderManagerController = std::make_unique<Xenoide::TreeManagerControllerFileSystem>(folderPath);
-        mFolderManager->SetController(folderManagerController.get());
-        mFolderManager->ReloadContent();
+    if (folderDialog.DoModal() != IDOK) {
+        return;
     }
 
-    if (nID == ID_FILE_SAVE) {
-        if (mFilePath) {
-            Xenoide::FileService fileService;
-            const std::string content = mCodeView.GetContent();
+    const boost::filesystem::path folderPath = folderDialog.GetFolderPath();
 
-            fileService.save(mFilePath.value().string(), content);
-
-            mCodeView.ClearSaveState();
-        } else {
-            OnFileMenu(uCode, ID_FILE_SAVE_AS, hwndCtrl);
-        }
-    }
-
-    if (nID == ID_FILE_EXIT) {
-        DestroyWindow();
-    }
+    folderManagerController = std::make_unique<Xenoide::TreeManagerControllerFileSystem>(folderPath);
+    mFolderManager->SetController(folderManagerController.get());
+    mFolderManager->ReloadContent();
 }
 
 
-void MainFrame::OnEditMenu(UINT uCode, int nID, HWND hwndCtrl) {
-    
+void MainFrame::OnSaveFile(UINT uCode, int nID, HWND hwndCtrl) {
+    if (!mFilePath) {
+        return;
+    }
+
+    Xenoide::FileService fileService;
+    const std::string content = mCodeView.GetContent();
+
+    fileService.save(mFilePath.value().string(), content);
+
+    mCodeView.ClearSaveState();
+}
+
+
+void MainFrame::OnExitApp(UINT uCode, int nID, HWND hwndCtrl) {
+    DestroyWindow();
 }
 
 

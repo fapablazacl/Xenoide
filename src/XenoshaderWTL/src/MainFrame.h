@@ -22,19 +22,10 @@ public:
     END_UPDATE_UI_MAP()
 
     BEGIN_MSG_MAP(MainFrame)
-        COMMAND_ID_HANDLER_EX(ID_FILE_NEW, OnFileMenu)
-        COMMAND_ID_HANDLER_EX(ID_FILE_OPEN, OnFileMenu)
-        COMMAND_ID_HANDLER_EX(ID_FILE_OPENFOLDER, OnFileMenu)
-        COMMAND_ID_HANDLER_EX(ID_FILE_SAVE, OnFileMenu)
-        COMMAND_ID_HANDLER_EX(ID_FILE_SAVE_AS, OnFileMenu)
-        COMMAND_ID_HANDLER_EX(ID_FILE_EXIT, OnFileMenu)
+        COMMAND_ID_HANDLER_EX(ID_FILE_OPEN, OnOpenFile)
+        COMMAND_ID_HANDLER_EX(ID_FILE_SAVE, OnSaveFile)
+        COMMAND_ID_HANDLER_EX(ID_FILE_EXIT, OnExitApp)
 
-        COMMAND_ID_HANDLER_EX(ID_EDIT_UNDO, OnEditMenu)
-        COMMAND_ID_HANDLER_EX(ID_EDIT_REDO, OnEditMenu)
-        COMMAND_ID_HANDLER_EX(ID_EDIT_CUT, OnEditMenu)
-        COMMAND_ID_HANDLER_EX(ID_EDIT_COPY, OnEditMenu)
-        COMMAND_ID_HANDLER_EX(ID_EDIT_PASTE, OnEditMenu)
-        
         COMMAND_ID_HANDLER_EX(ID_HELP_ABOUT, OnAboutMenu)
         
         MSG_WM_CREATE(OnCreate)
@@ -54,9 +45,10 @@ public:
 
     void OnDestroy();
 
-    void OnFileMenu(UINT uCode, int nID, HWND hwndCtrl);
-
-    void OnEditMenu(UINT uCode, int nID, HWND hwndCtrl);
+    void OnOpenFile(UINT uCode, int nID, HWND hwndCtrl);
+    void OnOpenFolder(UINT uCode, int nID, HWND hwndCtrl);
+    void OnSaveFile(UINT uCode, int nID, HWND hwndCtrl);
+    void OnExitApp(UINT uCode, int nID, HWND hwndCtrl);
 
     void OnAboutMenu(UINT uCode, int nID, HWND hwndCtrl);
 
@@ -68,8 +60,6 @@ private:
 
     std::unique_ptr<Xenoide::CTreeManager> mFolderManager;
     std::unique_ptr<Xenoide::TreeManagerController> folderManagerController;
-
-    DocumentManager mDocumentManager;
 
     CString mFolderPath;
     CCommandBarCtrl m_wndCmdBar;
