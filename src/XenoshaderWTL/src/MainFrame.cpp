@@ -126,11 +126,11 @@ void MainFrame::doOpenFile(const boost::filesystem::path &filePath) {
     const auto codeLang = getCodeLanguage(*mFilePath);
 
     switch (codeLang) {
-        case CodeLanguage::CPP: 
+        case CodeEditorLanguage::CPP: 
             mCodeView.SetLanguage(Lexilla::MakeLexer("cpp"), languageConfigC); 
             break;
 
-        case CodeLanguage::GLSL: 
+        case CodeEditorLanguage::GLSL: 
             mCodeView.SetLanguage(Lexilla::MakeLexer("cpp"), languageConfigGLSL); 
             break;
 

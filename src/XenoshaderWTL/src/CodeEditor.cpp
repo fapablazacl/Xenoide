@@ -3,7 +3,7 @@
 #include <boost/filesystem/path.hpp>
 
 
-CodeViewLanguageConfig languageConfigC = {
+CodeEditorConfiguration languageConfigC = {
     { black, white, defaultFontSize, defaultFontName },
     "alignas alignof and and_eq asm atomic_cancel atomic_commit atomic_noexcept auto bitand bitor bool break case catch char "
 	"char16_t char32_t class compl concept const constexpr const_cast continue decltype default delete do "
@@ -45,7 +45,7 @@ CodeViewLanguageConfig languageConfigC = {
 };
 
 
-CodeViewLanguageConfig languageConfigGLSL = {
+CodeEditorConfiguration languageConfigGLSL = {
     { black, white, defaultFontSize, defaultFontName },
     // supported keywords
     "attribute const uniform varying "
@@ -145,24 +145,24 @@ std::vector<std::string> extensionsGLSL = {
 };
 
 
-CodeLanguage getCodeLanguage(const boost::filesystem::path &filePath) {
+CodeEditorLanguage getCodeLanguage(const boost::filesystem::path &filePath) {
     if (filePath.has_extension()) {
         const auto ext = filePath.extension();
 
         for (const auto &extC : extensionsC) {
             if (ext == extC) {
-                return CodeLanguage::CPP;
+                return CodeEditorLanguage::CPP;
             }
         }
 
         for (const auto &extGLSL : extensionsGLSL) {
             if (ext == extGLSL) {
-                return CodeLanguage::GLSL;
+                return CodeEditorLanguage::GLSL;
             }
         }
     }
 
-    return CodeLanguage::TEXT;
+    return CodeEditorLanguage::TEXT;
 }
 
 
@@ -234,7 +234,7 @@ void CodeEditor::OnSize(UINT nType, CSize size) {
     mWndScintilla.SetWindowPos(NULL, rect, 0);
 }
 
-void CodeEditor::SetStyleAttribs(const int style, const CodeViewStyleAttribs &attribs) {
+void CodeEditor::SetStyleAttribs(const int style, const CodeEditorStyle &attribs) {
     mWndScintilla.SendMessage(SCI_STYLESETFORE, style, attribs.fore);
     mWndScintilla.SendMessage(SCI_STYLESETBACK, style, attribs.back);
 
@@ -252,7 +252,7 @@ void CodeEditor::ClearLanguage() {
     mWndScintilla.SendMessage(SCI_CLEARDOCUMENTSTYLE);
 }
 
-void CodeEditor::SetLanguage(const ILexer5 *lexer, const CodeViewLanguageConfig &config) {
+void CodeEditor::SetLanguage(const ILexer5 *lexer, const CodeEditorConfiguration &config) {
     mWndScintilla.SendMessage(SCI_STYLECLEARALL);
     mWndScintilla.SendMessage(SCI_CLEARDOCUMENTSTYLE);
 

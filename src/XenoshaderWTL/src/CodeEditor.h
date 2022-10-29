@@ -14,7 +14,7 @@
 #include <xeno/wtl/wtl.h>
 
 
-struct CodeViewStyleAttribs {
+struct CodeEditorStyle {
     COLORREF fore = RGB(255, 255, 255);
     COLORREF back = RGB(255, 255, 255);
     int size = 0;
@@ -27,15 +27,15 @@ constexpr COLORREF white = RGB(255, 255, 255);
 constexpr char *defaultFontName = "Courier New";
 constexpr int defaultFontSize = 10;
 
-enum class CodeLanguage {
+enum class CodeEditorLanguage {
     TEXT,
     CPP,
     GLSL
 };
 
 
-struct CodeViewLanguageConfig {
-    CodeViewStyleAttribs defaultStyle = {
+struct CodeEditorConfiguration {
+    CodeEditorStyle defaultStyle = {
         black, white, defaultFontSize, defaultFontName
     };
 
@@ -44,15 +44,15 @@ struct CodeViewLanguageConfig {
 };
 
 
-extern CodeViewLanguageConfig languageConfigC;
+extern CodeEditorConfiguration languageConfigC;
 
-extern CodeViewLanguageConfig languageConfigGLSL;
+extern CodeEditorConfiguration languageConfigGLSL;
 
 extern std::vector<std::string> extensionsC;
 
 extern std::vector<std::string> extensionsGLSL;
 
-extern CodeLanguage getCodeLanguage(const boost::filesystem::path& filePath);
+extern CodeEditorLanguage getCodeLanguage(const boost::filesystem::path& filePath);
 
 
 class CodeEditor : public CWindowImpl<CodeEditor> {
@@ -78,11 +78,11 @@ public:
 
     void OnSize(UINT nType, CSize size);
 
-    void SetStyleAttribs(const int style, const CodeViewStyleAttribs& attribs);
+    void SetStyleAttribs(const int style, const CodeEditorStyle& attribs);
 
     void ClearLanguage();
 
-    void SetLanguage(const ILexer5* lexer, const CodeViewLanguageConfig& config);
+    void SetLanguage(const ILexer5* lexer, const CodeEditorConfiguration& config);
 
     void SetInitialContent(const char* textContent);
 
