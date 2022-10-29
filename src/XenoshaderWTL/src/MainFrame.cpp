@@ -38,10 +38,8 @@ LRESULT MainFrame::OnCreate(LPCREATESTRUCT cs) {
     CreateSimpleStatusBar();
 
     mSplitterWindow.Create(*this, rcDefault, NULL, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN);
-
-    // mFolderView.Create(mSplitterWindow, rcDefault, NULL);
     mFolderManager->Create(mSplitterWindow, rcDefault, NULL);
-    mCodeView.Create(mSplitterWindow, rcDefault, NULL, WS_CHILD | WS_CLIPSIBLINGS | WS_CLIPCHILDREN, WS_EX_CLIENTEDGE);
+    mCodeView.Create(mSplitterWindow, rcDefault, NULL, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN, WS_EX_CLIENTEDGE);
     
     CreateSimpleReBar(ATL_SIMPLE_REBAR_NOBORDER_STYLE);
     AddSimpleReBarBand(m_wndCmdBar);
