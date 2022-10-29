@@ -10,9 +10,15 @@ CodeEditor::CodeEditor() {
 
 LRESULT CodeEditor::OnCreate(LPCREATESTRUCT cs) {
     mWndScintilla.Create(_T("Scintilla"), m_hWnd, rcDefault, _T(""), WS_CHILD | WS_VISIBLE);
+
+    const LRESULT marginWidth = mWndScintilla.SendMessage(SCI_TEXTWIDTH, STYLE_LINENUMBER, (LPARAM)"_99999");
+
+    mWndScintilla.SendMessage(SCI_SETCARETLINEVISIBLE, 1);
+    mWndScintilla.SendMessage(SCI_SETMARGINWIDTHN, 0, marginWidth);
+    mWndScintilla.SendMessage(SCI_SETMARGINTYPEN, 0, SC_MARGIN_NUMBER);
+
     mWndScintilla.SendMessage(SCI_SETUSETABS, 0);
     mWndScintilla.SendMessage(SCI_SETTABWIDTH, 4);
-        
     mWndScintilla.SendMessage(SCI_SETMOUSEDWELLTIME, 2000);
 
     // configure for generic text
@@ -24,31 +30,11 @@ LRESULT CodeEditor::OnCreate(LPCREATESTRUCT cs) {
 }
 
 LRESULT CodeEditor::OnNotify(int idCtrl, LPNMHDR pnmh) {
-    if (pnmh->code == SCN_DWELLSTART) {
-        auto notification = reinterpret_cast<SCNotification*>(pnmh);
+    if (pnmh->code >= 2000 && pnmh->code < 3000) {
+        auto notification = *reinterpret_cast<SCNotification*>(pnmh);
 
-        mWndScintilla.SendMessage(SCI_CALLTIPSHOW, notification->position, reinterpret_cast<LPARAM>("void glBegin(GLenum mode)"));
-    }
-
-    if (pnmh->code == SCN_CHARADDED) {
-        auto notification = reinterpret_cast<SCNotification*>(pnmh);
-
-        if (notification->ch == '(') {
-            const auto pos = mWndScintilla.SendMessage(SCI_GETCURRENTPOS);
-            mWndScintilla.SendMessage(SCI_CALLTIPSHOW, pos, reinterpret_cast<LPARAM>("The glBegin and glend functions delimit the vertices of a primitive or a group of like primitives.\nmode: The primitive or primitives that will be created from vertices presented between glBegin and the subsequent glEnd."));
-            mWndScintilla.SendMessage(SCI_CALLTIPSETHLT, 99, 103);
-                
-        } else if (notification->ch == ' ') {
-            identifier = "";
-        } else if (std::isalpha(notification->ch)) {
-            identifier += static_cast<char>(notification->ch);
-                
-            if (identifier.size() >= 3) {
-                mWndScintilla.SendMessage(SCI_AUTOCSHOW, identifier.size(), reinterpret_cast<LPARAM>("void int float pointer test"));
-                identifier = "";
-            }
-        } else {
-            identifier = "";
+        if (config.notificationHandler) {
+            config.notificationHandler->handleNotification(mWndScintilla, notification);
         }
     }
 
@@ -87,22 +73,8 @@ void CodeEditor::SetStyleAttribs(const int style, const CodeEditorStyle &attribs
 void CodeEditor::ClearLanguage() {
     mWndScintilla.SendMessage(SCI_STYLECLEARALL);
     mWndScintilla.SendMessage(SCI_CLEARDOCUMENTSTYLE);
-}
 
-void CodeEditor::SetLanguage(const ILexer5 *lexer, const CodeEditorConfiguration &config) {
-    mWndScintilla.SendMessage(SCI_STYLECLEARALL);
-    mWndScintilla.SendMessage(SCI_CLEARDOCUMENTSTYLE);
-
-    mWndScintilla.SendMessage(SCI_SETILEXER, 0, reinterpret_cast<LPARAM>(lexer));
-    mWndScintilla.SendMessage(SCI_SETKEYWORDS, 0, reinterpret_cast<LPARAM>(config.keywords.c_str()));
-
-    SetStyleAttribs(SCE_C_DEFAULT, config.defaultStyle);
-    for (const auto styleColor : config.stylesColors) {
-        SetStyleAttribs(styleColor.first, {styleColor.second, white, 0, nullptr});
-    }
-
-    mWndScintilla.SendMessage(SCI_STYLESETBOLD, SCE_C_WORD, 1);
-    mWndScintilla.SendMessage(SCI_STYLESETBOLD, SCE_C_WORD2, 1);
+    config = {};
 }
 
 
@@ -120,6 +92,8 @@ void CodeEditor::Configure(const CodeEditorConfiguration &config) {
 
     mWndScintilla.SendMessage(SCI_STYLESETBOLD, SCE_C_WORD, 1);
     mWndScintilla.SendMessage(SCI_STYLESETBOLD, SCE_C_WORD2, 1);
+    
+    this->config = config;
 }
 
 

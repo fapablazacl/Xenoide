@@ -43,8 +43,6 @@ public:
 
     void ClearLanguage();
 
-    void SetLanguage(const ILexer5* lexer, const CodeEditorConfiguration& config);
-
     void Configure(const CodeEditorConfiguration& config);
 
     void SetInitialContent(const char* textContent);
@@ -56,4 +54,5 @@ public:
 private:
     std::string identifier;
     mutable CWindow mWndScintilla;
+    CodeEditorConfiguration config;
 };

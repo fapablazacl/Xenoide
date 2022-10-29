@@ -134,6 +134,38 @@ CodeEditorConfiguration languageConfigGLSL = {
 };
 
 
+class ScintillaNotificationHandlerGLSL : public ScintillaNotificationHandler {
+public:
+    void handleNotification(CWindow &scintilla, const SCNotification &notification) override {
+
+    }
+} notificationHandlerGLSL;
+
+
+
+class ScintillaNotificationHandlerCPP : public ScintillaNotificationHandler {
+public:
+    void handleNotification(CWindow &scintilla, const SCNotification &notification) override {
+
+        switch (notification.nmhdr.code) {
+        case SCN_DWELLSTART:
+            scintilla.SendMessage(SCI_CALLTIPSHOW, notification.position, reinterpret_cast<LPARAM>("void glBegin(GLenum mode)"));
+            break;
+
+        case SCN_CHARADDED:
+            if (notification.ch == '(') {
+                const auto pos = scintilla.SendMessage(SCI_GETCURRENTPOS);
+                scintilla.SendMessage(SCI_CALLTIPSHOW, pos, reinterpret_cast<LPARAM>("The glBegin and glend functions delimit the vertices of a primitive or a group of like primitives.\nmode: The primitive or primitives that will be created from vertices presented between glBegin and the subsequent glEnd."));
+                scintilla.SendMessage(SCI_CALLTIPSETHLT, 99, 103);
+
+            } else if (notification.ch == '.') {
+                scintilla.SendMessage(SCI_AUTOCSHOW, 0, reinterpret_cast<LPARAM>("void int float pointer test"));
+            }
+        }
+    }
+} notificationHandlerCPP;
+
+
 
 static std::vector<std::pair<FileNamePatternMatcher, CodeEditorLanguage>> matcherLanguagePairs = {
     {
@@ -177,11 +209,13 @@ std::optional<CodeEditorConfiguration> CodeEditorConfiguration::detect(const boo
     case CodeEditorLanguage::CPP:
         config = languageConfigC;
         config.lexer = Lexilla::MakeLexer("cpp");
+        config.notificationHandler = &notificationHandlerCPP;
         break;
 
     case CodeEditorLanguage::GLSL: 
         config = languageConfigGLSL;
         config.lexer = Lexilla::MakeLexer("cpp");
+        config.notificationHandler = &notificationHandlerGLSL;
         break;
 
     default:

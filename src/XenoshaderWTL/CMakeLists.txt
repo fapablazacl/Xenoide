@@ -1,4 +1,7 @@
 
+add_subdirectory("src/XenoideLexerCPP")
+add_subdirectory("src/XenoideLexerGLSL")
+
 set (target XenoshaderWTL)
 
 set (sources
@@ -36,4 +39,11 @@ target_compile_definitions (${target} PRIVATE _WTL_USE_CSTRING)
 target_include_directories (${target} PUBLIC "include")
 target_include_directories (${target} PRIVATE "res")
 
-target_link_libraries (${target} xeno-ui xeno-scintilla xeno-wtl Boost::filesystem)
+target_link_libraries (${target} 
+	xeno-ui 
+	xeno-scintilla 
+	xeno-wtl 
+	Boost::filesystem 
+	XenoideLexerGLSL 
+	XenoideLexerCPP
+)
