@@ -1,7 +1,7 @@
 
 #pragma once 
 
-#include "framework.h"
+#include <xeno/wtl/wtl.h>
 
 class DocumentManager : public CTabViewImpl<DocumentManager> {
 public:

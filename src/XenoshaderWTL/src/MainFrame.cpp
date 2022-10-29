@@ -3,8 +3,7 @@
 #include "AboutDlg.h"
 
 #include <xeno/core/FileService.h>
-#include <xeno/wtl/TreeManagerControllerFileSystem.h>
-
+#include <xeno/ui/TreeManagerControllerFileSystem.h>
 
 MainFrame::MainFrame() {
     folderImageList = Xenoide::CreateImageList(48, 48, ILC_COLOR32, {
@@ -23,18 +22,30 @@ void MainFrame::openFile(const boost::filesystem::path &filePath) {
 
 
 LRESULT MainFrame::OnCreate(LPCREATESTRUCT cs) {
-    CreateSimpleToolBar();
+    // create command bar window
+    {
+        RECT rcCmdBar = { 0, 0, 100, 100 };
+        m_wndCmdBar.Create(m_hWnd, rcCmdBar, NULL, ATL_SIMPLE_CMDBAR_PANE_STYLE);
+        // atach menu
+        m_wndCmdBar.AttachMenu(GetMenu());
+        // load command bar images
+        m_wndCmdBar.LoadImages(IDR_MAINFRAME);
+        // remove old menu
+        SetMenu(NULL);
+    }
+    
+    // CreateSimpleToolBar();
     CreateSimpleStatusBar();
 
-    const DWORD dwClientStyle = WS_CHILD | WS_CLIPSIBLINGS | WS_CLIPCHILDREN;
-    const DWORD dwClientExStyle = WS_EX_CLIENTEDGE;
-
-    mSplitterWindow.Create(*this, rcDefault);
+    mSplitterWindow.Create(*this, rcDefault, NULL, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN);
 
     // mFolderView.Create(mSplitterWindow, rcDefault, NULL);
     mFolderManager->Create(mSplitterWindow, rcDefault, NULL);
-    mCodeView.Create(mSplitterWindow, rcDefault, NULL, dwClientStyle, dwClientExStyle);
+    mCodeView.Create(mSplitterWindow, rcDefault, NULL, WS_CHILD | WS_CLIPSIBLINGS | WS_CLIPCHILDREN, WS_EX_CLIENTEDGE);
     mDocumentManager.Create(mSplitterWindow, rcDefault, NULL, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN, WS_EX_CLIENTEDGE);
+
+    CreateSimpleReBar(ATL_SIMPLE_REBAR_NOBORDER_STYLE);
+    AddSimpleReBarBand(m_wndCmdBar);
 
     // mSplitterWindow.SetSplitterPanes(mFolderView, mDocumentManager);
     mSplitterWindow.SetSplitterPanes(*mFolderManager, mDocumentManager);
@@ -101,10 +112,6 @@ void MainFrame::OnFileMenu(UINT uCode, int nID, HWND hwndCtrl) {
         }
     }
 
-    if (nID == ID_FILE_SAVE_AS) {
-        int x = 0;
-    }
-
     if (nID == ID_FILE_EXIT) {
         DestroyWindow();
     }
@@ -112,7 +119,7 @@ void MainFrame::OnFileMenu(UINT uCode, int nID, HWND hwndCtrl) {
 
 
 void MainFrame::OnEditMenu(UINT uCode, int nID, HWND hwndCtrl) {
-    int x = 0;
+    
 }
 
 

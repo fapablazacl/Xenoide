@@ -1,5 +1,5 @@
 
-#include <xeno/wtl/CodeEditor.h>
+#include "CodeEditor.h"
 #include <boost/filesystem/path.hpp>
 
 

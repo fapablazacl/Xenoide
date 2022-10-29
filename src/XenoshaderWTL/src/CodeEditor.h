@@ -1,18 +1,17 @@
 
 #pragma once 
 
-#include "wtl.h"
-
 #include <string>
 #include <vector>
 #include <tuple>
-#include <boost/filesystem/path.hpp>
 #include <ILexer.h>
 #include <Scintilla.h>
 #include <Sci_Position.h>
 #include <SciLexer.h>
 #include <Lexilla.h>
 #include <LexillaAccess.h>
+#include <boost/filesystem/path.hpp>
+#include <xeno/wtl/wtl.h>
 
 
 struct CodeViewStyleAttribs {

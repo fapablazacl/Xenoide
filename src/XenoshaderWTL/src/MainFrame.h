@@ -3,24 +3,16 @@
 
 #include <optional>
 #include <memory>
+#include <xeno/wtl/wtl.h>
+#include <xeno/ui/TreeManagerController.h>
 
-#include "framework.h"
-#include "resource.h"
-#include "AppController.h"
 #include "DocumentManager.h"
-#include "FolderView.h"
+#include "FolderExplorer.h"
+#include "CodeEditor.h"
+#include "TreeManager.h"
+#include "resource.h"
 
-#include <xeno/wtl/CodeEditor.h>
-#include <xeno/wtl/TreeManager.h>
-#include <xeno/wtl/TreeManagerController.h>
-
-
-// Frame Windows are defined with CFrameWindowImpl
-class MainFrame :   public CFrameWindowImpl<MainFrame>,
-                    public CUpdateUI<MainFrame>/*,
-                    public CMessageFilter,
-                    public CIdleHandler*/, 
-                    public AppController {
+class MainFrame : public CFrameWindowImpl<MainFrame>, public CUpdateUI<MainFrame> {
 public:
     DECLARE_FRAME_WND_CLASS("MainFrame", IDR_MAINFRAME)
 
@@ -55,7 +47,7 @@ public:
 public:
     MainFrame();
 
-    void openFile(const boost::filesystem::path& filePath) override;
+    void openFile(const boost::filesystem::path& filePath);
 
 public:
     LRESULT OnCreate(LPCREATESTRUCT cs);
@@ -73,7 +65,6 @@ private:
 
 private:
     CodeEditor mCodeView;
-    // CXenoFolderView mFolderView;
 
     std::unique_ptr<Xenoide::CTreeManager> mFolderManager;
     std::unique_ptr<Xenoide::TreeManagerController> folderManagerController;
@@ -81,6 +72,7 @@ private:
     DocumentManager mDocumentManager;
 
     CString mFolderPath;
+    CCommandBarCtrl m_wndCmdBar;
     CSplitterWindow mSplitterWindow;
     std::optional<boost::filesystem::path> mFilePath;
 

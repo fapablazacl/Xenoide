@@ -1,11 +1,11 @@
 
-#include <xeno/wtl/TreeManager.h>
+#include "TreeManager.h"
 
 #include <CommonControls.h>
 #include <iostream>
 #include <map>
 
-#include <xeno/wtl/TreeManagerControllerFileSystem.h>
+#include <xeno/ui/TreeManagerController.h>
 
 
 int GetIconFromPath(const char *strPath) {

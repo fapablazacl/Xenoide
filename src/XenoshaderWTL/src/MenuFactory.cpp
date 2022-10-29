@@ -1,5 +1,5 @@
 
-#include <xeno/wtl/MenuFactory.h>
+#include "MenuFactory.h"
 
 #include <boost/algorithm/string/join.hpp>
 
