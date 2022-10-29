@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <tuple>
+#include <optional>
 #include <ILexer.h>
 #include <Scintilla.h>
 #include <Sci_Position.h>
@@ -41,6 +42,10 @@ struct CodeEditorConfiguration {
 
     std::string keywords;
     std::vector<std::pair<int, COLORREF>> stylesColors;
+
+    const ILexer5* lexer;
+
+    static std::optional<CodeEditorConfiguration> detect(const boost::filesystem::path& filePath);
 };
 
 
@@ -52,8 +57,7 @@ extern std::vector<std::string> extensionsC;
 
 extern std::vector<std::string> extensionsGLSL;
 
-extern CodeEditorLanguage getCodeLanguage(const boost::filesystem::path& filePath);
-
+extern CodeEditorLanguage detectCodeLanguage(const boost::filesystem::path& filePath);
 
 class CodeEditor : public CWindowImpl<CodeEditor> {
 public:
@@ -83,6 +87,8 @@ public:
     void ClearLanguage();
 
     void SetLanguage(const ILexer5* lexer, const CodeEditorConfiguration& config);
+
+    void Configure(const CodeEditorConfiguration& config);
 
     void SetInitialContent(const char* textContent);
 

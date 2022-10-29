@@ -119,22 +119,14 @@ void MainFrame::doOpenFile(const boost::filesystem::path &filePath) {
     Xenoide::FileService fileService;
 
     const std::string fileContent = fileService.load(mFilePath->string());
-
     mCodeView.SetInitialContent(fileContent.c_str());
 
     // 
-    const auto codeLang = getCodeLanguage(*mFilePath);
+    const auto config = CodeEditorConfiguration::detect(filePath);
 
-    switch (codeLang) {
-        case CodeEditorLanguage::CPP: 
-            mCodeView.SetLanguage(Lexilla::MakeLexer("cpp"), languageConfigC); 
-            break;
-
-        case CodeEditorLanguage::GLSL: 
-            mCodeView.SetLanguage(Lexilla::MakeLexer("cpp"), languageConfigGLSL); 
-            break;
-
-        default: 
-            mCodeView.ClearLanguage();
+    if (config) {
+        mCodeView.Configure(config.value());
+    } else {
+        mCodeView.ClearLanguage();
     }
 }

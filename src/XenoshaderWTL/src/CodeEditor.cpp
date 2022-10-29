@@ -145,7 +145,7 @@ std::vector<std::string> extensionsGLSL = {
 };
 
 
-CodeEditorLanguage getCodeLanguage(const boost::filesystem::path &filePath) {
+CodeEditorLanguage detectCodeLanguage(const boost::filesystem::path &filePath) {
     if (filePath.has_extension()) {
         const auto ext = filePath.extension();
 
@@ -163,6 +163,30 @@ CodeEditorLanguage getCodeLanguage(const boost::filesystem::path &filePath) {
     }
 
     return CodeEditorLanguage::TEXT;
+}
+
+
+std::optional<CodeEditorConfiguration> CodeEditorConfiguration::detect(const boost::filesystem::path& filePath) {
+    CodeEditorConfiguration config;
+
+    const auto codeLang = detectCodeLanguage(filePath);
+
+    switch (codeLang) {
+    case CodeEditorLanguage::CPP:
+        config = languageConfigC;
+        config.lexer = Lexilla::MakeLexer("cpp");
+        break;
+
+    case CodeEditorLanguage::GLSL: 
+        config = languageConfigGLSL;
+        config.lexer = Lexilla::MakeLexer("cpp");
+        break;
+
+    default:
+        return {};
+    }
+
+    return config;
 }
 
 
@@ -267,6 +291,24 @@ void CodeEditor::SetLanguage(const ILexer5 *lexer, const CodeEditorConfiguration
     mWndScintilla.SendMessage(SCI_STYLESETBOLD, SCE_C_WORD, 1);
     mWndScintilla.SendMessage(SCI_STYLESETBOLD, SCE_C_WORD2, 1);
 }
+
+
+void CodeEditor::Configure(const CodeEditorConfiguration &config) {
+    mWndScintilla.SendMessage(SCI_STYLECLEARALL);
+    mWndScintilla.SendMessage(SCI_CLEARDOCUMENTSTYLE);
+
+    mWndScintilla.SendMessage(SCI_SETILEXER, 0, reinterpret_cast<LPARAM>(config.lexer));
+    mWndScintilla.SendMessage(SCI_SETKEYWORDS, 0, reinterpret_cast<LPARAM>(config.keywords.c_str()));
+
+    SetStyleAttribs(SCE_C_DEFAULT, config.defaultStyle);
+    for (const auto styleColor : config.stylesColors) {
+        SetStyleAttribs(styleColor.first, {styleColor.second, white, 0, nullptr});
+    }
+
+    mWndScintilla.SendMessage(SCI_STYLESETBOLD, SCE_C_WORD, 1);
+    mWndScintilla.SendMessage(SCI_STYLESETBOLD, SCE_C_WORD2, 1);
+}
+
 
 void CodeEditor::SetInitialContent(const char *textContent) {
     mWndScintilla.SendMessage(SCI_SETTEXT, 0, reinterpret_cast<LPARAM>(textContent));
