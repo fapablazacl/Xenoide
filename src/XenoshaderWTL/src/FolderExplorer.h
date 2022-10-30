@@ -9,9 +9,7 @@
 #include <boost/filesystem.hpp>
 #include <boost/bimap.hpp>
 
-#include "framework.h"
-
-#include "AppController.h"
+#include <xeno/wtl/wtl.h>
 #include <xeno/core/FolderExplorer.h>
 #include <xeno/core/FileSystemServiceBoost.h>
 
@@ -61,9 +59,7 @@ public:
 
 class FolderExplorerPresenter {
 public:
-    FolderExplorerPresenter(AppController *controller, Xenoide::FolderExplorer *folderExplorer) 
-        : mController(controller), folderExplorer(folderExplorer) {}
-
+    FolderExplorerPresenter(Xenoide::FolderExplorer *folderExplorer) : folderExplorer(folderExplorer) {}
 
     void attachView(FolderExplorerView *view) {
         this->view = view;
@@ -123,7 +119,6 @@ public:
 private:
     FolderExplorerView *view = nullptr;
     Xenoide::FolderExplorer* folderExplorer = nullptr;
-    AppController *mController = nullptr;
 };
 
 

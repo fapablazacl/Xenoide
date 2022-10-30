@@ -3,8 +3,7 @@
 #include "AboutDlg.h"
 
 #include <xeno/core/FileService.h>
-#include <xeno/wtl/TreeManagerControllerFileSystem.h>
-
+#include <xeno/ui/TreeManagerControllerFileSystem.h>
 
 MainFrame::MainFrame() {
     folderImageList = Xenoide::CreateImageList(48, 48, ILC_COLOR32, {
@@ -23,21 +22,29 @@ void MainFrame::openFile(const boost::filesystem::path &filePath) {
 
 
 LRESULT MainFrame::OnCreate(LPCREATESTRUCT cs) {
-    CreateSimpleToolBar();
+    // create command bar window
+    {
+        RECT rcCmdBar = { 0, 0, 100, 100 };
+        m_wndCmdBar.Create(m_hWnd, rcCmdBar, NULL, ATL_SIMPLE_CMDBAR_PANE_STYLE);
+        // atach menu
+        m_wndCmdBar.AttachMenu(GetMenu());
+        // load command bar images
+        m_wndCmdBar.LoadImages(IDR_MAINFRAME);
+        // remove old menu
+        SetMenu(NULL);
+    }
+    
+    // CreateSimpleToolBar();
     CreateSimpleStatusBar();
 
-    const DWORD dwClientStyle = WS_CHILD | WS_CLIPSIBLINGS | WS_CLIPCHILDREN;
-    const DWORD dwClientExStyle = WS_EX_CLIENTEDGE;
-
-    mSplitterWindow.Create(*this, rcDefault);
-
-    // mFolderView.Create(mSplitterWindow, rcDefault, NULL);
+    mSplitterWindow.Create(*this, rcDefault, NULL, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN);
     mFolderManager->Create(mSplitterWindow, rcDefault, NULL);
-    mCodeView.Create(mSplitterWindow, rcDefault, NULL, dwClientStyle, dwClientExStyle);
-    mDocumentManager.Create(mSplitterWindow, rcDefault, NULL, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN, WS_EX_CLIENTEDGE);
+    mCodeView.Create(mSplitterWindow, rcDefault, NULL, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN, WS_EX_CLIENTEDGE);
+    
+    CreateSimpleReBar(ATL_SIMPLE_REBAR_NOBORDER_STYLE);
+    AddSimpleReBarBand(m_wndCmdBar);
 
-    // mSplitterWindow.SetSplitterPanes(mFolderView, mDocumentManager);
-    mSplitterWindow.SetSplitterPanes(*mFolderManager, mDocumentManager);
+    mSplitterWindow.SetSplitterPanes(*mFolderManager, mCodeView);
     
     m_hWndClient = mSplitterWindow;
     UpdateLayout();
@@ -53,66 +60,47 @@ void MainFrame::OnDestroy() {
 }
 
 
-void MainFrame::OnFileMenu(UINT uCode, int nID, HWND hwndCtrl) {
-    if (nID == ID_FILE_NEW) {
-        const DWORD dwClientStyle = WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN;
-        const DWORD dwClientExStyle = WS_EX_CLIENTEDGE;
+void MainFrame::OnOpenFile(UINT uCode, int nID, HWND hwndCtrl) {
+    auto dialog = CFileDialog{TRUE, _T("All Files\0*.*")};
 
-        auto codeView = new CodeEditor();
-        codeView->Create(mDocumentManager, rcDefault, NULL, dwClientStyle, dwClientExStyle);
-
-        mDocumentManager.AddPage(codeView->m_hWnd, _T("New 01"));
+    if (dialog.DoModal() != IDOK) {
+        return;
     }
 
-    if (nID == ID_FILE_OPEN) {
-        auto dialog = CFileDialog{TRUE, _T("All Files\0*.*")};
+    doOpenFile(boost::filesystem::path{dialog.m_szFileName});
+}
 
-        if (dialog.DoModal() != IDOK) {
-            return;
-        }
+void MainFrame::OnOpenFolder(UINT uCode, int nID, HWND hwndCtrl) {
+    auto folderDialog = CFolderDialog(m_hWnd, _T("Open Folder"));
 
-        doOpenFile(boost::filesystem::path{dialog.m_szFileName});
-    }
-        
-    if (nID == ID_FILE_OPENFOLDER) {
-        auto folderDialog = CFolderDialog(m_hWnd, _T("Open Folder"));
-
-        if (folderDialog.DoModal() != IDOK) {
-            return;
-        }
-
-        const boost::filesystem::path folderPath = folderDialog.GetFolderPath();
-
-        folderManagerController = std::make_unique<Xenoide::TreeManagerControllerFileSystem>(folderPath);
-        mFolderManager->SetController(folderManagerController.get());
-        mFolderManager->ReloadContent();
+    if (folderDialog.DoModal() != IDOK) {
+        return;
     }
 
-    if (nID == ID_FILE_SAVE) {
-        if (mFilePath) {
-            Xenoide::FileService fileService;
-            const std::string content = mCodeView.GetContent();
+    const boost::filesystem::path folderPath = folderDialog.GetFolderPath();
 
-            fileService.save(mFilePath.value().string(), content);
-
-            mCodeView.ClearSaveState();
-        } else {
-            OnFileMenu(uCode, ID_FILE_SAVE_AS, hwndCtrl);
-        }
-    }
-
-    if (nID == ID_FILE_SAVE_AS) {
-        int x = 0;
-    }
-
-    if (nID == ID_FILE_EXIT) {
-        DestroyWindow();
-    }
+    folderManagerController = std::make_unique<Xenoide::TreeManagerControllerFileSystem>(folderPath);
+    mFolderManager->SetController(folderManagerController.get());
+    mFolderManager->ReloadContent();
 }
 
 
-void MainFrame::OnEditMenu(UINT uCode, int nID, HWND hwndCtrl) {
-    int x = 0;
+void MainFrame::OnSaveFile(UINT uCode, int nID, HWND hwndCtrl) {
+    if (!mFilePath) {
+        return;
+    }
+
+    Xenoide::FileService fileService;
+    const std::string content = mCodeView.GetContent();
+
+    fileService.save(mFilePath.value().string(), content);
+
+    mCodeView.ClearSaveState();
+}
+
+
+void MainFrame::OnExitApp(UINT uCode, int nID, HWND hwndCtrl) {
+    DestroyWindow();
 }
 
 
@@ -131,22 +119,14 @@ void MainFrame::doOpenFile(const boost::filesystem::path &filePath) {
     Xenoide::FileService fileService;
 
     const std::string fileContent = fileService.load(mFilePath->string());
-
     mCodeView.SetInitialContent(fileContent.c_str());
 
     // 
-    const auto codeLang = getCodeLanguage(*mFilePath);
+    const auto config = CodeEditorConfiguration::detect(filePath);
 
-    switch (codeLang) {
-        case CodeLanguage::CPP: 
-            mCodeView.SetLanguage(Lexilla::MakeLexer("cpp"), languageConfigC); 
-            break;
-
-        case CodeLanguage::GLSL: 
-            mCodeView.SetLanguage(Lexilla::MakeLexer("cpp"), languageConfigGLSL); 
-            break;
-
-        default: 
-            mCodeView.ClearLanguage();
+    if (config) {
+        mCodeView.Configure(config.value());
+    } else {
+        mCodeView.ClearLanguage();
     }
 }

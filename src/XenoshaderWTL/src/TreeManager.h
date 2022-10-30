@@ -9,11 +9,10 @@
 #include <cassert>
 #include <vector>
 
-#include "wtl.h"
+#include <xeno/wtl/wtl.h>
+#include <xeno/ui/TreeManagerController.h>
+
 #include "MenuFactory.h"
-
-#include "TreeManagerController.h"
-
 
 namespace Xenoide {
     struct CImageListCreateData {

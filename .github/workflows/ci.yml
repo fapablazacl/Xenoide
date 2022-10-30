@@ -1,21 +1,32 @@
-name: Continous Integration Jobs
+name: Continuous Integration Pipeline
 on: [push]
 jobs:
-  Ubuntu-CI:
-    runs-on: ubuntu-latest
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-22.04, ubuntu-20.04, macos-11, macos-12, windows-2022, windows-2019]
+        build-type: [Debug, Release]
+    runs-on: ${{ matrix.os }}
     steps:
-      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
-      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-
       - name: Check out repository code
         uses: actions/checkout@v2
+        with:
+          submodules: true
 
-      - name: Install Development dependencies
-        run: sudo apt-get install libboost-all-dev libgtkmm-3.0-dev libgtksourceviewmm-3.0-dev
+      - name: Install Ubuntu Dependencies
+        if: ${{startsWith(matrix.os, 'ubuntu')}}
+        run: sudo apt-get install libboost-all-dev
 
-      - name: Configuring a debug build, using the GTK3 Frontend
-        run: mkdir -p .cmake/ && cd .cmake/ && cmake ../ -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug -DXENOIDE_GUI_GTK3=ON
+      - name: Install macOS Dependencies
+        if: ${{startsWith(matrix.os, 'macos')}}
+        run: brew install boost
 
-      - name: Performing a Debug build
-        run: cd .cmake/ && make 
+      - name: Install Windows Dependencies
+        if: ${{startsWith(matrix.os, 'windows')}}
+        run: vcpkg install boost && vcpkg integrate install
+
+      - name: Configure
+        run: cmake -B build/${{ matrix.build-type }} -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=${{ matrix.build-type }}
+
+      - name: Build 
+        run: cmake --build build/${{ matrix.build-type }}

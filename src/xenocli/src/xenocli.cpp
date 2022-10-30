@@ -6,6 +6,7 @@
 #include <cassert>
 #include <memory>
 #include <sstream>
+#include <fstream>
 #include <boost/optional.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/program_options.hpp>
