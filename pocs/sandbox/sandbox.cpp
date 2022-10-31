@@ -4,20 +4,20 @@
 //#include <vector>
 //#include <algorithm>
 //
-//#include <xeno/core/TreeNode.hpp>
-//#include <xeno/core/pom/Project.hpp>
-//#include <xeno/core/pom/ModuleTarget.hpp>
-//#include <xeno/core/pom/ModuleTargetType.hpp>
-//#include <xeno/core/pom/TargetAction.hpp>
+//#include <xenoide/core/TreeNode.hpp>
+//#include <xenoide/core/pom/Project.hpp>
+//#include <xenoide/core/pom/ModuleTarget.hpp>
+//#include <xenoide/core/pom/ModuleTargetType.hpp>
+//#include <xenoide/core/pom/TargetAction.hpp>
 //
-//#include <xeno/core/tasks/Task.hpp>
-//#include <xeno/core/tasks/TaskNodeVisitor.hpp>
+//#include <xenoide/core/tasks/Task.hpp>
+//#include <xenoide/core/tasks/TaskNodeVisitor.hpp>
 //
-//#include <xeno/core/cpp/ModuleCompiler.hpp>
-//#include <xeno/core/cpp/ModuleLinker.hpp>
-//#include <xeno/core/cpp/ModuleToolset.hpp>
+//#include <xenoide/core/cpp/ModuleCompiler.hpp>
+//#include <xenoide/core/cpp/ModuleLinker.hpp>
+//#include <xenoide/core/cpp/ModuleToolset.hpp>
 //
-//#include <xeno/core/FileTypeRegistry.hpp>
+//#include <xenoide/core/FileTypeRegistry.hpp>
 //
 //#define XSTR(a) STR(a)
 //#define STR(a) #a
