@@ -22,8 +22,10 @@ public:
     END_UPDATE_UI_MAP()
 
     BEGIN_MSG_MAP(MainFrame)
+        COMMAND_ID_HANDLER_EX(ID_FILE_NEW, OnNewFile)
         COMMAND_ID_HANDLER_EX(ID_FILE_OPEN, OnOpenFile)
         COMMAND_ID_HANDLER_EX(ID_FILE_SAVE, OnSaveFile)
+        COMMAND_ID_HANDLER_EX(ID_FILE_SAVE_AS, OnSaveAsFile)
         COMMAND_ID_HANDLER_EX(ID_FILE_EXIT, OnExitApp)
 
         COMMAND_ID_HANDLER_EX(ID_HELP_ABOUT, OnAboutMenu)
@@ -45,9 +47,11 @@ public:
 
     void OnDestroy();
 
+    void OnNewFile(UINT uCode, int nID, HWND hwndCtrl);
     void OnOpenFile(UINT uCode, int nID, HWND hwndCtrl);
     void OnOpenFolder(UINT uCode, int nID, HWND hwndCtrl);
     void OnSaveFile(UINT uCode, int nID, HWND hwndCtrl);
+    void OnSaveAsFile(UINT uCode, int nID, HWND hwndCtrl);
     void OnExitApp(UINT uCode, int nID, HWND hwndCtrl);
 
     void OnAboutMenu(UINT uCode, int nID, HWND hwndCtrl);
@@ -57,14 +61,12 @@ private:
 
 private:
     CodeEditor mCodeView;
-
-    std::unique_ptr<Xenoide::CTreeManager> mFolderManager;
-    std::unique_ptr<Xenoide::TreeManagerController> folderManagerController;
-
     CString mFolderPath;
     CCommandBarCtrl m_wndCmdBar;
-    CSplitterWindow mSplitterWindow;
     std::optional<boost::filesystem::path> mFilePath;
 
-    CImageList folderImageList;
+    // CImageList folderImageList;
+    // CSplitterWindow mSplitterWindow;
+    // std::unique_ptr<Xenoide::CTreeManager> mFolderManager;
+    // std::unique_ptr<Xenoide::TreeManagerController> folderManagerController;
 };

@@ -6,13 +6,13 @@
 #include <xeno/ui/TreeManagerControllerFileSystem.h>
 
 MainFrame::MainFrame() {
-    folderImageList = Xenoide::CreateImageList(48, 48, ILC_COLOR32, {
-        LoadIcon(GetModuleHandle(NULL), MAKEINTRESOURCE(IDI_FILE)),
-        LoadIcon(GetModuleHandle(NULL), MAKEINTRESOURCE(IDI_FOLDER_2)),
-        LoadIcon(GetModuleHandle(NULL), MAKEINTRESOURCE(IDI_FOLDER_OPEN_5))
-    });
-
-    mFolderManager = std::make_unique<Xenoide::CTreeManager>(folderImageList);
+    //folderImageList = Xenoide::CreateImageList(48, 48, ILC_COLOR32, {
+    //    LoadIcon(GetModuleHandle(NULL), MAKEINTRESOURCE(IDI_FILE)),
+    //    LoadIcon(GetModuleHandle(NULL), MAKEINTRESOURCE(IDI_FOLDER_2)),
+    //    LoadIcon(GetModuleHandle(NULL), MAKEINTRESOURCE(IDI_FOLDER_OPEN_5))
+    //});
+    //
+    //mFolderManager = std::make_unique<Xenoide::CTreeManager>(folderImageList);
 }
 
 
@@ -37,18 +37,20 @@ LRESULT MainFrame::OnCreate(LPCREATESTRUCT cs) {
     // CreateSimpleToolBar();
     CreateSimpleStatusBar();
 
-    mSplitterWindow.Create(*this, rcDefault, NULL, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN);
-    mFolderManager->Create(mSplitterWindow, rcDefault, NULL);
-    mCodeView.Create(mSplitterWindow, rcDefault, NULL, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN, WS_EX_CLIENTEDGE);
+    //mSplitterWindow.Create(*this, rcDefault, NULL, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN);
+    //mFolderManager->Create(mSplitterWindow, rcDefault, NULL);
+    // mCodeView.Create(mSplitterWindow, rcDefault, NULL, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN, WS_EX_CLIENTEDGE);
+    mCodeView.Create(*this, rcDefault, NULL, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN, WS_EX_CLIENTEDGE);
     
     CreateSimpleReBar(ATL_SIMPLE_REBAR_NOBORDER_STYLE);
     AddSimpleReBarBand(m_wndCmdBar);
 
-    mSplitterWindow.SetSplitterPanes(*mFolderManager, mCodeView);
+    // mSplitterWindow.SetSplitterPanes(*mFolderManager, mCodeView);
     
-    m_hWndClient = mSplitterWindow;
+    // m_hWndClient = mSplitterWindow;
+    m_hWndClient = mCodeView;
     UpdateLayout();
-    mSplitterWindow.SetSplitterPos(200);
+    // mSplitterWindow.SetSplitterPos(200);
 
     return 0;
 }
@@ -57,6 +59,10 @@ LRESULT MainFrame::OnCreate(LPCREATESTRUCT cs) {
 void MainFrame::OnDestroy() {
     SetMsgHandled(false);
     PostQuitMessage(0);
+}
+
+void MainFrame::OnNewFile(UINT uCode, int nID, HWND hwndCtrl) {
+    
 }
 
 
@@ -71,17 +77,17 @@ void MainFrame::OnOpenFile(UINT uCode, int nID, HWND hwndCtrl) {
 }
 
 void MainFrame::OnOpenFolder(UINT uCode, int nID, HWND hwndCtrl) {
-    auto folderDialog = CFolderDialog(m_hWnd, _T("Open Folder"));
+    //auto folderDialog = CFolderDialog(m_hWnd, _T("Open Folder"));
 
-    if (folderDialog.DoModal() != IDOK) {
-        return;
-    }
+    //if (folderDialog.DoModal() != IDOK) {
+    //    return;
+    //}
 
-    const boost::filesystem::path folderPath = folderDialog.GetFolderPath();
+    //const boost::filesystem::path folderPath = folderDialog.GetFolderPath();
 
-    folderManagerController = std::make_unique<Xenoide::TreeManagerControllerFileSystem>(folderPath);
-    mFolderManager->SetController(folderManagerController.get());
-    mFolderManager->ReloadContent();
+    //folderManagerController = std::make_unique<Xenoide::TreeManagerControllerFileSystem>(folderPath);
+    //mFolderManager->SetController(folderManagerController.get());
+    //mFolderManager->ReloadContent();
 }
 
 
@@ -96,6 +102,11 @@ void MainFrame::OnSaveFile(UINT uCode, int nID, HWND hwndCtrl) {
     fileService.save(mFilePath.value().string(), content);
 
     mCodeView.ClearSaveState();
+}
+
+
+void MainFrame::OnSaveAsFile(UINT uCode, int nID, HWND hwndCtrl) {
+
 }
 
 
