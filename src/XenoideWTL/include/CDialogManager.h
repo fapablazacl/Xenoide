@@ -3,14 +3,7 @@
 
 #include <xeno/ui/DialogManager.h>
 
-#include <atlbase.h>
-#include <atlapp.h>
-#include <atlframe.h>
-#include <atlctrls.h>
-#include <atlctrlx.h>
-#include <atluser.h>
-#include <atlcrack.h>
-#include <atlsplit.h>
+#include <xeno/wtl/wtl.h>
 
 namespace Xenoide {
     class CDialogManager : public DialogManager {

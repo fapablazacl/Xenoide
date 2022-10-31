@@ -27,3 +27,4 @@ build/
 .build/*
 .Xenobuild/*
 Xenobuild-Xcode/*
+out/*

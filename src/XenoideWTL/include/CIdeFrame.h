@@ -3,14 +3,7 @@
 
 #include <map>
 
-#include <atlbase.h>
-#include <atlapp.h>
-#include <atlframe.h>
-#include <atlctrls.h>
-#include <atlctrlx.h>
-#include <atluser.h>
-#include <atlcrack.h>
-#include <atlsplit.h>
+#include <xeno/wtl/wtl.h>
 
 #include <xenoide/core/FolderService.h>
 #include <xeno/ui/MenuPanel.h>

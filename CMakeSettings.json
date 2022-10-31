@@ -1,0 +1,42 @@
+﻿{
+  "configurations": [
+    {
+      "name": "x64-Debug",
+      "generator": "Ninja",
+      "configurationType": "Debug",
+      "inheritEnvironments": [ "msvc_x64_x64" ],
+      "buildRoot": "${projectDir}\\out\\build\\${name}",
+      "installRoot": "D:/Development/sdks/Xenoide-debug",
+      "cmakeCommandArgs": "",
+      "buildCommandArgs": "",
+      "ctestCommandArgs": "",
+      "variables": [
+        {
+          "name": "BOOST_ROOT",
+          "value": "D:/Development/packages/msvc17-x64/Boost",
+          "type": "PATH"
+        },
+        {
+          "name": "XENOIDE_BUILD_UI_WTL",
+          "value": "True",
+          "type": "BOOL"
+        },
+        {
+          "name": "XENOIDE_WTL_INCLUDE_DIR",
+          "value": "D:/Development/packages/msvc16-x64/WTL10_10320/Include",
+          "type": "PATH"
+        },
+        {
+          "name": "XENOIDE_LEXILLA_INCLUDE_DIR",
+          "value": "D:/Development/packages/msvc17-x64/lexilla-5.3.1/include",
+          "type": "PATH"
+        },
+        {
+          "name": "XENOIDE_SCINTILLA_INCLUDE_DIR",
+          "value": "D:/Development/packages/msvc17-x64/scintilla-5.3.1/include",
+          "type": "PATH"
+        }
+      ]
+    }
+  ]
+}

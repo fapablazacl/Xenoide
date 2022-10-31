@@ -3,12 +3,7 @@
 
 #include <xeno/ui/DocumentManager.h>
 
-#include <atlbase.h>
-#include <atlwin.h>
-#include <atlapp.h>
-#include <atlctrls.h>
-#include <atlmisc.h>
-#include <atlcrack.h>
+#include <xeno/wtl/wtl.h>
 
 namespace Xenoide {
     /**
