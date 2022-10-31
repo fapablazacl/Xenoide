@@ -45,7 +45,7 @@ target_link_libraries (
     ${target} 
     ${DL_LIBRARY}
     ${Boost_LIBRARIES}
-    xeno-core
+    xenoide.core
 )
 
 install(TARGETS ${target} DESTINATION "lib")

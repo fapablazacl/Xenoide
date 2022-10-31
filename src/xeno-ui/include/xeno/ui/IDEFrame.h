@@ -2,7 +2,7 @@
 #ifndef __XENOIDE_UI_MAINWINDOWVIEW_HPP__
 #define __XENOIDE_UI_MAINWINDOWVIEW_HPP__
 
-#include <xeno/core/Predef.h>
+#include <xenoide/core/Predef.h>
 #include <xeno/ui/FileFilter.h>
 #include <xeno/ui/DialogManager.h>
 #include <xeno/ui/Document.h>

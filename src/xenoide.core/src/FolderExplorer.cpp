@@ -1,6 +1,6 @@
 
-#include <xeno/core/FolderExplorer.h>
-#include <xeno/core/FileSystemService.h>
+#include <xenoide/core/FolderExplorer.h>
+#include <xenoide/core/FileSystemService.h>
 
 #include <cassert>
 

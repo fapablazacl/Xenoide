@@ -2,7 +2,7 @@
 #pragma once 
 
 #include <xeno/wtl/wtl.h>
-#include "resource.h"
+#include "Resource.h"
 
 
 // All Dialogs must inherit from the CDialogImpl template class.

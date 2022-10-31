@@ -10,8 +10,8 @@
 #include <boost/bimap.hpp>
 
 #include <xeno/wtl/wtl.h>
-#include <xeno/core/FolderExplorer.h>
-#include <xeno/core/FileSystemServiceBoost.h>
+#include <xenoide/core/FolderExplorer.h>
+#include <xenoide/core/FileSystemServiceBoost.h>
 
 
 struct TreeItemHandle {

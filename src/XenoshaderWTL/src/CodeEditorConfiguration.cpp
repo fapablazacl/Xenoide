@@ -147,12 +147,18 @@ class ScintillaNotificationHandlerCPP : public ScintillaNotificationHandler {
 public:
     void handleNotification(CWindow &scintilla, const SCNotification &notification) override {
 
-        switch (notification.nmhdr.code) {
-        case SCN_DWELLSTART:
+        const auto code = static_cast<Scintilla::Notification>(notification.nmhdr.code);
+
+        switch (code) {
+        case Scintilla::Notification::DwellStart:
             scintilla.SendMessage(SCI_CALLTIPSHOW, notification.position, reinterpret_cast<LPARAM>("void glBegin(GLenum mode)"));
             break;
 
-        case SCN_CHARADDED:
+        case Scintilla::Notification::CharAdded:
+            if (notification.ch == 13) {
+                // return
+            }
+
             if (notification.ch == '(') {
                 const auto pos = scintilla.SendMessage(SCI_GETCURRENTPOS);
                 scintilla.SendMessage(SCI_CALLTIPSHOW, pos, reinterpret_cast<LPARAM>("The glBegin and glend functions delimit the vertices of a primitive or a group of like primitives.\nmode: The primitive or primitives that will be created from vertices presented between glBegin and the subsequent glEnd."));
@@ -163,7 +169,8 @@ public:
             }
         }
     }
-} notificationHandlerCPP;
+} 
+notificationHandlerCPP;
 
 
 

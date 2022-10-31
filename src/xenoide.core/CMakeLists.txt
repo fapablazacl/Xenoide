@@ -1,17 +1,17 @@
 
-set (target "xeno-core")
+set (target "xenoide.core")
 
 set (sources
-    "include/xeno/core/Predef.h"
-    "include/xeno/core/Version.h"
-    "include/xeno/core/FileService.h"
-    "include/xeno/core/FolderService.h"
-    "include/xeno/core/WorkspaceService.h"
-    "include/xeno/core/Model.h"
-    "include/xeno/core/OS.h"
-    "include/xeno/core/FileSystemService.h"
-    "include/xeno/core/FileSystemServiceBoost.h"
-    "include/xeno/core/FolderExplorer.h"
+    "include/xenoide/core/Predef.h"
+    "include/xenoide/core/Version.h"
+    "include/xenoide/core/FileService.h"
+    "include/xenoide/core/FolderService.h"
+    "include/xenoide/core/WorkspaceService.h"
+    "include/xenoide/core/Model.h"
+    "include/xenoide/core/OS.h"
+    "include/xenoide/core/FileSystemService.h"
+    "include/xenoide/core/FileSystemServiceBoost.h"
+    "include/xenoide/core/FolderExplorer.h"
 
     "src/OS.cpp"
     "src/Version.cpp"

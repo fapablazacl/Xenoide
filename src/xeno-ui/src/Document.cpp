@@ -1,8 +1,8 @@
 
 #include <xeno/ui/Document.h>
 
-#include <xeno/core/OS.h>
-#include <xeno/core/FileService.h>
+#include <xenoide/core/OS.h>
+#include <xenoide/core/FileService.h>
 #include <xeno/ui/DialogManager.h>
 
 #include <boost/filesystem/path.hpp>

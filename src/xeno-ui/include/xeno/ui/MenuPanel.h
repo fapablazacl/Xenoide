@@ -2,7 +2,7 @@
 #ifndef __XENOIDE_UI_MENUPANEL_HPP__
 #define __XENOIDE_UI_MENUPANEL_HPP__
 
-#include <xeno/core/Predef.h>
+#include <xenoide/core/Predef.h>
 
 namespace Xenoide {
     struct MenuData;

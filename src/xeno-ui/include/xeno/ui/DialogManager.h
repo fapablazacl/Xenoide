@@ -7,7 +7,7 @@
 #include <boost/optional.hpp>
 #include <boost/filesystem/path.hpp>
 #include <xeno/ui/FileFilter.h>
-#include <xeno/core/Predef.h>
+#include <xenoide/core/Predef.h>
 
 namespace Xenoide {
     enum class FileDialogType {

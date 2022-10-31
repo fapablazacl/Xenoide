@@ -1,5 +1,5 @@
 
-#include <xeno/core/Version.h>
+#include <xenoide/core/Version.h>
 
 #include <cassert>
 #include <stdexcept>

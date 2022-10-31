@@ -5,7 +5,7 @@
 #include <string>
 #include <boost/optional/optional.hpp>
 #include <boost/filesystem/path.hpp>
-#include <xeno/core/Predef.h>
+#include <xenoide/core/Predef.h>
 #include <xeno/ui/Menu.h>
 
 namespace Xenoide {

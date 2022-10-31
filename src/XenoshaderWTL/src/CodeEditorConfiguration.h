@@ -12,6 +12,8 @@
 #include <SciLexer.h>
 #include <Lexilla.h>
 #include <LexillaAccess.h>
+#include <ScintillaTypes.h>
+#include <ScintillaCall.h>
 #include <xeno/wtl/wtl.h>
 
 

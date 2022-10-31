@@ -2,7 +2,7 @@
 #include "MainFrame.h"
 #include "AboutDlg.h"
 
-#include <xeno/core/FileService.h>
+#include <xenoide/core/FileService.h>
 #include <xeno/ui/TreeManagerControllerFileSystem.h>
 
 MainFrame::MainFrame() {

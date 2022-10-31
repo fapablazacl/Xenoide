@@ -10,7 +10,7 @@
 #include "FolderExplorer.h"
 #include "CodeEditor.h"
 #include "TreeManager.h"
-#include "resource.h"
+#include "Resource.h"
 
 class MainFrame : public CFrameWindowImpl<MainFrame>, public CUpdateUI<MainFrame> {
 public:

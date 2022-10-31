@@ -6,7 +6,7 @@
 #include <fstream>
 #include <boost/filesystem.hpp>
 
-#include <xeno/core/FolderService.h>
+#include <xenoide/core/FolderService.h>
 #include <xeno/ui/DialogManager.h>
 #include <xeno/ui/Menu.h>
 #include <xeno/ui/IDEFrame.h>

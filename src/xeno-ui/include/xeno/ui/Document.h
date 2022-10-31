@@ -5,7 +5,7 @@
 #include <string>
 #include <memory>
 #include <boost/filesystem/path.hpp>
-#include <xeno/core/Predef.h>
+#include <xenoide/core/Predef.h>
 
 namespace Xenoide {
     struct DocumentConfig {

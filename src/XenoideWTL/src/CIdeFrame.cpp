@@ -2,7 +2,7 @@
 #include "CIdeFrame.h"
 
 #include <boost/algorithm/string/join.hpp>
-// #include <xeno/core/FileService.h"
+// #include <xenoide/core/FileService.h"
 // #include "FolderService.h"
 #include "CFolderBrowser.h"
 

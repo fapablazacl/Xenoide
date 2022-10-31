@@ -1,5 +1,5 @@
 
-#include <xeno/core/FileSystemServiceBoost.h>
+#include <xenoide/core/FileSystemServiceBoost.h>
 
 #include <boost/filesystem.hpp>
 

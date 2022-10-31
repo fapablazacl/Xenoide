@@ -4,7 +4,7 @@
 #include <iostream>
 #include <cassert>
 #include <boost/filesystem.hpp>
-#include <xeno/core/FolderService.h>
+#include <xenoide/core/FolderService.h>
 #include <xeno/ui/Menu.h>
 #include <xeno/ui/MenuPanel.h>
 #include <xeno/ui/FolderBrowser.h>

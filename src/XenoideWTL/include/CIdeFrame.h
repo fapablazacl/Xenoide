@@ -12,7 +12,7 @@
 #include <atlcrack.h>
 #include <atlsplit.h>
 
-#include <xeno/core/FolderService.h>
+#include <xenoide/core/FolderService.h>
 #include <xeno/ui/MenuPanel.h>
 #include <xeno/ui/IDEFrame.h>
 

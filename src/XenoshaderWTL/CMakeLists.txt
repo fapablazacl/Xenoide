@@ -5,6 +5,7 @@ add_subdirectory("src/XenoideLexerGLSL")
 set (target XenoshaderWTL)
 
 set (sources
+	"src/Resource.h"
 	"src/FolderExplorer.h"
 	"src/FolderExplorer.cpp"
 	"src/MainFrame.h" 

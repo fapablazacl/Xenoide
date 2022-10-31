@@ -1,6 +1,6 @@
 
 # IDE Core
-add_subdirectory ("xeno-core")
+add_subdirectory ("xenoide.core")
 add_subdirectory ("xeno-ui")
 
 # WTL UI 
@@ -17,8 +17,8 @@ if (XENOIDE_BUILD_UI_GTK)
     add_subdirectory ("XenoideGTK")
 endif ()
 
-# build system
-add_subdirectory ("core")
-add_subdirectory ("libxenocli")
-add_subdirectory ("xenocli")
-add_subdirectory ("Xenobuild")
+# build system stuff
+# add_subdirectory ("core")
+# add_subdirectory ("libxenocli")
+# add_subdirectory ("xenocli")
+# add_subdirectory ("Xenobuild")
