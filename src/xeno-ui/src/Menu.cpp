@@ -32,6 +32,17 @@ namespace Xenoide {
         return menu;
     }
 
+    MenuData MenuData::action(const int id, const std::string &text, const Shortcut &shortcut) {
+        MenuData menu;
+
+        menu.id = id;
+        menu.text = text;
+        menu.shortcut = shortcut;
+        menu.kind = MenuKind::Action;
+
+        return menu;
+    }
+
     MenuData MenuData::separator() {
         MenuData menu;
 

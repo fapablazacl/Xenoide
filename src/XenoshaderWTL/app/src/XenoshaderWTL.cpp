@@ -31,24 +31,31 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     
     _Module.Init(NULL, hInstance);
 
-    MainFrame mainFrame;
-    MSG msg;
+    {
+        // RUN MAIN LOOP
 
-    if (NULL == mainFrame.CreateEx()) {
-        return 1;
-    }
+        CMessageLoop theLoop;
+        _Module.AddMessageLoop(&theLoop);
 
-    mainFrame.ShowWindow(nCmdShow);
-    mainFrame.UpdateWindow();
+        MainFrame wndFrame;
 
-    while (::GetMessage(&msg, NULL, 0, 0) > 0) {
-        ::TranslateMessage(&msg);
-        ::DispatchMessage(&msg);
+        if(wndFrame.CreateEx() == NULL) {
+            ATLTRACE(_T("Frame window creation failed!\n"));
+            return EXIT_FAILURE;
+        }
+
+        wndFrame.ShowWindow(nCmdShow);
+        ::SetForegroundWindow(wndFrame);
+
+        int nRet = theLoop.Run();
+
+        _Module.RemoveMessageLoop();
+        return nRet;
     }
 
     _Module.Term();
 
     ::FreeLibrary(hModScintilla);
     
-    return static_cast<int>(msg.wParam);
+    return EXIT_SUCCESS;
 }

@@ -61,12 +61,14 @@ namespace Xenoide {
         std::vector<MenuData> childs;
         MenuKind kind;
         std::function<void()> callback;
+        int id;
         
         static MenuData menuBar(const std::vector<MenuData> &childs);
 
         static MenuData menu(const std::string &text, const std::vector<MenuData> &childs);
 
         static MenuData action(const std::function<void()> &callback, const std::string &text, const Shortcut &shortcut = {});
+        static MenuData action(const int id, const std::string &text, const Shortcut &shortcut = {});
 
         static MenuData separator();
     };

@@ -41,4 +41,14 @@ namespace Xenoide {
 	private:
 		int commandBase = 0;
 	};
+
+	class CMenuFactory2 {
+	public:
+		void fillMenu(HMENU hMenu, const std::vector<MenuData>& popupMenuItems) const;
+
+	private:
+		void fillMenuItem(CMenuHandle parent, const MenuData& menu) const;
+
+		std::string mapMenuTitle(const MenuData& menu) const;
+	};
 }
