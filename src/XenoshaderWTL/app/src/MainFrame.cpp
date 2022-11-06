@@ -25,7 +25,7 @@ void MainFrame::openFile(const boost::filesystem::path &filePath) {
 }
 
 
-void MainFrame::InitializeCommandBar() {
+void MainFrame::CreateCommandBar() {
     /*
     using namespace Xenoide;
 
@@ -51,25 +51,28 @@ void MainFrame::InitializeCommandBar() {
 
 LRESULT MainFrame::OnCreate(LPCREATESTRUCT cs) {
     // create command bar window
-    InitializeCommandBar();
+    CreateCommandBar();
 
-    CreateSimpleToolBar();
+    HWND hWndToolBar = CreateSimpleToolBarCtrl(m_hWnd, IDR_MAINFRAME, FALSE, ATL_SIMPLE_TOOLBAR_PANE_STYLE);
+    assert(hWndToolBar);
     CreateSimpleStatusBar();
 
     //mSplitterWindow.Create(*this, rcDefault, NULL, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN);
     //mFolderManager->Create(mSplitterWindow, rcDefault, NULL);
     // mCodeView.Create(mSplitterWindow, rcDefault, NULL, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN, WS_EX_CLIENTEDGE);
+    // mSplitterWindow.SetSplitterPanes(*mFolderManager, mCodeView);
+    // m_hWndClient = mSplitterWindow;
     mCodeView.Create(*this, rcDefault, NULL, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN, WS_EX_CLIENTEDGE);
-    
+    m_hWndClient = mCodeView;
+
     CreateSimpleReBar(ATL_SIMPLE_REBAR_NOBORDER_STYLE);
     AddSimpleReBarBand(m_wndCmdBar);
+    AddSimpleReBarBand(hWndToolBar, NULL, TRUE);
 
-    // mSplitterWindow.SetSplitterPanes(*mFolderManager, mCodeView);
-    
-    // m_hWndClient = mSplitterWindow;
-    m_hWndClient = mCodeView;
     UpdateLayout();
     // mSplitterWindow.SetSplitterPos(200);
+
+    UIAddToolBar(hWndToolBar);
 
     CMessageLoop* pLoop = _Module.GetMessageLoop();
     pLoop->AddMessageFilter(this);

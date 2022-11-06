@@ -72,7 +72,7 @@ public:
     void OnAboutMenu(UINT uCode, int nID, HWND hwndCtrl);
 
 private:
-    void InitializeCommandBar();
+    void CreateCommandBar();
 
 private:
     void doOpenFile(const boost::filesystem::path& filePath);

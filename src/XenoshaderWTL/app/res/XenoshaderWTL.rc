@@ -115,10 +115,29 @@ END
 // Accelerator
 //
 
-IDR_ACCELERATOR1 ACCELERATORS
+IDR_MAINFRAME ACCELERATORS
 BEGIN
     "O",            ID_FILE_OPEN,           VIRTKEY, CONTROL, NOINVERT
 END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Toolbar
+//
+
+IDR_MAINFRAME TOOLBAR 16, 15
+BEGIN
+    BUTTON      ID_FILE_OPEN
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDR_MAINFRAME           BITMAP                  "toolbar1.bmp"
 
 #endif    // English (United States) resources
 /////////////////////////////////////////////////////////////////////////////

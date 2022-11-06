@@ -44,6 +44,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
             return EXIT_FAILURE;
         }
 
+        wndFrame.SetWindowText(_T("Xenoshader"));
+
         wndFrame.ShowWindow(nCmdShow);
         ::SetForegroundWindow(wndFrame);
 
