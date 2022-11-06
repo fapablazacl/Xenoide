@@ -25,17 +25,18 @@ set (sources
 	"src/FileNamePatternMatcher.h" 
 	"src/FileNamePatternMatcher.cpp" 
 	"src/XenoshaderWTL.cpp"
-	
-	"res/Resource.rc"
-	"res/resource.h"
+	"res/XenoshaderWTL.rc"
+
 )
 
 add_executable (${target} WIN32 ${sources})
 
 # target_compile_definitions (${target} PUBLIC _UNICODE)
-target_compile_definitions (${target} PRIVATE STRICT)
-target_compile_definitions (${target} PRIVATE WIN32_LEAN_AND_MEAN)
-target_compile_definitions (${target} PRIVATE _WTL_USE_CSTRING)
+target_compile_definitions (${target} PRIVATE 
+	STRICT 
+	WIN32_LEAN_AND_MEAN 
+	_WTL_USE_CSTRING
+)
 
 target_include_directories (${target} PUBLIC "include")
 target_include_directories (${target} PRIVATE "res")
