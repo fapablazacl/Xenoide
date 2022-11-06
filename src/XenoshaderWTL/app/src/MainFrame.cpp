@@ -26,6 +26,7 @@ void MainFrame::openFile(const boost::filesystem::path &filePath) {
 
 
 void MainFrame::InitializeCommandBar() {
+    /*
     using namespace Xenoide;
 
     const std::vector<Xenoide::MenuData> menus {
@@ -36,8 +37,9 @@ void MainFrame::InitializeCommandBar() {
 
     menuBar.CreateMenu();
     CMenuFactory2{}.fillMenu(menuBar, menus);
-
+    
     SetMenu(menuBar);
+    */
 
     RECT rcCmdBar = { 0, 0, 100, 100 };
     m_wndCmdBar.Create(m_hWnd, rcCmdBar, NULL, ATL_SIMPLE_CMDBAR_PANE_STYLE);

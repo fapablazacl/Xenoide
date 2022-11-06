@@ -14,14 +14,16 @@
 
 class MainFrame : public CFrameWindowImpl<MainFrame>, public CUpdateUI<MainFrame>, public CMessageFilter, public CIdleHandler {
 public:
+    /*
     enum Commands {
-        IDX_FILE_NEW = 1000,
-        IDX_FILE_OPEN,
-        IDX_FILE_SAVE,
-        IDX_FILE_SAVEAS,
-        IDX_FILE_EXIT,
-        IDX_HELP_ABOUT
+        ID_FILE_NEW = 1000,
+        ID_FILE_OPEN,
+        ID_FILE_SAVE,
+        ID_FILE_SAVEAS,
+        ID_FILE_EXIT,
+        ID_HELP_ABOUT
     };
+    */
 
 public:
     DECLARE_FRAME_WND_CLASS("MainFrame", IDR_MAINFRAME)
@@ -32,12 +34,12 @@ public:
     END_UPDATE_UI_MAP()
 
     BEGIN_MSG_MAP(MainFrame)
-        COMMAND_ID_HANDLER_EX(IDX_FILE_NEW, OnNewFile)
-        COMMAND_ID_HANDLER_EX(IDX_FILE_OPEN, OnOpenFile)
-        COMMAND_ID_HANDLER_EX(IDX_FILE_SAVE, OnSaveFile)
-        COMMAND_ID_HANDLER_EX(IDX_FILE_SAVEAS, OnSaveAsFile)
-        COMMAND_ID_HANDLER_EX(IDX_FILE_EXIT, OnExitApp)
-        COMMAND_ID_HANDLER_EX(IDX_HELP_ABOUT, OnAboutMenu)
+        COMMAND_ID_HANDLER_EX(ID_FILE_NEW, OnNewFile)
+        COMMAND_ID_HANDLER_EX(ID_FILE_OPEN, OnOpenFile)
+        COMMAND_ID_HANDLER_EX(ID_FILE_SAVE, OnSaveFile)
+        COMMAND_ID_HANDLER_EX(ID_FILE_SAVEAS, OnSaveAsFile)
+        COMMAND_ID_HANDLER_EX(ID_FILE_EXIT, OnExitApp)
+        COMMAND_ID_HANDLER_EX(ID_HELP_ABOUT, OnAboutMenu)
         
         MSG_WM_CREATE(OnCreate)
         MSG_WM_DESTROY(OnDestroy)
