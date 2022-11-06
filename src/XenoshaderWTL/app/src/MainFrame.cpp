@@ -2,8 +2,12 @@
 #include "MainFrame.h"
 #include "AboutDlg.h"
 
+#include <shobjidl.h> 
+
 #include <xenoide/core/FileService.h>
+#include <xeno/ui/Menu.h>
 #include <xeno/ui/TreeManagerControllerFileSystem.h>
+
 
 MainFrame::MainFrame() {
     //folderImageList = Xenoide::CreateImageList(48, 48, ILC_COLOR32, {
@@ -21,20 +25,20 @@ void MainFrame::openFile(const boost::filesystem::path &filePath) {
 }
 
 
+void MainFrame::InitializeCommandBar() {
+    RECT rcCmdBar = { 0, 0, 100, 100 };
+    m_wndCmdBar.Create(m_hWnd, rcCmdBar, NULL, ATL_SIMPLE_CMDBAR_PANE_STYLE);
+    m_wndCmdBar.AttachMenu(GetMenu());
+    m_wndCmdBar.LoadImages(IDR_MAINFRAME);
+    SetMenu(NULL);
+}
+
+
 LRESULT MainFrame::OnCreate(LPCREATESTRUCT cs) {
     // create command bar window
-    {
-        RECT rcCmdBar = { 0, 0, 100, 100 };
-        m_wndCmdBar.Create(m_hWnd, rcCmdBar, NULL, ATL_SIMPLE_CMDBAR_PANE_STYLE);
-        // atach menu
-        m_wndCmdBar.AttachMenu(GetMenu());
-        // load command bar images
-        m_wndCmdBar.LoadImages(IDR_MAINFRAME);
-        // remove old menu
-        SetMenu(NULL);
-    }
-    
-    // CreateSimpleToolBar();
+    InitializeCommandBar();
+
+    CreateSimpleToolBar();
     CreateSimpleStatusBar();
 
     //mSplitterWindow.Create(*this, rcDefault, NULL, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN);
@@ -67,14 +71,52 @@ void MainFrame::OnNewFile(UINT uCode, int nID, HWND hwndCtrl) {
 
 
 void MainFrame::OnOpenFile(UINT uCode, int nID, HWND hwndCtrl) {
-    auto dialog = CFileDialog{TRUE, _T("All Files\0*.*")};
+    IFileOpenDialog *pFileOpen = nullptr;
 
-    if (dialog.DoModal() != IDOK) {
+    // Create the FileOpenDialog object.
+    auto hr = CoCreateInstance(CLSID_FileOpenDialog, NULL, CLSCTX_ALL, 
+        IID_IFileOpenDialog, reinterpret_cast<void**>(&pFileOpen));
+
+    if (FAILED(hr)) {
         return;
     }
 
-    doOpenFile(boost::filesystem::path{dialog.m_szFileName});
+    // Show the Open dialog box.
+    const COMDLG_FILTERSPEC rgSpec[] = {
+        { L"GLSL Shader", L"*.glsl;*.vert;*.frag" },
+        { L"C/C++ Code", L"*.c;*.cpp;*.cxx;*.c++;*.h;*.hpp;*.hxx;*.h++" },
+        { L"All Files", L"*.*" },
+    };
+
+    pFileOpen->SetFileTypes(3, rgSpec);
+    pFileOpen->SetTitle(L"Open File");
+
+    hr = pFileOpen->Show(*this);
+    if (FAILED(hr)) {
+        return;
+    }
+
+    // Get the file name from the dialog box.
+    IShellItem *pItem = nullptr;
+    hr = pFileOpen->GetResult(&pItem);
+
+    if (FAILED(hr)) {
+        return;
+    }
+
+    PWSTR pszFilePath;
+    hr = pItem->GetDisplayName(SIGDN_FILESYSPATH, &pszFilePath);
+
+    // Display the file name to the user.
+    if (SUCCEEDED(hr)) {
+        doOpenFile(boost::filesystem::path{pszFilePath});
+        CoTaskMemFree(pszFilePath);
+    }
+    pItem->Release();
+    
+    pFileOpen->Release();
 }
+
 
 void MainFrame::OnOpenFolder(UINT uCode, int nID, HWND hwndCtrl) {
     //auto folderDialog = CFolderDialog(m_hWnd, _T("Open Folder"));

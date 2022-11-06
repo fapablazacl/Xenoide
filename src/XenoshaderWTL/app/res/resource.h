@@ -2,6 +2,7 @@
 // Microsoft Visual C++ generated include file.
 // Used by Resource.rc
 //
+
 #include <Windows.h>
 
 #define SW_HIDE                         0

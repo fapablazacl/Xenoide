@@ -14,6 +14,16 @@
 
 class MainFrame : public CFrameWindowImpl<MainFrame>, public CUpdateUI<MainFrame> {
 public:
+    enum Commands {
+        IDX_FILE_NEW = 10000,
+        IDX_FILE_OPEN,
+        IDX_FILE_SAVE,
+        IDX_FILE_SAVE_AS,
+        IDX_FILE_EXIT,
+        IDX_HELP_ABOUT
+    };
+
+public:
     DECLARE_FRAME_WND_CLASS("MainFrame", IDR_MAINFRAME)
 
     BEGIN_UPDATE_UI_MAP(MainFrame)
@@ -22,13 +32,12 @@ public:
     END_UPDATE_UI_MAP()
 
     BEGIN_MSG_MAP(MainFrame)
-        COMMAND_ID_HANDLER_EX(ID_FILE_NEW, OnNewFile)
-        COMMAND_ID_HANDLER_EX(ID_FILE_OPEN, OnOpenFile)
-        COMMAND_ID_HANDLER_EX(ID_FILE_SAVE, OnSaveFile)
-        COMMAND_ID_HANDLER_EX(ID_FILE_SAVE_AS, OnSaveAsFile)
-        COMMAND_ID_HANDLER_EX(ID_FILE_EXIT, OnExitApp)
-
-        COMMAND_ID_HANDLER_EX(ID_HELP_ABOUT, OnAboutMenu)
+        COMMAND_ID_HANDLER_EX(IDX_FILE_NEW, OnNewFile)
+        COMMAND_ID_HANDLER_EX(IDX_FILE_OPEN, OnOpenFile)
+        COMMAND_ID_HANDLER_EX(IDX_FILE_SAVE, OnSaveFile)
+        COMMAND_ID_HANDLER_EX(IDX_FILE_SAVE_AS, OnSaveAsFile)
+        COMMAND_ID_HANDLER_EX(IDX_FILE_EXIT, OnExitApp)
+        COMMAND_ID_HANDLER_EX(IDX_HELP_ABOUT, OnAboutMenu)
         
         MSG_WM_CREATE(OnCreate)
         MSG_WM_DESTROY(OnDestroy)
@@ -55,6 +64,9 @@ public:
     void OnExitApp(UINT uCode, int nID, HWND hwndCtrl);
 
     void OnAboutMenu(UINT uCode, int nID, HWND hwndCtrl);
+
+private:
+    void InitializeCommandBar();
 
 private:
     void doOpenFile(const boost::filesystem::path& filePath);
