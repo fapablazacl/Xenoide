@@ -8,18 +8,7 @@
 #define IDB_BITMAP4                     107
 #define IDR_MENU1                       108
 #define IDR_MAINFRAME                   108
-#define ID_FILE_NEW                     40001
-#define ID_FILE_OPEN                    40002
-#define ID_FILE_SAVE                    40003
-#define ID_FILE_SAVEAS                  40004
-#define ID_FILE_EXIT                    40005
-#define ID_OPEN_FILE                    40006
-#define ID_OPEN_FOLDER                  40007
-#define ID_EDIT_UNDO                    40008
-#define ID_EDIT_REDO                    40009
-#define ID_EDIT_CUT                     40010
-#define ID_EDIT_COPY                    40011
-#define ID_EDIT_PASTE                   40012
+
 
 // Next default values for new objects
 // 

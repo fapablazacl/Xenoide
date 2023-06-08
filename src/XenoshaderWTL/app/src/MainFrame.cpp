@@ -28,9 +28,9 @@ void MainFrame::openFile(const boost::filesystem::path &filePath) {
 void MainFrame::CreateCommandBar() {
 
     RECT rcCmdBar = { 0, 0, 100, 100 };
-    m_wndCmdBar.Create(m_hWnd, rcCmdBar, NULL, ATL_SIMPLE_CMDBAR_PANE_STYLE);
-    m_wndCmdBar.AttachMenu(GetMenu());
-    m_wndCmdBar.LoadImages(IDR_MAINFRAME);
+    mCommandBar.Create(m_hWnd, rcCmdBar, NULL, ATL_SIMPLE_CMDBAR_PANE_STYLE);
+    mCommandBar.AttachMenu(GetMenu());
+    mCommandBar.LoadImages(IDR_MAINFRAME);
     SetMenu(NULL);
 }
 
@@ -52,7 +52,7 @@ LRESULT MainFrame::OnCreate(LPCREATESTRUCT cs) {
     m_hWndClient = mCodeView;
 
     CreateSimpleReBar(ATL_SIMPLE_REBAR_NOBORDER_STYLE);
-    AddSimpleReBarBand(m_wndCmdBar);
+    AddSimpleReBarBand(mCommandBar);
     AddSimpleReBarBand(hWndToolBar, NULL, TRUE);
 
     UpdateLayout();

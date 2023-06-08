@@ -1,3 +1,4 @@
+/*
 
 #include "CIdeFrame.h"
 
@@ -16,11 +17,9 @@ namespace Xenoide {
         documentManagerModel = DocumentManager::Model::create();
 
         folderBrowserPresenter = std::make_unique<FolderBrowser::Presenter>(folderBrowserModel.get());
-        documentManagerPresenter = std::make_unique<DocumentManager::Presenter>(documentManagerModel.get());
 
         folderBrowser = std::make_unique<CFolderBrowser>(folderBrowserPresenter.get());
         dialogManager = std::make_unique<CDialogManager>();
-        documentManager = std::make_unique<CDocumentManager>(documentManagerPresenter.get());
     }
 
 
@@ -30,7 +29,7 @@ namespace Xenoide {
 
 
     DocumentManager* CIdeFrame::getDocumentManager() {
-        return documentManager.get();
+        return nullptr;
     }
 
 
@@ -64,35 +63,7 @@ namespace Xenoide {
     const int commandIdBase = 1000;
 
     void CIdeFrame::fillMenuItem(CMenuHandle parent, const MenuData &menu) {
-        switch (menu.kind) {
-            case MenuKind::Action: {
-                const int commandId = commandIdBase + static_cast<int>(commandMap.size());
 
-                const std::string title = this->mapMenuTitle(menu);
-                parent.AppendMenu(MF_STRING, commandId, title.c_str());
-
-                commandMap[commandId] = menu.callback;
-
-                break;
-            }
-            
-            case MenuKind::Separator:  {
-                parent.AppendMenuA(MF_SEPARATOR);
-                break;
-            }
-                
-            case MenuKind::SubMenu: {
-                CMenuHandle menuItemHandle;
-                menuItemHandle.CreateMenu();
-                parent.AppendMenu(MF_STRING, menuItemHandle, menu.text.c_str());
-
-                for (const MenuData& child : menu.childs) {
-                    this->fillMenuItem(menuItemHandle, child);
-                }
-
-                break;
-            }
-        }
     }
 
 
@@ -201,15 +172,52 @@ namespace Xenoide {
         
         return 0;
     }
-    */
+
 
     int CIdeFrame::OnCommand(WORD wNotifyCode, WORD wID, HWND hWndCtrl, BOOL &bHandled) {
-        const int commandId = static_cast<int>(wID);
+        const IdeCommands commandId = static_cast<IdeCommands>(wID);
 
-        if (auto commandIt = commandMap.find(commandId); commandIt != commandMap.end()) {
-            commandIt->second();
+        switch (commandId)
+        {
+        case ID_XENOIDE_FILE_NEW:
+            break;
+
+        case ID_XENOIDE_FILE_OPEN:
+            break;
+
+        case ID_XENOIDE_FILE_SAVE:
+            break;
+
+        case ID_XENOIDE_FILE_SAVEAS:
+            break;
+
+        case ID_XENOIDE_FILE_EXIT:
+            break;
+
+        case ID_XENOIDE_EDIT_UNDO:
+            break;
+
+        case ID_XENOIDE_EDIT_REDO:
+            break;
+
+        case ID_XENOIDE_EDIT_CUT:
+            break;
+
+        case ID_XENOIDE_EDIT_COPY:
+            break;
+
+        case ID_XENOIDE_EDIT_PASTE:
+            break;
+
+        case ID_WINDOW_SHOW_VIEWS:
+            break;
+
+        case ID_WINDOW_CLOSE:
+            break;
+
+        default:
+            break;
         }
-
         return 0;
     }
 
@@ -218,11 +226,18 @@ namespace Xenoide {
         CRect clientRect;
         this->GetClientRect(&clientRect);
 
+        // TODO: Initialize tab control here 
+        m_hWndClient = m_view.Create(m_hWnd, rcDefault, NULL, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN, WS_EX_CLIENTEDGE);
+		m_view.SetTitleBarWindow(m_hWnd);
+
+
+        /*
         splitterWindow.Create(m_hWnd, &clientRect, NULL, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN);
 
         this->SetupFolderBrowser();
         this->SetupDocumentManager();
 
+        
         splitterWindow.SetSplitterPane(SPLIT_PANE_LEFT, folderBrowser->m_hWnd);
         splitterWindow.SetSplitterPane(SPLIT_PANE_RIGHT, documentManager->m_hWnd);
         
@@ -242,7 +257,7 @@ namespace Xenoide {
         RECT rcClient;
         splitterWindow.GetClientRect(&rcClient);
 
-        documentManager->Create(splitterWindow, rcClient, "", WS_CHILD | WS_VISIBLE);
+        // documentManager->Create(splitterWindow, rcClient, "", WS_CHILD | WS_VISIBLE);
     }
 
     void CIdeFrame::SetupFolderBrowser() {
@@ -250,6 +265,39 @@ namespace Xenoide {
         splitterWindow.GetClientRect(&clientRect);
         
         folderBrowser->Create(splitterWindow, clientRect, "", WS_VISIBLE | WS_CHILD);
+    }
+
+
+    void CIdeFrame::SetupMenuBar() {
+        /*
+        IDR_MAINFRAME MENU
+        BEGIN
+            POPUP "&File"
+            BEGIN
+                MENUITEM "New",                         ID_FILE_NEW
+                MENUITEM SEPARATOR
+                POPUP "Open"
+                BEGIN
+                    MENUITEM "&File ...",                   ID_OPEN_FILE
+                    MENUITEM "F&older ...",                 ID_OPEN_FOLDER
+                END
+                MENUITEM SEPARATOR
+                MENUITEM "Save",                        ID_FILE_SAVE
+                MENUITEM "Save As",                     ID_FILE_SAVEAS
+                MENUITEM SEPARATOR
+                MENUITEM "Exit",                        ID_FILE_EXIT
+            END
+            POPUP "&Edit"
+            BEGIN
+                MENUITEM "&Undo",                       ID_EDIT_UNDO
+                MENUITEM "&Redo",                       ID_EDIT_REDO
+                MENUITEM SEPARATOR
+                MENUITEM "&Cut",                        ID_EDIT_CUT
+                MENUITEM "C&opy",                       ID_EDIT_COPY
+                MENUITEM "&Paste",                      ID_EDIT_PASTE
+            END
+            MENUITEM "&Help",                       0
+        END
     }
 
 
@@ -263,6 +311,8 @@ namespace Xenoide {
 
     void CIdeFrame::OnSize(UINT nType, CSize size) {
         // m_editor.ResizeClient(size.cx, size.cy, TRUE);
-        splitterWindow.ResizeClient(size.cx, size.cy, TRUE);
+        // splitterWindow.ResizeClient(size.cx, size.cy, TRUE);
     }
 }
+
+*/

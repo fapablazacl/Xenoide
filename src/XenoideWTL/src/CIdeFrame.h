@@ -14,9 +14,17 @@
 #include "CFolderBrowser.h"
 #include "CDialogManager.h"
 
+#include "CustomTabView.h"
+#include "IdeCommands.h"
+
+
 namespace Xenoide {
-    
-    class CIdeFrame : public CWindowImpl<CIdeFrame, CWindow, CFrameWinTraits>, public IDEFrame, public MenuPanel {
+    class CIdeFrame : 
+        public CFrameWindowImpl<CMainFrame>, 
+        public CUpdateUI<CMainFrame>,
+		public CMessageFilter, 
+        public CIdleHandler
+
     public:
         CIdeFrame(IDEFrame::Presenter *presenter);
 
@@ -72,6 +80,8 @@ namespace Xenoide {
         void SetupMenuBar();
 
     private:
+        CCustomTabView mTabView;
+
         CSplitterWindow splitterWindow;
         CMenu menuBar;
         
@@ -81,12 +91,8 @@ namespace Xenoide {
         std::unique_ptr<DocumentManager::Model> documentManagerModel;
 
         std::unique_ptr<FolderBrowser::Presenter> folderBrowserPresenter;
-        std::unique_ptr<DocumentManager::Presenter> documentManagerPresenter;
 
         std::unique_ptr<CFolderBrowser> folderBrowser;
         std::unique_ptr<CDialogManager> dialogManager;
-        std::unique_ptr<CDocumentManager> documentManager;
-
-        std::map<int, std::function<void()>> commandMap;
     };
 }

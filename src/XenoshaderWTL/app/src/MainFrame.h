@@ -81,7 +81,7 @@ private:
     CMenu menuBar;
     CodeEditor mCodeView;
     CString mFolderPath;
-    CCommandBarCtrl m_wndCmdBar;
+    CCommandBarCtrl mCommandBar;
     std::optional<boost::filesystem::path> mFilePath;
 
     // CImageList folderImageList;

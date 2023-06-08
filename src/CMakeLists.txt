@@ -9,7 +9,6 @@ if (XENOIDE_BUILD_UI_WTL)
     add_subdirectory ("xeno-scintilla")
     add_subdirectory ("xeno-wtl")
     add_subdirectory ("XenoideWTL")
-    add_subdirectory ("XenoshaderWTL")
 endif ()
 
 # GTK UI
