@@ -45,7 +45,7 @@ private:
 
     void CreateImageList(CImageList &) const;
 
-    CBitmap LoadImageBitmap(const LPWSTR filePath) const;
+    CBitmapHandle LoadImageBitmap(const LPWSTR filePath) const;
 
 private:
     CImageList mImageList;

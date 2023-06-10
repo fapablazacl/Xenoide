@@ -1,8 +1,73 @@
 
 #include "MainFrame.h"
 
+#include <map>
+
 #include <cassert>
 #include <gdiplus.h>
+
+
+constexpr int IMAGE_WIDTH = 48;
+constexpr int IMAGE_HEIGHT = 48;
+
+
+struct ActionData {
+    LPSTR lpCaption = nullptr;
+
+    LPSTR lpDescription = nullptr;
+
+    LPSTR lpImagePath = nullptr;
+
+    ActionData() {}
+
+    explicit ActionData(LPSTR lpCaption, LPSTR lpDescription = nullptr, LPSTR lpImagePath = nullptr) {
+        assert(lpCaption);
+
+        this->lpCaption = lpCaption;
+        this->lpDescription = lpDescription;
+        this->lpImagePath = lpImagePath;
+    }
+
+    HBITMAP hBitmap = NULL;
+};
+
+
+static std::map<UINT, ActionData> gActionDataMap = {
+    {
+        ID_XENOIDE_FILE_NEW, 
+        ActionData {
+            _T("&New"), 
+            _T("Creates a New File"), 
+            _T("D:\\Assets\\apps\\icons\\VS2012 Modern Image Library\\x--archive--x\\Actions - VS2010\\24bitcolor bitmaps\\Document.bmp")
+        }
+    }, {
+        ID_XENOIDE_FILE_OPEN, 
+        ActionData {
+            _T("&Open"), 
+            _T("Opens an existing file"), 
+            _T("D:\\Assets\\apps\\icons\\VS2012 Modern Image Library\\x--archive--x\\Actions - VS2010\\24bitcolor bitmaps\\openfolder_24.bmp")
+        }
+    }, {
+        ID_XENOIDE_FILE_SAVE, 
+        ActionData {
+            _T("&Save"), 
+            _T("Pending explanation"), 
+            _T("D:\\Assets\\apps\\icons\\VS2012 Modern Image Library\\x--archive--x\\Actions - VS2010\\24bitcolor bitmaps\\Save.bmp")
+        }
+    },{
+        ID_XENOIDE_FILE_SAVEAS, 
+        ActionData {
+            _T("Save &As"), 
+            _T("Pending"), 
+        }
+    },{
+        ID_XENOIDE_FILE_EXIT, 
+        ActionData {
+            _T("&Exit"), 
+            _T("Pending")
+        }
+    },
+};
 
 
 BOOL CMainFrame::PreTranslateMessage(MSG* pMsg)
@@ -24,11 +89,11 @@ LRESULT CMainFrame::OnCreate(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/
 
     // Command Bar
     CreateCommandBar(mCommandBar, GetMenu());
-    SetMenu(NULL);
+    SetMenu(nullptr);
 
     CreateToolBar(mToolBar, mImageList);
 
-    // CreateSimpleStatusBar();
+    CreateSimpleStatusBar();
 
     m_hWndClient = mCodeView.Create(m_hWnd, rcDefault, NULL, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN, WS_EX_CLIENTEDGE);
 
@@ -49,7 +114,7 @@ LRESULT CMainFrame::OnCreate(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/
 }
 
 
-// TODO: Move into a utility package
+// TODO: Move this into an utility package
 struct GdiplusGuard {
     ULONG_PTR gdiplusToken;
     Gdiplus::GdiplusStartupInput startupInput;
@@ -73,30 +138,28 @@ struct GdiplusGuard {
 static GdiplusGuard guard;
 
 
-CBitmap CMainFrame::LoadImageBitmap(const LPWSTR filePath) const {
-    auto gdiplusBitmap = guard.CreateBitmapFromFile(filePath);
-    assert(gdiplusBitmap->GetLastStatus() == Gdiplus::Ok);
+CBitmapHandle CMainFrame::LoadImageBitmap(const LPWSTR filePath) const {
+    const auto flags = LR_LOADFROMFILE | LR_CREATEDIBSECTION;
 
-    HBITMAP hBitmap;
-    gdiplusBitmap->GetHBITMAP(NULL, &hBitmap);
+    HBITMAP hBitmap = (HBITMAP)::LoadImageW(NULL, filePath, IMAGE_BITMAP, IMAGE_WIDTH, IMAGE_HEIGHT, flags);
+    assert(hBitmap);
 
-    CBitmap bitmap;
+    CBitmapHandle bitmap;
     bitmap.Attach(hBitmap);
-
     return bitmap;
 }
 
 
 void CMainFrame::CreateImageList(CImageList &imageList) const {
     const std::vector<LPWSTR> bitmapFileNames = {
-        L"D:\\Assets\\apps\\icons\\VS2019 Image Library\\vswin2019\\Document\\Document_16x.png",
-        L"D:\\Assets\\apps\\icons\\VS2019 Image Library\\vswin2019\\Document\\Document_16x.png",
-        L"D:\\Assets\\apps\\icons\\VS2019 Image Library\\vswin2019\\Document\\Document_16x.png"
+        L"D:\\Assets\\apps\\icons\\VS2012 Modern Image Library\\x--archive--x\\Actions - VS2010\\24bitcolor bitmaps\\Document.bmp",
+        L"D:\\Assets\\apps\\icons\\VS2012 Modern Image Library\\x--archive--x\\Actions - VS2010\\24bitcolor bitmaps\\openfolder_24.bmp",
+        L"D:\\Assets\\apps\\icons\\VS2012 Modern Image Library\\x--archive--x\\Actions - VS2010\\24bitcolor bitmaps\\Save.bmp"
     };
 
-    imageList.Create(16, 16, ILC_COLOR32 | ILC_MASK, 3, 1);
+    imageList.Create(IMAGE_WIDTH, IMAGE_HEIGHT, ILC_COLOR24 | ILC_MASK, 3, 1);
 
-    CBitmap bmp;
+    CBitmapHandle bmp;
 
     for (LPWSTR fileName : bitmapFileNames) {
         if (!bmp.IsNull()) {
@@ -105,15 +168,16 @@ void CMainFrame::CreateImageList(CImageList &imageList) const {
 
         bmp = LoadImageBitmap(fileName);
 
-        assert(!bmp.IsNull());
-
-        imageList.Add(bmp, RGB(255, 255, 255));
+        const int imageIndex = imageList.Add(bmp, RGB(255, 0, 255));
+        assert(imageIndex >= 0);
     }
 }
 
 
 void CMainFrame::CreateToolBar(CToolBarCtrl &toolbarCtrl, const CImageList &imageList) const {
-    HWND hWnd = toolbarCtrl.Create(m_hWnd, rcDefault, NULL, ATL_SIMPLE_TOOLBAR_STYLE | CCS_NOPARENTALIGN, 0, ATL_IDW_TOOLBAR, nullptr);
+    const DWORD dwStyle = ATL_SIMPLE_TOOLBAR_STYLE | CCS_NOPARENTALIGN;
+
+    HWND hWnd = toolbarCtrl.Create(m_hWnd, rcDefault, NULL, dwStyle, 0, ATL_IDW_TOOLBAR, nullptr);
 
     toolbarCtrl.SetButtonStructSize(sizeof(TBBUTTON));
     toolbarCtrl.SetImageList(imageList);
@@ -141,22 +205,47 @@ void CMainFrame::CreateToolBar(CToolBarCtrl &toolbarCtrl, const CImageList &imag
 
     // Resize the toolbar
     toolbarCtrl.AutoSize();
-
 }
 
+
+static BOOL AppendMenuItemInfo(HMENU hMenu, const UINT pos, const UINT id, const LPSTR item, HBITMAP hBitmap) {
+    MENUITEMINFO info{ 0 };
+
+    info.cbSize = sizeof(MENUITEMINFO);
+    info.fMask = MIIM_STRING | MIIM_ID | (hBitmap != NULL ? MIIM_BITMAP : 0);
+    info.wID = id;
+    info.dwTypeData = item;
+    info.hbmpItem = hBitmap;
+
+    return InsertMenuItem(hMenu, pos, TRUE, &info);
+}
+
+
+static BOOL AppendMenuItemSeparator(HMENU hMenu, const UINT pos) {
+    MENUITEMINFO info{ 0 };
+
+    info.cbSize = sizeof(MENUITEMINFO);
+    info.fMask = MIIM_TYPE;
+    info.fType = MFT_SEPARATOR;
+    
+    return InsertMenuItem(hMenu, pos, TRUE, &info);
+}
 
 HMENU CMainFrame::CreateMenuBar() const {
     HMENU hMenuBar = CreateMenu();
 
     HMENU hFileMenu = CreatePopupMenu();
-    AppendMenu(hFileMenu, MF_STRING , ID_XENOIDE_FILE_NEW, _T("&New"));
-    AppendMenu(hFileMenu, MF_SEPARATOR, 0, NULL);
-    AppendMenu(hFileMenu, MF_STRING , ID_XENOIDE_FILE_OPEN, _T("&Open"));
-    AppendMenu(hFileMenu, MF_SEPARATOR, 0, NULL);
-    AppendMenu(hFileMenu, MF_STRING , ID_XENOIDE_FILE_SAVE, _T("&Save"));
-    AppendMenu(hFileMenu, MF_STRING , ID_XENOIDE_FILE_SAVEAS, _T("Save &As"));
-    AppendMenu(hFileMenu, MF_SEPARATOR, 0, NULL);
-    AppendMenu(hFileMenu, MF_STRING , ID_XENOIDE_FILE_EXIT, _T("&Exit"));
+
+    UINT pos = 0;
+
+    AppendMenuItemInfo(hFileMenu, pos++, ID_XENOIDE_FILE_NEW, _T("&New"), NULL);
+    AppendMenuItemSeparator(hFileMenu, pos++);
+    AppendMenuItemInfo(hFileMenu, pos++, ID_XENOIDE_FILE_OPEN, _T("&Open"), NULL);
+    AppendMenuItemSeparator(hFileMenu, pos++);
+    AppendMenuItemInfo(hFileMenu, pos++, ID_XENOIDE_FILE_SAVE, _T("&Save"), NULL);
+    AppendMenuItemInfo(hFileMenu, pos++, ID_XENOIDE_FILE_SAVEAS, _T("Save &As"), NULL);
+    AppendMenuItemSeparator(hFileMenu, pos++);
+    AppendMenuItemInfo(hFileMenu, pos++, ID_XENOIDE_FILE_EXIT, _T("&Exit"), NULL);
 
     AppendMenu(hMenuBar, MF_POPUP, (UINT_PTR)hFileMenu, _T("&File"));
 

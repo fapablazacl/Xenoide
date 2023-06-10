@@ -31,7 +31,7 @@ set (sources
 
 add_executable (${target} WIN32 ${sources})
 
-# target_compile_definitions (${target} PUBLIC _UNICODE)
+target_compile_definitions (${target} PUBLIC _UNICODE)
 target_compile_definitions (${target} PRIVATE 
 	STRICT 
 	WIN32_LEAN_AND_MEAN 
