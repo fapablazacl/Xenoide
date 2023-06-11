@@ -6,68 +6,16 @@
 #include <cassert>
 #include <gdiplus.h>
 
-
 constexpr int IMAGE_WIDTH = 48;
 constexpr int IMAGE_HEIGHT = 48;
 
+CMainFrame::CMainFrame() {
+    const std::wstring parentPath = L"D:\\Assets\\apps\\icons\\VS2012 Modern Image Library\\x--archive--x\\Actions - VS2010\\24bitcolor bitmaps\\";
 
-struct ActionData {
-    LPSTR lpCaption = nullptr;
-
-    LPSTR lpDescription = nullptr;
-
-    LPSTR lpImagePath = nullptr;
-
-    ActionData() {}
-
-    explicit ActionData(LPSTR lpCaption, LPSTR lpDescription = nullptr, LPSTR lpImagePath = nullptr) {
-        assert(lpCaption);
-
-        this->lpCaption = lpCaption;
-        this->lpDescription = lpDescription;
-        this->lpImagePath = lpImagePath;
-    }
-
-    HBITMAP hBitmap = NULL;
-};
-
-
-static std::map<UINT, ActionData> gActionDataMap = {
-    {
-        ID_XENOIDE_FILE_NEW, 
-        ActionData {
-            _T("&New"), 
-            _T("Creates a New File"), 
-            _T("D:\\Assets\\apps\\icons\\VS2012 Modern Image Library\\x--archive--x\\Actions - VS2010\\24bitcolor bitmaps\\Document.bmp")
-        }
-    }, {
-        ID_XENOIDE_FILE_OPEN, 
-        ActionData {
-            _T("&Open"), 
-            _T("Opens an existing file"), 
-            _T("D:\\Assets\\apps\\icons\\VS2012 Modern Image Library\\x--archive--x\\Actions - VS2010\\24bitcolor bitmaps\\openfolder_24.bmp")
-        }
-    }, {
-        ID_XENOIDE_FILE_SAVE, 
-        ActionData {
-            _T("&Save"), 
-            _T("Pending explanation"), 
-            _T("D:\\Assets\\apps\\icons\\VS2012 Modern Image Library\\x--archive--x\\Actions - VS2010\\24bitcolor bitmaps\\Save.bmp")
-        }
-    },{
-        ID_XENOIDE_FILE_SAVEAS, 
-        ActionData {
-            _T("Save &As"), 
-            _T("Pending"), 
-        }
-    },{
-        ID_XENOIDE_FILE_EXIT, 
-        ActionData {
-            _T("&Exit"), 
-            _T("Pending")
-        }
-    },
-};
+    mCommandBitmapPathMap[ID_XENOIDE_FILE_NEW] = parentPath + L"Document.bmp";
+    mCommandBitmapPathMap[ID_XENOIDE_FILE_OPEN] = parentPath + L"openfolder_24.bmp";
+    mCommandBitmapPathMap[ID_XENOIDE_FILE_SAVE] = parentPath + L"Save.bmp";
+}
 
 
 BOOL CMainFrame::PreTranslateMessage(MSG* pMsg)
@@ -84,14 +32,21 @@ BOOL CMainFrame::OnIdle()
 
 LRESULT CMainFrame::OnCreate(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/)
 {
+    const std::vector<IdeCommands> toolbarCommands = {
+        ID_XENOIDE_FILE_NEW,
+        ID_XENOIDE_FILE_OPEN,
+        ID_XENOIDE_FILE_SAVE,
+    };
+
+
     SetMenu(CreateMenuBar());
-    CreateImageList(mImageList);
+    CreateToolBarImageList(mToolBarImageList, toolbarCommands);
 
     // Command Bar
     CreateCommandBar(mCommandBar, GetMenu());
     SetMenu(nullptr);
 
-    CreateToolBar(mToolBar, mImageList);
+    CreateToolBar(mToolBar, mToolBarImageList, toolbarCommands);
 
     CreateSimpleStatusBar();
 
@@ -150,23 +105,19 @@ CBitmapHandle CMainFrame::LoadImageBitmap(const LPWSTR filePath) const {
 }
 
 
-void CMainFrame::CreateImageList(CImageList &imageList) const {
-    const std::vector<LPWSTR> bitmapFileNames = {
-        L"D:\\Assets\\apps\\icons\\VS2012 Modern Image Library\\x--archive--x\\Actions - VS2010\\24bitcolor bitmaps\\Document.bmp",
-        L"D:\\Assets\\apps\\icons\\VS2012 Modern Image Library\\x--archive--x\\Actions - VS2010\\24bitcolor bitmaps\\openfolder_24.bmp",
-        L"D:\\Assets\\apps\\icons\\VS2012 Modern Image Library\\x--archive--x\\Actions - VS2010\\24bitcolor bitmaps\\Save.bmp"
-    };
-
+void CMainFrame::CreateToolBarImageList(CImageList &imageList, const std::vector<IdeCommands> &commands) const {
     imageList.Create(IMAGE_WIDTH, IMAGE_HEIGHT, ILC_COLOR24 | ILC_MASK, 3, 1);
 
-    CBitmapHandle bmp;
+    for (const IdeCommands command : commands) {
+        CBitmapHandle bmp;
 
-    for (LPWSTR fileName : bitmapFileNames) {
         if (!bmp.IsNull()) {
             bmp.DeleteObject();
         }
 
-        bmp = LoadImageBitmap(fileName);
+        const std::wstring fileName = mCommandBitmapPathMap.find(command)->second;
+
+        bmp = LoadImageBitmap(const_cast<LPWSTR>(fileName.c_str()));
 
         const int imageIndex = imageList.Add(bmp, RGB(255, 0, 255));
         assert(imageIndex >= 0);
@@ -174,7 +125,7 @@ void CMainFrame::CreateImageList(CImageList &imageList) const {
 }
 
 
-void CMainFrame::CreateToolBar(CToolBarCtrl &toolbarCtrl, const CImageList &imageList) const {
+void CMainFrame::CreateToolBar(CToolBarCtrl &toolbarCtrl, const CImageList &imageList, const std::vector<IdeCommands> &commands) const {
     const DWORD dwStyle = ATL_SIMPLE_TOOLBAR_STYLE | CCS_NOPARENTALIGN;
 
     HWND hWnd = toolbarCtrl.Create(m_hWnd, rcDefault, NULL, dwStyle, 0, ATL_IDW_TOOLBAR, nullptr);
@@ -183,25 +134,21 @@ void CMainFrame::CreateToolBar(CToolBarCtrl &toolbarCtrl, const CImageList &imag
     toolbarCtrl.SetImageList(imageList);
 
     // Define buttons
-    std::vector<TBBUTTON> tbb{3};
+    std::vector<TBBUTTON> tbbs;
 
-    tbb[0].idCommand = ID_XENOIDE_FILE_NEW;
-    tbb[0].fsState = TBSTATE_ENABLED;
-    tbb[0].fsStyle = BTNS_BUTTON;
-    tbb[0].iBitmap = 0;
+    for (size_t i = 0; i < commands.size(); i++) {
+        TBBUTTON tbb = {};
 
-    tbb[1].idCommand = ID_XENOIDE_FILE_OPEN;
-    tbb[1].fsState = TBSTATE_ENABLED;
-    tbb[1].fsStyle = BTNS_BUTTON;
-    tbb[1].iBitmap = 1;
+        tbb.idCommand = commands[i];
+        tbb.fsState = TBSTATE_ENABLED;
+        tbb.fsStyle = BTNS_BUTTON;
+        tbb.iBitmap = static_cast<int>(i);
 
-    tbb[2].idCommand = ID_XENOIDE_FILE_SAVE;
-    tbb[2].fsState = TBSTATE_ENABLED;
-    tbb[2].fsStyle = BTNS_BUTTON;
-    tbb[2].iBitmap = 2;
+        tbbs.push_back(tbb);
+    }
 
     // Add the buttons to the toolbar
-    toolbarCtrl.AddButtons(static_cast<int>(tbb.size()), tbb.data());
+    toolbarCtrl.AddButtons(static_cast<int>(tbbs.size()), tbbs.data());
 
     // Resize the toolbar
     toolbarCtrl.AutoSize();
@@ -233,9 +180,7 @@ static BOOL AppendMenuItemSeparator(HMENU hMenu, const UINT pos) {
 
 HMENU CMainFrame::CreateMenuBar() const {
     HMENU hMenuBar = CreateMenu();
-
     HMENU hFileMenu = CreatePopupMenu();
-
     UINT pos = 0;
 
     AppendMenuItemInfo(hFileMenu, pos++, ID_XENOIDE_FILE_NEW, _T("&New"), NULL);
@@ -258,4 +203,20 @@ void CMainFrame::CreateCommandBar(CCommandBarCtrl &commandBarCtrl, const HMENU h
     commandBarCtrl.Create(m_hWnd, rcCmdBar, NULL, ATL_SIMPLE_CMDBAR_PANE_STYLE);
     commandBarCtrl.AttachMenu(hMenuBar);
     commandBarCtrl.LoadImages(IDR_MAINFRAME);    
+}
+
+
+CBitmap& CMainFrame::GetOrLoadBitmap(const std::wstring& fullFilePath) {
+    const auto it = mFullFilePathBitmapMap.find(fullFilePath);
+
+    if (it == mFullFilePathBitmapMap.end()) {
+        CBitmapHandle handle = LoadImageBitmap(const_cast<LPWSTR>(fullFilePath.c_str()));
+        CBitmap& bitmap = mFullFilePathBitmapMap[fullFilePath];
+
+        bitmap.Attach(handle);
+
+        return bitmap;    
+    }
+
+    return it->second;    
 }

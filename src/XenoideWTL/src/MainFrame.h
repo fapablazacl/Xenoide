@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include <map>
+
 #include <resource.h>
 #include <xeno/wtl/wtl.h>
 
@@ -16,6 +18,8 @@ class CMainFrame :
 	public CIdleHandler {
 
 public:
+    CMainFrame();
+
 	DECLARE_FRAME_WND_CLASS(_T("Xenoide_MainFrame"), IDR_MAINFRAME)
 
 public:
@@ -41,16 +45,21 @@ private:
 
     void CreateCommandBar(CCommandBarCtrl &, const HMENU hMenuBar) const;
 
-    void CreateToolBar(CToolBarCtrl &, const CImageList &imageList) const;
+    void CreateToolBar(CToolBarCtrl &, const CImageList &imageList, const std::vector<IdeCommands> &commands) const;
 
-    void CreateImageList(CImageList &) const;
+    void CreateToolBarImageList(CImageList &, const std::vector<IdeCommands> &commands) const;
 
     CBitmapHandle LoadImageBitmap(const LPWSTR filePath) const;
 
+    CBitmap& GetOrLoadBitmap(const std::wstring& fullFilePath);
+
 private:
-    CImageList mImageList;
+    CImageList mToolBarImageList;
     CToolBarCtrl mToolBar;
     CCommandBarCtrl mCommandBar;
 
     CodeEditor mCodeView;
+
+    std::map<IdeCommands, std::wstring> mCommandBitmapPathMap;
+    std::map<std::wstring, CBitmap> mFullFilePathBitmapMap;
 };
