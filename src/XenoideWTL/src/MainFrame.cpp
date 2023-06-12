@@ -128,8 +128,7 @@ void CMainFrame::CreateToolBarImageList(CImageList &imageList, const std::vector
 
 void CMainFrame::CreateToolBar(CToolBarCtrl &toolbarCtrl, const CImageList &imageList, const std::vector<IdeCommands> &commands) const {
     const DWORD dwStyle = ATL_SIMPLE_TOOLBAR_STYLE | TBSTYLE_TRANSPARENT | CCS_NODIVIDER | CCS_NOPARENTALIGN | CCS_NORESIZE | CCS_TOP;
-
-    HWND hWnd = toolbarCtrl.Create(m_hWnd, rcDefault, NULL, dwStyle, 0, ATL_IDW_TOOLBAR, nullptr);
+    const HWND hWnd = toolbarCtrl.Create(m_hWnd, rcDefault, NULL, dwStyle, 0, ATL_IDW_TOOLBAR, nullptr);
     
     toolbarCtrl.SetButtonStructSize(sizeof(TBBUTTON));
     toolbarCtrl.SetImageList(imageList);
@@ -148,10 +147,7 @@ void CMainFrame::CreateToolBar(CToolBarCtrl &toolbarCtrl, const CImageList &imag
         tbbs.push_back(tbb);
     }
 
-    // Add the buttons to the toolbar
     toolbarCtrl.AddButtons(static_cast<int>(tbbs.size()), tbbs.data());
-
-    // Resize the toolbar
     toolbarCtrl.AutoSize();
 }
 
@@ -179,21 +175,33 @@ static BOOL AppendMenuItemSeparator(HMENU hMenu, const UINT pos) {
     return InsertMenuItem(hMenu, pos, TRUE, &info);
 }
 
-HMENU CMainFrame::CreateMenuBar() const {
+
+static BOOL AppendMenuItem(HMENU hMenu, const UINT pos, HMENU hSubMenu, const LPSTR item) {
+    MENUITEMINFO info{ 0 };
+    info.cbSize = sizeof(MENUITEMINFO);
+    info.fMask = MIIM_STRING | MIIM_SUBMENU;
+    info.dwTypeData = item;
+    info.hSubMenu = hSubMenu;
+    
+    return InsertMenuItem(hMenu, pos, TRUE, &info);
+}
+
+
+HMENU CMainFrame::CreateMenuBar() {
     HMENU hMenuBar = CreateMenu();
     HMENU hFileMenu = CreatePopupMenu();
     UINT pos = 0;
 
-    AppendMenuItemInfo(hFileMenu, pos++, ID_XENOIDE_FILE_NEW, _T("&New"), NULL);
+    AppendMenuItemInfo(hFileMenu, pos++, ID_XENOIDE_FILE_NEW, _T("&New"), GetOrLoadBitmap(ID_XENOIDE_FILE_NEW));
     AppendMenuItemSeparator(hFileMenu, pos++);
-    AppendMenuItemInfo(hFileMenu, pos++, ID_XENOIDE_FILE_OPEN, _T("&Open"), NULL);
+    AppendMenuItemInfo(hFileMenu, pos++, ID_XENOIDE_FILE_OPEN, _T("&Open"), GetOrLoadBitmap(ID_XENOIDE_FILE_OPEN));
     AppendMenuItemSeparator(hFileMenu, pos++);
-    AppendMenuItemInfo(hFileMenu, pos++, ID_XENOIDE_FILE_SAVE, _T("&Save"), NULL);
-    AppendMenuItemInfo(hFileMenu, pos++, ID_XENOIDE_FILE_SAVEAS, _T("Save &As"), NULL);
+    AppendMenuItemInfo(hFileMenu, pos++, ID_XENOIDE_FILE_SAVE, _T("&Save"), GetOrLoadBitmap(ID_XENOIDE_FILE_SAVE));
+    AppendMenuItemInfo(hFileMenu, pos++, ID_XENOIDE_FILE_SAVEAS, _T("Save &As"), GetOrLoadBitmap(ID_XENOIDE_FILE_SAVEAS));
     AppendMenuItemSeparator(hFileMenu, pos++);
-    AppendMenuItemInfo(hFileMenu, pos++, ID_XENOIDE_FILE_EXIT, _T("&Exit"), NULL);
+    AppendMenuItemInfo(hFileMenu, pos++, ID_XENOIDE_FILE_EXIT, _T("&Exit"), GetOrLoadBitmap(ID_XENOIDE_FILE_EXIT));
 
-    AppendMenu(hMenuBar, MF_POPUP, (UINT_PTR)hFileMenu, _T("&File"));
+    AppendMenuItem(hMenuBar, 0, hFileMenu, _T("&File"));
 
     return hMenuBar;
 }
@@ -220,4 +228,17 @@ CBitmap& CMainFrame::GetOrLoadBitmap(const std::wstring& fullFilePath) {
     }
 
     return it->second;    
+}
+
+
+CBitmapHandle CMainFrame::GetOrLoadBitmap(const IdeCommands command) {
+    const auto it = mCommandBitmapPathMap.find(command);
+
+    if (it == mCommandBitmapPathMap.end()) {
+        return {};
+    }
+
+    CBitmap& bitmap = GetOrLoadBitmap(it->second);
+
+    return bitmap.m_hBitmap;
 }

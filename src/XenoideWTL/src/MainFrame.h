@@ -41,7 +41,7 @@ public:
     LRESULT OnCreate(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/);
 
 private:
-    HMENU CreateMenuBar() const;
+    HMENU CreateMenuBar();
 
     void CreateCommandBar(CCommandBarCtrl &, const HMENU hMenuBar) const;
 
@@ -52,6 +52,8 @@ private:
     CBitmapHandle LoadImageBitmap(const LPWSTR filePath) const;
 
     CBitmap& GetOrLoadBitmap(const std::wstring& fullFilePath);
+
+    CBitmapHandle GetOrLoadBitmap(const IdeCommands command);
 
 private:
     CImageList mToolBarImageList;
