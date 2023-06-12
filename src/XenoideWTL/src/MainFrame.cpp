@@ -50,7 +50,8 @@ LRESULT CMainFrame::OnCreate(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/
 
     CreateSimpleStatusBar();
 
-    m_hWndClient = mCodeView.Create(m_hWnd, rcDefault, NULL, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN, WS_EX_CLIENTEDGE);
+    const DWORD dwStyle = WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN;
+    m_hWndClient = mCodeView.Create(m_hWnd, rcDefault, NULL, dwStyle, WS_EX_CLIENTEDGE);
 
     CreateSimpleReBar(ATL_SIMPLE_REBAR_NOBORDER_STYLE);
     AddSimpleReBarBand(mCommandBar);
@@ -126,10 +127,10 @@ void CMainFrame::CreateToolBarImageList(CImageList &imageList, const std::vector
 
 
 void CMainFrame::CreateToolBar(CToolBarCtrl &toolbarCtrl, const CImageList &imageList, const std::vector<IdeCommands> &commands) const {
-    const DWORD dwStyle = ATL_SIMPLE_TOOLBAR_STYLE | CCS_NOPARENTALIGN;
+    const DWORD dwStyle = ATL_SIMPLE_TOOLBAR_STYLE | TBSTYLE_TRANSPARENT | CCS_NODIVIDER | CCS_NOPARENTALIGN | CCS_NORESIZE | CCS_TOP;
 
     HWND hWnd = toolbarCtrl.Create(m_hWnd, rcDefault, NULL, dwStyle, 0, ATL_IDW_TOOLBAR, nullptr);
-
+    
     toolbarCtrl.SetButtonStructSize(sizeof(TBBUTTON));
     toolbarCtrl.SetImageList(imageList);
 

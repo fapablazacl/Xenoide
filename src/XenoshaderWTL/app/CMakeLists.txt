@@ -22,8 +22,8 @@ set (sources
 	"../../XenoideWTL/src/CodeEditorConfiguration.cpp"
 	"src/DocumentManager.cpp" 
 	"src/DocumentManager.h" 
-	"src/FileNamePatternMatcher.h" 
-	"src/FileNamePatternMatcher.cpp" 
+	"../../XenoideWTL/src/FileNamePatternMatcher.h"
+	"../../XenoideWTL/src/FileNamePatternMatcher.cpp"
 	"src/XenoshaderWTL.cpp"
 	"res/XenoshaderWTL.rc"
 
