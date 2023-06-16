@@ -8,11 +8,11 @@ namespace Xenoide {
         RECT clientRect = {};
         this->GetClientRect(&clientRect);
 
-        tabControl.Create(m_hWnd, clientRect, "", dwStyle);
+        tabControl.Create(m_hWnd, clientRect, _T(""), dwStyle);
 
-        tabControl.AddItem("Test1");
-        tabControl.AddItem("Test2");
-        tabControl.AddItem("Test3");
+        tabControl.AddItem(_T("Test1"));
+        tabControl.AddItem(_T("Test2"));
+        tabControl.AddItem(_T("Test3"));
 
         return 0;
     }

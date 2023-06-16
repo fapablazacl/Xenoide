@@ -35,7 +35,7 @@ set (sources
 
 add_executable (${target} WIN32 ${sources} )
 
-# target_compile_definitions (${target} PUBLIC _UNICODE)
+target_compile_definitions (${target} PUBLIC _UNICODE UNICODE)
 target_include_directories (${target} PUBLIC "res")
 
 target_link_libraries(${target} 

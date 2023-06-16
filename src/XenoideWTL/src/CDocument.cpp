@@ -8,7 +8,7 @@ namespace Xenoide {
 
         const DWORD dwStyle = ES_MULTILINE | ES_AUTOHSCROLL | ES_AUTOVSCROLL | WS_CHILD | WS_VISIBLE | WS_VSCROLL | WS_HSCROLL;
 
-        m_edit.Create(m_hWnd, rcClient, "Test", dwStyle);
+        m_edit.Create(m_hWnd, rcClient, _T("Test"), dwStyle);
 
         return 0;
     }

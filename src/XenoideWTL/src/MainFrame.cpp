@@ -152,16 +152,22 @@ void CMainFrame::CreateToolBar(CToolBarCtrl &toolbarCtrl, const CImageList &imag
 }
 
 
-static BOOL AppendMenuItemInfo(HMENU hMenu, const UINT pos, const UINT id, const LPSTR item, HBITMAP hBitmap) {
+static BOOL AppendMenuItemInfo(HMENU hMenu, const UINT pos, const UINT id, const LPWSTR item, HBITMAP hBitmap) {
     MENUITEMINFO info{ 0 };
 
     info.cbSize = sizeof(MENUITEMINFO);
-    info.fMask = MIIM_STRING | MIIM_ID | (hBitmap != NULL ? MIIM_BITMAP : 0);
+    info.fMask = MIIM_STRING | MIIM_ID;
     info.wID = id;
     info.dwTypeData = item;
-    info.hbmpItem = hBitmap;
 
-    return InsertMenuItem(hMenu, pos, TRUE, &info);
+    BOOL result = InsertMenuItem(hMenu, pos, TRUE, &info);
+    assert(result);
+    
+    if (hBitmap != nullptr) {
+        SetMenuItemBitmaps(hMenu, id, MF_BYCOMMAND, hBitmap, hBitmap);
+    }
+    
+    return TRUE;
 }
 
 
@@ -176,7 +182,7 @@ static BOOL AppendMenuItemSeparator(HMENU hMenu, const UINT pos) {
 }
 
 
-static BOOL AppendMenuItem(HMENU hMenu, const UINT pos, HMENU hSubMenu, const LPSTR item) {
+static BOOL AppendMenuItem(HMENU hMenu, const UINT pos, HMENU hSubMenu, const LPWSTR item) {
     MENUITEMINFO info{ 0 };
     info.cbSize = sizeof(MENUITEMINFO);
     info.fMask = MIIM_STRING | MIIM_SUBMENU;
@@ -188,18 +194,20 @@ static BOOL AppendMenuItem(HMENU hMenu, const UINT pos, HMENU hSubMenu, const LP
 
 
 HMENU CMainFrame::CreateMenuBar() {
+    CMenuHandle test;
+
     HMENU hMenuBar = CreateMenu();
     HMENU hFileMenu = CreatePopupMenu();
     UINT pos = 0;
 
-    AppendMenuItemInfo(hFileMenu, pos++, ID_XENOIDE_FILE_NEW, _T("&New"), GetOrLoadBitmap(ID_XENOIDE_FILE_NEW));
+    AppendMenuItemInfo(hFileMenu, pos++, ID_XENOIDE_FILE_NEW, _T("&New\tCtrl+N"), GetOrLoadBitmap(ID_XENOIDE_FILE_NEW));
     AppendMenuItemSeparator(hFileMenu, pos++);
-    AppendMenuItemInfo(hFileMenu, pos++, ID_XENOIDE_FILE_OPEN, _T("&Open"), GetOrLoadBitmap(ID_XENOIDE_FILE_OPEN));
+    AppendMenuItemInfo(hFileMenu, pos++, ID_XENOIDE_FILE_OPEN, _T("&Open\tCtrl+O"), GetOrLoadBitmap(ID_XENOIDE_FILE_OPEN));
     AppendMenuItemSeparator(hFileMenu, pos++);
-    AppendMenuItemInfo(hFileMenu, pos++, ID_XENOIDE_FILE_SAVE, _T("&Save"), GetOrLoadBitmap(ID_XENOIDE_FILE_SAVE));
+    AppendMenuItemInfo(hFileMenu, pos++, ID_XENOIDE_FILE_SAVE, _T("&Save\tCtrl+S"), GetOrLoadBitmap(ID_XENOIDE_FILE_SAVE));
     AppendMenuItemInfo(hFileMenu, pos++, ID_XENOIDE_FILE_SAVEAS, _T("Save &As"), GetOrLoadBitmap(ID_XENOIDE_FILE_SAVEAS));
     AppendMenuItemSeparator(hFileMenu, pos++);
-    AppendMenuItemInfo(hFileMenu, pos++, ID_XENOIDE_FILE_EXIT, _T("&Exit"), GetOrLoadBitmap(ID_XENOIDE_FILE_EXIT));
+    AppendMenuItemInfo(hFileMenu, pos++, ID_XENOIDE_FILE_EXIT, _T("&Exit\tAlt+F4"), GetOrLoadBitmap(ID_XENOIDE_FILE_EXIT));
 
     AppendMenuItem(hMenuBar, 0, hFileMenu, _T("&File"));
 

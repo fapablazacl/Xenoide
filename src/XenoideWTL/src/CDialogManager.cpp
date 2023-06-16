@@ -75,7 +75,7 @@ namespace Xenoide  {
         std::wstring wtitle(data.title.begin(), data.title.end());
         */
 
-        int result = ::MessageBox(NULL, data.message.c_str(), data.title.c_str(), flags);
+        int result = ::MessageBox(NULL, _T("data.message.c_str()"), _T("data.title.c_str()"), flags);
 
         return this->mapMsgBoxResult(result);
     }
@@ -91,8 +91,8 @@ namespace Xenoide  {
         CFileDialog dialog(TRUE, _T("All Files\0*.*"));
 
         if (dialog.DoModal() == IDOK) {
-            std::string fileName = dialog.m_szFileName;
-            return boost::filesystem::path{fileName};
+            // std::string fileName = dialog.m_szFileName;
+            // return boost::filesystem::path{fileName};
         }
         
         return {};
