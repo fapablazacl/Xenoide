@@ -1,0 +1,44 @@
+name: Continous Integration Jobs
+on:
+  push:
+    branches:
+      - '**'
+jobs:
+  ci-windows:
+    runs-on: windows-latest
+    timeout-minutes: 120
+    env:
+      XENOIDE_VERSION_MAJOR: 0
+      XENOIDE_VERSION_MINOR: 0
+      XENOIDE_VERSION_REVISION: 0
+      XENOIDE_BUILD_COMMIT: ${{ github.sha }}
+      XENOIDE_BUILD_BRANCH: ${{ github.ref_name }}
+
+    steps:      
+      - run: Get-PSDrive
+    
+      - name: Get Timestamp
+        id: timestamp
+        run: |
+          $timestamp = Get-Date -Format 'yyyyMMddHHmmss'
+          echo "XENOIDE_BUILD_TIMESTAMP=$timestamp" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
+            
+      - name: Check out repository code
+        uses: actions/checkout@v2
+
+      - name: Cache Hit Check
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: .cmake/vcpkg_installed
+          key: ${{ runner.os }}-cache-${{ hashFiles('vcpkg.json') }}
+
+      - name: Configure
+        run: |
+          cmake --preset=default -DXENOIDE_BUILD_TIMESTAMP="${{ env.XENOIDE_BUILD_TIMESTAMP }}" -DXENOIDE_BUILD_COMMIT="${{ env.XENOIDE_BUILD_COMMIT }}" -DXENOIDE_BUILD_BRANCH="${{ env.XENOIDE_BUILD_BRANCH }}" -DXENOIDE_VERSION_MAJOR=${{ env.XENOIDE_VERSION_MAJOR }} -DXENOIDE_VERSION_MINOR=${{ env.DXENOIDE_VERSION_MINOR }} -DXENOIDE_VERSION_REVISION=${{ env.XENOIDE_VERSION_REVISION }}
+
+      - name: Build 
+        run: cmake --build .cmake --config Release
+          
+      - name: Test
+        run: ctest --output-on-failure --test-dir .cmake -C Release
