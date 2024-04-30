@@ -4,9 +4,11 @@
   "version": "0.0.0",
   "dependencies": [
     {
-      "name":"qscintilla",
-      "version>=": "2.13.4#2"
+      "name":"qscintilla"
+    }, 
+    {
+      "name": "qt"
     }
   ],
-  "builtin-baseline": "a34c873a9717a888f58dc05268dea15592c2f0ff"
+  "builtin-baseline": "dcfbe90ecb76d96106a97d1eb3f9d151bfc621da"
 }
