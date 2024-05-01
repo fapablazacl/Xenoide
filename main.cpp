@@ -1,12 +1,12 @@
 
 #include <QApplication>
-#include <QMainWindow>
 
+#include "MainWindow.h"
 
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
-    QMainWindow mainWindow;
 
+    xenoide::MainWindow mainWindow;
     mainWindow.setWindowTitle("Xenoide");
     mainWindow.resize(800, 600);
     mainWindow.show();

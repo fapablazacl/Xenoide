@@ -4,9 +4,8 @@ on:
     branches:
       - '**'
 jobs:
-  ci-windows:
+  ci:
     runs-on: windows-latest
-    timeout-minutes: 120
     env:
       XENOIDE_VERSION_MAJOR: 0
       XENOIDE_VERSION_MINOR: 0
@@ -25,6 +24,8 @@ jobs:
             
       - name: Check out repository code
         uses: actions/checkout@v2
+        with:
+          submodules: recursive
 
       - name: Cache Hit Check
         id: cache
@@ -37,8 +38,14 @@ jobs:
         run: |
           cmake --preset=default -DXENOIDE_BUILD_TIMESTAMP="${{ env.XENOIDE_BUILD_TIMESTAMP }}" -DXENOIDE_BUILD_COMMIT="${{ env.XENOIDE_BUILD_COMMIT }}" -DXENOIDE_BUILD_BRANCH="${{ env.XENOIDE_BUILD_BRANCH }}" -DXENOIDE_VERSION_MAJOR=${{ env.XENOIDE_VERSION_MAJOR }} -DXENOIDE_VERSION_MINOR=${{ env.DXENOIDE_VERSION_MINOR }} -DXENOIDE_VERSION_REVISION=${{ env.XENOIDE_VERSION_REVISION }}
 
-      - name: Build 
-        run: cmake --build .cmake --config Release
+      - name: Build Debug
+        run: cmake --build .cmake --config Debug
           
-      - name: Test
+      - name: Build Release
+        run: cmake --build .cmake --config Release
+        
+      - name: Test Debug
+        run: ctest --output-on-failure --test-dir .cmake -C Debug
+        
+      - name: Test Release
         run: ctest --output-on-failure --test-dir .cmake -C Release

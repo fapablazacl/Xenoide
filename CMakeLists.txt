@@ -12,6 +12,9 @@ set(XENOIDE_BUILD_COMMIT "local" CACHE STRING "Git hash used to generate this bu
 set(XENOIDE_BUILD_TIMESTAMP "now" CACHE STRING "When this build was made, in YYYYmmDDHHMMSS format (if set)")
 
 # Qt packages
+set (CMAKE_INCLUDE_CURRENT_DIR ON)
+set (CMAKE_AUTOMOC ON)
+set (CMAKE_AUTOUIC ON)
 find_package(Qt6 COMPONENTS Core Widgets REQUIRED)
 
 # Qscintilla target
@@ -23,7 +26,7 @@ target_link_libraries(Qt6QScintilla INTERFACE qscintilla2_qt6)
 
 # Xenoide executable
 set (target Xenoide)
-set (sources main.cpp)
+set (sources main.cpp MainWindow.cpp MainWindow.h)
 
 add_executable(${target} ${sources})
 
@@ -34,3 +37,8 @@ target_compile_definitions(${target} PRIVATE XENOIDE_BUILD_COMMIT=${XENOIDE_BUIL
 target_compile_definitions(${target} PRIVATE XENOIDE_BUILD_TIMESTAMP=${XENOIDE_BUILD_TIMESTAMP})
 
 target_link_libraries(${target} PRIVATE Qt6::Core Qt6::Widgets Qt6QScintilla)
+
+add_custom_command(TARGET ${target} POST_BUILD 
+    COMMAND Qt6::windeployqt
+    ARGS $<TARGET_FILE:${target}>
+)
