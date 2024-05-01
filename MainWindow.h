@@ -17,6 +17,8 @@ namespace xenoide {
     private:
         void setupEditor(QsciScintilla *scintilla);
 
+        void createMenuBar();
+
         QsciScintilla *mScintilla = nullptr;
     };
 }
