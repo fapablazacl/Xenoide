@@ -46,7 +46,7 @@ namespace xenoide {
         scintilla->setMarginWidth(1, QString("1000"));
         scintilla->setMarginType(1, QsciScintilla::NumberMargin);
 
-        // setup C++
+        // setup glsl
         auto lexer = new QsciLexerCPP{};
         lexer->setDefaultFont(defaultFont);
         scintilla->setLexer(lexer);

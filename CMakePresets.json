@@ -8,6 +8,13 @@
         "CMAKE_TOOLCHAIN_FILE": "vcpkg/scripts/buildsystems/vcpkg.cmake"
       },
       "generator": "Visual Studio 17 2022"
+    },
+    {
+      "name": "ci",
+      "binaryDir": "${sourceDir}/.cmake",
+      "cacheVariables": {
+        "CMAKE_TOOLCHAIN_FILE": "vcpkg/scripts/buildsystems/vcpkg.cmake"
+      }
     }
   ]
 }

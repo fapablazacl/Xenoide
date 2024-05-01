@@ -34,10 +34,14 @@ jobs:
           path: .cmake/vcpkg_installed
           key: ${{ runner.os }}-cache-${{ hashFiles('vcpkg.json') }}
 
-      - name: Configure
+      - name: Configure Debug
         run: |
-          cmake --preset=default -DXENOIDE_BUILD_TIMESTAMP="${{ env.XENOIDE_BUILD_TIMESTAMP }}" -DXENOIDE_BUILD_COMMIT="${{ env.XENOIDE_BUILD_COMMIT }}" -DXENOIDE_BUILD_BRANCH="${{ env.XENOIDE_BUILD_BRANCH }}" -DXENOIDE_VERSION_MAJOR=${{ env.XENOIDE_VERSION_MAJOR }} -DXENOIDE_VERSION_MINOR=${{ env.DXENOIDE_VERSION_MINOR }} -DXENOIDE_VERSION_REVISION=${{ env.XENOIDE_VERSION_REVISION }}
+          cmake --preset=ci -DCMAKE_BUILD_TYPE=Debug -DXENOIDE_BUILD_TIMESTAMP="${{ env.XENOIDE_BUILD_TIMESTAMP }}" -DXENOIDE_BUILD_COMMIT="${{ env.XENOIDE_BUILD_COMMIT }}" -DXENOIDE_BUILD_BRANCH="${{ env.XENOIDE_BUILD_BRANCH }}" -DXENOIDE_VERSION_MAJOR=${{ env.XENOIDE_VERSION_MAJOR }} -DXENOIDE_VERSION_MINOR=${{ env.DXENOIDE_VERSION_MINOR }} -DXENOIDE_VERSION_REVISION=${{ env.XENOIDE_VERSION_REVISION }}
 
+      - name: Configure Release
+        run: |
+          cmake --preset=ci -DCMAKE_BUILD_TYPE=Release -DXENOIDE_BUILD_TIMESTAMP="${{ env.XENOIDE_BUILD_TIMESTAMP }}" -DXENOIDE_BUILD_COMMIT="${{ env.XENOIDE_BUILD_COMMIT }}" -DXENOIDE_BUILD_BRANCH="${{ env.XENOIDE_BUILD_BRANCH }}" -DXENOIDE_VERSION_MAJOR=${{ env.XENOIDE_VERSION_MAJOR }} -DXENOIDE_VERSION_MINOR=${{ env.DXENOIDE_VERSION_MINOR }} -DXENOIDE_VERSION_REVISION=${{ env.XENOIDE_VERSION_REVISION }}
+  
       - name: Build Debug
         run: cmake --build .cmake --config Debug
           
