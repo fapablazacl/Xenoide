@@ -26,7 +26,7 @@ target_link_libraries(Qt6QScintilla INTERFACE qscintilla2_qt6)
 
 # Xenoide executable
 set (target Xenoide)
-set (sources main.cpp MainWindow.cpp MainWindow.h)
+set (sources main.cpp MainWindow.cpp MainWindow.h LanguageConfig.cpp LanguageConfig.h)
 
 add_executable(${target} ${sources})
 
